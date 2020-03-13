@@ -19,6 +19,7 @@ package ir.FiroozehCorp.GameService.Core.ApiWebRequest
 
 import okhttp3.Call
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -32,24 +33,21 @@ object GSWebRequest {
 
     private var client = OkHttpClient()
     private val JSON = "application/json; charset=utf-8".toMediaType()
+    private val MEDIA_TYPE_PNG = "image/png".toMediaType()
+
 
     @Throws(IOException::class)
-    fun get(URL: String, headers: MutableMap<String, String>?): Call {
-        val request = addHeaders(Request.Builder().url(URL), headers).build()
+    fun get(URL: String, headers: MutableMap<String, String>? = null): Call {
+        val request = addHeaders(Request.Builder().get().url(URL), headers).build()
         return client.newCall(request)
     }
 
     @Throws(IOException::class)
     fun post(URL: String, body: String? = null, headers: MutableMap<String, String>? = null): Call {
-        val request: Request = if (body != null)
-            addHeaders(Request
-                    .Builder()
-                    .url(URL)
-                    .post(body.toRequestBody(JSON))
-                    , headers).build()
-        else addHeaders(Request
+        val request = addHeaders(Request
                 .Builder()
                 .url(URL)
+                .post(body.toString().toRequestBody(JSON))
                 , headers).build()
 
         return client.newCall(request)
@@ -73,6 +71,30 @@ object GSWebRequest {
                 .url(URL)
                 .delete()
                 , headers).build()
+        return client.newCall(request)
+    }
+
+
+    @Throws(IOException::class)
+    fun multiPart(URL: String, imageBody: ByteArray, headers: MutableMap<String, String>? = null): Call {
+        MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file", "file", imageBody.toRequestBody(MEDIA_TYPE_PNG))
+                .build()
+                .also { multiPart ->
+                    val request = addHeaders(Request
+                            .Builder()
+                            .url(URL)
+                            .post(multiPart)
+                            , headers).build()
+                    return client.newCall(request)
+                }
+    }
+
+
+    @Throws(IOException::class)
+    fun download(URL: String): Call {
+        val request = Request.Builder().url(URL).build()
         return client.newCall(request)
     }
 

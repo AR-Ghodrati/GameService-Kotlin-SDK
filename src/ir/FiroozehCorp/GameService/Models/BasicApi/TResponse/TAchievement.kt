@@ -1,5 +1,5 @@
 /*
- * <copyright file="$this.kt" company="Firoozeh Technology LTD">
+ * <copyright file="TAchievement.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,17 +16,23 @@
  * </copyright>
  */
 
-package ir.FiroozehCorp.GameService.Core.ApiWebRequest.Interfaces
+package ir.FiroozehCorp.GameService.Models.BasicApi.TResponse
 
-import java.io.IOException
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+import ir.FiroozehCorp.GameService.Models.BasicApi.Achievement
 
 /**
  * @author Alireza Ghodrati
  */
-interface GameServiceCall<T> {
+internal class TAchievement {
 
-    @Throws(IOException::class)
-    fun execute(): T
+    @SerializedName("status")
+    @Expose
+    var status: Boolean = false
 
-    fun enqueue(callback: GameServiceCallback<T>)
+
+    @SerializedName("achievement")
+    @Expose
+    var achievements: MutableList<Achievement>? = null
 }

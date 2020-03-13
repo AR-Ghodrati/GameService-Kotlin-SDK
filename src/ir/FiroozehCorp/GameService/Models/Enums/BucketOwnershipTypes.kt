@@ -1,5 +1,5 @@
 /*
- * <copyright file="$this.kt" company="Firoozeh Technology LTD">
+ * <copyright file="BucketOwnershipTypes.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,29 +16,12 @@
  * </copyright>
  */
 
-package ir.FiroozehCorp.GameService.Models.BasicApi
-
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
-import ir.FiroozehCorp.GameService.Models.Internal.Game
+package ir.FiroozehCorp.GameService.Models.Enums
 
 /**
+ * Represents BucketOwnershipTypes Model In Game Service Basic API
  * @author Alireza Ghodrati
  */
-internal class Login {
-
-    @SerializedName("status")
-    @Expose
-    var status: Boolean = false
-
-
-    @SerializedName("token")
-    @Expose
-    var token: String? = null
-
-
-    @SerializedName("game")
-    @Expose
-    var game: Game? = null
-
+enum class BucketOwnershipTypes {
+    Me, Another
 }

@@ -1,5 +1,5 @@
 /*
- * <copyright file="$this.kt" company="Firoozeh Technology LTD">
+ * <copyright file="SaveDetails.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,25 +20,51 @@ package ir.FiroozehCorp.GameService.Models.BasicApi
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ir.FiroozehCorp.GameService.Models.Internal.Game
 
 /**
  * @author Alireza Ghodrati
  */
-internal class Login {
+class SaveDetails {
 
-    @SerializedName("status")
-    @Expose
-    var status: Boolean = false
-
-
-    @SerializedName("token")
-    @Expose
-    var token: String? = null
-
-
+    /**
+     * Gets the Game id.
+     * @return the Game id
+     */
     @SerializedName("game")
     @Expose
-    var game: Game? = null
+    var gameId: String? = null
+
+
+    /**
+     * Gets the User id.
+     * @return the User id
+     */
+    @SerializedName("user")
+    @Expose
+    var userId: String? = null
+
+
+    /**
+     * Gets the Save Name.
+     * @return the Save Name
+     */
+    @SerializedName("name")
+    @Expose
+    var name: String? = null
+
+
+    /**
+     * Gets the Last Modify Save Time.
+     * @return the Last Modify Save Time
+     */
+    @SerializedName("lastmodify")
+    @Expose
+    var lastModify: String? = null
+
+
+    override fun toString(): String {
+        return "SaveDetails(gameId=$gameId, userId=$userId, name=$name, lastModify=$lastModify)"
+    }
+
 
 }

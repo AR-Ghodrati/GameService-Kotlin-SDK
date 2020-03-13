@@ -16,29 +16,33 @@
  * </copyright>
  */
 
-package ir.FiroozehCorp.GameService.Models.BasicApi
+package ir.FiroozehCorp.GameService.Models.BasicApi.Bucket
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ir.FiroozehCorp.GameService.Models.Internal.Game
+import java.io.Serializable
 
 /**
+ * Represents BucketCore Data Model In Game Service Basic API
  * @author Alireza Ghodrati
  */
-internal class Login {
+open class BucketCore : Serializable {
 
-    @SerializedName("status")
-    @Expose
-    var status: Boolean = false
+    /**
+     * Gets the Bucket Object ID.
+     * @return the Bucket Object ID</value>
+     */
+    @SerializedName("id")
+    @Expose(serialize = false)
+    var id: String? = null
 
 
-    @SerializedName("token")
-    @Expose
-    var token: String? = null
-
-
-    @SerializedName("game")
-    @Expose
-    var game: Game? = null
+    /**
+     * Gets the Bucket Owner User ID
+     * @return the Bucket Object ID</value>
+     */
+    @SerializedName("owner")
+    @Expose(serialize = false)
+    var ownerId: String? = null
 
 }

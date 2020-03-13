@@ -1,5 +1,5 @@
 /*
- * <copyright file="InlineUtil.kt" company="Firoozeh Technology LTD">
+ * <copyright file="GSTime.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,18 +16,37 @@
  * </copyright>
  */
 
-package ir.FiroozehCorp.GameService.Utils
+package ir.FiroozehCorp.GameService.Models.Internal
 
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import java.time.OffsetDateTime
 
 /**
  * @author Alireza Ghodrati
  */
-internal object InlineUtil {
+class GSTime {
 
-    fun <T> fromJson(json: String?): T {
-        return Gson().fromJson(json, object : TypeToken<T>() {}.type)
+    /**
+     * Gets the Current Server Time
+     * @return the Current Server Time
+     */
+    var serverTime: OffsetDateTime? = null
+
+
+    /**
+     * Gets the Current Device Time
+     * @return the Current Device Time
+     */
+    var deviceTime: OffsetDateTime? = null
+
+
+    fun isDeviceTimeValid(): Boolean {
+        return serverTime?.toEpochSecond() == deviceTime?.toEpochSecond()
     }
+
+
+    override fun toString(): String {
+        return "GSTime(serverTime=$serverTime, deviceTime=$deviceTime)"
+    }
+
 
 }

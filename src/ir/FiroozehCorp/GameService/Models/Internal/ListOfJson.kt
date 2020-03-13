@@ -1,5 +1,5 @@
 /*
- * <copyright file="GameServiceCallback.kt" company="Firoozeh Technology LTD">
+ * <copyright file="ListOfJson.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,18 +16,27 @@
  * </copyright>
  */
 
-package ir.FiroozehCorp.GameService.Core.ApiWebRequest.Interfaces
+package ir.FiroozehCorp.GameService.Models.Internal
 
-import ir.FiroozehCorp.GameService.Models.GameServiceException
-import java.io.IOException
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
 
 /**
  * @author Alireza Ghodrati
  */
-interface GameServiceCallback<T> {
+internal class ListOfJson<T>(wrapper: Class<T>) : ParameterizedType {
 
-    @Throws(IOException::class)
-    fun onResponse(response: T)
+    private var wrapped: Class<*>? = wrapper
 
-    fun onFailure(error: GameServiceException)
+    override fun getActualTypeArguments(): Array<Type?>? {
+        return arrayOf(wrapped)
+    }
+
+    override fun getRawType(): Type? {
+        return MutableList::class.java
+    }
+
+    override fun getOwnerType(): Type? {
+        return null
+    }
 }

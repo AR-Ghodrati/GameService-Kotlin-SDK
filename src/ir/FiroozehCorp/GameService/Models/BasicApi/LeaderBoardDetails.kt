@@ -1,5 +1,5 @@
 /*
- * <copyright file="$this.kt" company="Firoozeh Technology LTD">
+ * <copyright file="LeaderBoardDetails.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,25 +20,34 @@ package ir.FiroozehCorp.GameService.Models.BasicApi
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ir.FiroozehCorp.GameService.Models.Internal.Game
 
 /**
+ * Represents LeaderBoardDetails Data Model In Game Service Basic API
  * @author Alireza Ghodrati
  */
-internal class Login {
+class LeaderBoardDetails {
 
-    @SerializedName("status")
+    /**
+     * Gets the LeaderBoard.
+     * @return the LeaderBoard </value>
+     */
+    @SerializedName("leaderboard")
     @Expose
-    var status: Boolean = false
+    var leaderboard: Leaderboard? = null
 
 
-    @SerializedName("token")
+    /**
+     * Gets the List Of Scores.
+     * @return the Achievement status</value>
+     */
+    @SerializedName("scores")
     @Expose
-    var token: String? = null
+    var scores: MutableList<Score>? = null
 
 
-    @SerializedName("game")
-    @Expose
-    var game: Game? = null
+    override fun toString(): String {
+        return "LeaderBoardDetails(leaderboard=$leaderboard, scores=$scores)"
+    }
+
 
 }

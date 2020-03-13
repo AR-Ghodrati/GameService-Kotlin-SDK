@@ -1,5 +1,5 @@
 /*
- * <copyright file="$this.kt" company="Firoozeh Technology LTD">
+ * <copyright file="TUser.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,29 +16,23 @@
  * </copyright>
  */
 
-package ir.FiroozehCorp.GameService.Models.BasicApi
+package ir.FiroozehCorp.GameService.Models.BasicApi.TResponse
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ir.FiroozehCorp.GameService.Models.Internal.Game
+import ir.FiroozehCorp.GameService.Models.BasicApi.User
 
 /**
  * @author Alireza Ghodrati
  */
-internal class Login {
+internal class TUser {
 
     @SerializedName("status")
     @Expose
     var status: Boolean = false
 
 
-    @SerializedName("token")
+    @SerializedName("data")
     @Expose
-    var token: String? = null
-
-
-    @SerializedName("game")
-    @Expose
-    var game: Game? = null
-
+    var user: User? = null
 }

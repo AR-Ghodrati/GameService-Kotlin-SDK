@@ -1,5 +1,5 @@
 /*
- * <copyright file="$this.kt" company="Firoozeh Technology LTD">
+ * <copyright file="FindByElement.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,29 +16,23 @@
  * </copyright>
  */
 
-package ir.FiroozehCorp.GameService.Models.BasicApi
+package ir.FiroozehCorp.GameService.Models.BasicApi.Bucket
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
-import ir.FiroozehCorp.GameService.Models.Internal.Game
+import ir.FiroozehCorp.GameService.Models.GameServiceException
 
 /**
+ * Represents ElementOptionData Model In Game Service Basic API
  * @author Alireza Ghodrati
  */
-internal class Login {
+class FindByElement<T>(private val name: String, val value: T) : BucketOption {
 
-    @SerializedName("status")
-    @Expose
-    var status: Boolean = false
-
-
-    @SerializedName("token")
-    @Expose
-    var token: String? = null
+    init {
+        if (name.isEmpty()) throw GameServiceException("Name Cant Be Empty")
+        if (value == null) throw GameServiceException("Value Cant Be Null")
+    }
 
 
-    @SerializedName("game")
-    @Expose
-    var game: Game? = null
-
+    override fun getParsedData(): String {
+        return "&conditionProperty=$name&conditionValue=$value"
+    }
 }

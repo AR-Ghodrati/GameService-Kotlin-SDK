@@ -1,5 +1,5 @@
 /*
- * <copyright file="$this.kt" company="Firoozeh Technology LTD">
+ * <copyright file="SubmitScoreResponse.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,25 +20,43 @@ package ir.FiroozehCorp.GameService.Models.BasicApi
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ir.FiroozehCorp.GameService.Models.Internal.Game
 
 /**
  * @author Alireza Ghodrati
  */
-internal class Login {
+class SubmitScoreResponse {
 
-    @SerializedName("status")
+    /**
+     * Gets the LeaderBoard.
+     * @return the LeaderBoard </value>
+     */
+    @SerializedName("leaderboard_r")
     @Expose
-    var status: Boolean = false
+    var leaderboard: Leaderboard? = null
 
 
-    @SerializedName("token")
+    /**
+     * Gets the Score Value.
+     * @return the Score Value </value>
+     */
+    @SerializedName("score")
     @Expose
-    var token: String? = null
+    var score: Int = 0
 
 
-    @SerializedName("game")
+    /**
+     * Gets the Tries Value.
+     * How Many Tries To Submit Score
+     * @return the Tries Value </value>
+     */
+    @SerializedName("tries")
     @Expose
-    var game: Game? = null
+    var tries: Int = 0
+
+
+    override fun toString(): String {
+        return "SubmitScoreResponse(leaderboard=$leaderboard, score=$score, tries=$tries)"
+    }
+
 
 }

@@ -1,5 +1,5 @@
 /*
- * <copyright file="$this.kt" company="Firoozeh Technology LTD">
+ * <copyright file="Constraint.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,29 +16,24 @@
  * </copyright>
  */
 
-package ir.FiroozehCorp.GameService.Models.BasicApi
+package ir.FiroozehCorp.GameService.Models.BasicApi.Bucket
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
-import ir.FiroozehCorp.GameService.Models.Internal.Game
+import ir.FiroozehCorp.GameService.Models.GameServiceException
 
 /**
+ * Represents ConstraintOptionData Model In Game Service Basic API
  * @author Alireza Ghodrati
  */
-internal class Login {
+class Constraint(private val skip: Int, private val limit: Int) : BucketOption {
 
-    @SerializedName("status")
-    @Expose
-    var status: Boolean = false
-
-
-    @SerializedName("token")
-    @Expose
-    var token: String? = null
+    init {
+        if (skip < 0) throw GameServiceException("Invalid Skip Value")
+        if (limit <= 0 || limit > 200) throw GameServiceException("Invalid Limit Value")
+    }
 
 
-    @SerializedName("game")
-    @Expose
-    var game: Game? = null
+    override fun getParsedData(): String {
+        return "&skip=$skip&limit=$limit"
+    }
 
 }
