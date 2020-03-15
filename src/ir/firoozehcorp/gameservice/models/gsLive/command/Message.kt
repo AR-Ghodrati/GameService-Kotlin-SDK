@@ -25,13 +25,13 @@ import com.google.gson.annotations.SerializedName
  * @author Alireza Ghodrati
  */
 internal class Message(@SerializedName("0")
-                       @Expose var isPrivate: Boolean,
+                       @Expose var isPrivate: Boolean = false,
                        @SerializedName("1")
                        @Expose
                        var receiverId: String,
                        @SerializedName("2")
                        @Expose
-                       var senderId: String,
+                       var senderId: String? = null,
                        @SerializedName("3")
                        @Expose var data: String?) {
 

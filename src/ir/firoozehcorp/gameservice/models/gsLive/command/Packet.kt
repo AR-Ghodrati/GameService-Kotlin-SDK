@@ -28,8 +28,8 @@ import ir.firoozehcorp.gameservice.models.gsLive.APacket
 internal class Packet(@SerializedName("0")
                       @Expose var token: String?, @SerializedName("1")
                       @Expose var action: Int, @SerializedName("2")
-                      @Expose var data: String?, @SerializedName("3")
-                      @Expose var message: String?) : APacket() {
+                      @Expose var data: String? = null, @SerializedName("3")
+                      @Expose var message: String? = null) : APacket() {
 
 
     override fun toString(): String {
