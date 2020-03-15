@@ -1,5 +1,5 @@
 /*
- * <copyright file="Packet.kt" company="Firoozeh Technology LTD">
+ * <copyright file="BaseRequestHandler.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,21 +16,22 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.gsLive.realtime
+package ir.firoozehcorp.gameservice.handlers.realtime.request
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+import ir.firoozehcorp.gameservice.models.gsLive.realtime.Packet
+
 
 /**
  * @author Alireza Ghodrati
  */
-internal class Packet(@SerializedName("1")
-                      @Expose var action: Int, @SerializedName("2")
-                      @Expose var payload: String? = null, @SerializedName("3")
-                      @Expose var hash: String? = null) {
+internal abstract class BaseRequestHandler : IRequestHandler() {
 
-
-    override fun toString(): String {
-        return "Packet(action=$action, payload=$payload, hash=$hash)"
+    override fun handleAction(payload: Any): Packet {
+        if (checkAction(payload)) return doAction(payload)
+        throw IllegalArgumentException()
     }
+
+    protected abstract fun checkAction(payload: Any?): Boolean
+
+    protected abstract fun doAction(payload: Any?): Packet
 }
