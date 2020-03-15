@@ -1,5 +1,5 @@
 /*
- * <copyright file="PingPongHandler.kt" company="Firoozeh Technology LTD">
+ * <copyright file="BaseRequestHandler.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,36 +16,22 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.handlers.command.request
+package ir.firoozehcorp.gameservice.handlers.turnbased.request
 
-import ir.firoozehcorp.gameservice.handlers.command.CommandHandler
-import ir.firoozehcorp.gameservice.models.consts.Command
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
+
 
 /**
  * @author Alireza Ghodrati
  */
-internal class PingPongHandler : BaseRequestHandler() {
+internal abstract class BaseRequestHandler : IRequestHandler() {
 
-    companion object {
-        const val signature = "PING_PONG"
+    override fun handleAction(payload: Any): Packet {
+        if (checkAction(payload)) return doAction(payload)
+        throw IllegalArgumentException()
     }
 
+    protected abstract fun checkAction(payload: Any?): Boolean
 
-    private fun doAction(): Packet {
-        return Packet(CommandHandler.PlayerHash
-                , Command.ActionPing
-        )
-    }
-
-
-    override fun checkAction(payload: Any?): Boolean {
-        return true
-    }
-
-    override fun doAction(payload: Any?): Packet {
-        if (!checkAction(payload)) throw IllegalArgumentException()
-        return doAction()
-    }
-
+    protected abstract fun doAction(payload: Any?): Packet
 }

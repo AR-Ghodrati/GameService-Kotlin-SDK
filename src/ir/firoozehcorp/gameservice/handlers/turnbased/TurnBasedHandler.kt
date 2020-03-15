@@ -1,5 +1,5 @@
 /*
- * <copyright file="RealTimeHandler.kt" company="Firoozeh Technology LTD">
+ * <copyright file="TurnBasedHandler.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +16,7 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.handlers.realtime
+package ir.firoozehcorp.gameservice.handlers.turnbased
 
 import com.google.gson.Gson
 import ir.firoozehcorp.gameservice.core.GameService
@@ -31,7 +31,7 @@ import java.io.Closeable
 /**
  * @author Alireza Ghodrati
  */
-internal class RealTimeHandler(payload: StartPayload) : Closeable {
+internal class TurnBasedHandler(payload: StartPayload) : Closeable {
 
     private val observer: GsLiveSystemObserver
     private var _isDisposed = false
@@ -52,7 +52,7 @@ internal class RealTimeHandler(payload: StartPayload) : Closeable {
 
     init {
         CurrentRoom = payload.room
-        observer = GsLiveSystemObserver(GSLiveType.RealTime)
+        observer = GsLiveSystemObserver(GSLiveType.TurnBased)
 
         initRequestMessageHandlers()
         initResponseMessageHandlers()

@@ -16,11 +16,12 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.handlers.command.request
+package ir.firoozehcorp.gameservice.handlers.turnbased.request
 
-import ir.firoozehcorp.gameservice.handlers.command.CommandHandler
-import ir.firoozehcorp.gameservice.models.consts.Command
+import ir.firoozehcorp.gameservice.handlers.turnbased.TurnBasedHandler
+import ir.firoozehcorp.gameservice.models.consts.TurnBase
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
+
 
 /**
  * @author Alireza Ghodrati
@@ -33,8 +34,8 @@ internal class PingPongHandler : BaseRequestHandler() {
 
 
     private fun doAction(): Packet {
-        return Packet(CommandHandler.PlayerHash
-                , Command.ActionPing
+        return Packet(TurnBasedHandler.PlayerHash
+                , TurnBase.ActionPingPong
         )
     }
 

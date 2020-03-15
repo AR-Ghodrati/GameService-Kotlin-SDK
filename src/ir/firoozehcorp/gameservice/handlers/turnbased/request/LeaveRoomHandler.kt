@@ -1,5 +1,5 @@
 /*
- * <copyright file="PingPongHandler.kt" company="Firoozeh Technology LTD">
+ * <copyright file="LeaveRoomHandler.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,36 +16,37 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.handlers.command.request
+package ir.firoozehcorp.gameservice.handlers.turnbased.request
 
-import ir.firoozehcorp.gameservice.handlers.command.CommandHandler
-import ir.firoozehcorp.gameservice.models.consts.Command
+import ir.firoozehcorp.gameservice.handlers.turnbased.TurnBasedHandler
+import ir.firoozehcorp.gameservice.handlers.turnbased.TurnBasedHandler.Companion.gson
+import ir.firoozehcorp.gameservice.models.consts.TurnBase
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
+import ir.firoozehcorp.gameservice.models.gsLive.turnbased.DataPayload
+
 
 /**
  * @author Alireza Ghodrati
  */
-internal class PingPongHandler : BaseRequestHandler() {
+internal class LeaveRoomHandler : BaseRequestHandler() {
 
     companion object {
-        const val signature = "PING_PONG"
+        const val signature = "LEAVE_ROOM"
     }
 
 
-    private fun doAction(): Packet {
-        return Packet(CommandHandler.PlayerHash
-                , Command.ActionPing
-        )
+    private fun doAction(payload: DataPayload): Packet {
+        return Packet(TurnBasedHandler.PlayToken, TurnBase.OnLeave, gson.toJson(payload))
     }
 
 
     override fun checkAction(payload: Any?): Boolean {
-        return true
+        return payload is DataPayload
     }
 
     override fun doAction(payload: Any?): Packet {
         if (!checkAction(payload)) throw IllegalArgumentException()
-        return doAction()
+        return doAction(payload as DataPayload)
     }
 
 }
