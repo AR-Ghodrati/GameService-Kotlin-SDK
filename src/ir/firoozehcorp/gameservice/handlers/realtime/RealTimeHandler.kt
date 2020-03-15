@@ -20,7 +20,7 @@ package ir.firoozehcorp.gameservice.handlers.realtime
 
 import com.google.gson.Gson
 import ir.firoozehcorp.gameservice.core.GameService
-import ir.firoozehcorp.gameservice.handlers.realtime.request.IRequestHandler
+import ir.firoozehcorp.gameservice.handlers.realtime.request.*
 import ir.firoozehcorp.gameservice.handlers.realtime.response.IResponseHandler
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 import ir.firoozehcorp.gameservice.models.gsLive.Room
@@ -61,7 +61,11 @@ internal class RealTimeHandler(payload: StartPayload) : Closeable {
 
     private fun initRequestMessageHandlers() {
         requestHandlers = mutableMapOf(
-
+                AuthorizationHandler.signature to AuthorizationHandler(),
+                GetMemberHandler.signature to GetMemberHandler(),
+                LeaveRoomHandler.signature to LeaveRoomHandler(),
+                SendPublicMessageHandler.signature to SendPublicMessageHandler(),
+                SendPrivateMessageHandler.signature to SendPrivateMessageHandler()
         )
     }
 
