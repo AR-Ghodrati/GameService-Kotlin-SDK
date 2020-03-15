@@ -1,5 +1,5 @@
 /*
- * <copyright file="BucketOption.kt" company="Firoozeh Technology LTD">
+ * <copyright file="JoinEvent.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,14 +16,26 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.basicApi.bucket
+package ir.firoozehcorp.gameservice.models.gsLive.command
 
-import java.io.Serializable
+import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 
 /**
- * Represents BucketOption Model In Game Service Basic API
+ * Represents JoinEvent
  * @author Alireza Ghodrati
  */
-interface BucketOption : Serializable {
-    fun getParsedData(): String
+class JoinEvent {
+
+    /**
+     * Gets the GSLive Type for JoinEvent
+     * @return Gets the GSLive Type for JoinEvent
+     */
+    var type: GSLiveType = GSLiveType.NotSet
+
+
+    /**
+     * Gets the Join Data
+     * @return the Join Data
+     */
+    lateinit var joinData: JoinData
 }

@@ -1,5 +1,5 @@
 /*
- * <copyright file="BucketOption.kt" company="Firoozeh Technology LTD">
+ * <copyright file="TapActionType.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,14 +16,18 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.basicApi.bucket
-
-import java.io.Serializable
+package ir.firoozehcorp.gameservice.models.enums.gsLive.command
 
 /**
- * Represents BucketOption Model In Game Service Basic API
  * @author Alireza Ghodrati
  */
-interface BucketOption : Serializable {
-    fun getParsedData(): String
+enum class TapActionType {
+    NotSet,
+    OpenApp,
+    OpenLink,
+    OpenMarket,
+    CloseNotification,
+    OpenEmail,
+    InviteTelegramChannel,
+    OtherIntent
 }

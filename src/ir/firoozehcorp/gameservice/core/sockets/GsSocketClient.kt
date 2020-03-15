@@ -1,5 +1,5 @@
 /*
- * <copyright file="BucketOption.kt" company="Firoozeh Technology LTD">
+ * <copyright file="GsSocketClient.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,14 +16,21 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.basicApi.bucket
+package ir.firoozehcorp.gameservice.core.sockets
 
-import java.io.Serializable
+import com.sun.tools.jdi.Packet
+
 
 /**
- * Represents BucketOption Model In Game Service Basic API
  * @author Alireza Ghodrati
  */
-interface BucketOption : Serializable {
-    fun getParsedData(): String
+abstract class GsSocketClient {
+
+
+    abstract fun init()
+    abstract fun startReceiving()
+    abstract fun stopReceiving()
+    abstract fun updatePwd(newPwd: String?)
+    abstract fun setType(type: GSLiveType?)
+    abstract fun send(packet: Packet?)
 }

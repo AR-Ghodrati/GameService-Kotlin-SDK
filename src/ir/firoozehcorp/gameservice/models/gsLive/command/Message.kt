@@ -1,5 +1,5 @@
 /*
- * <copyright file="LeaderBoardDetails.kt" company="Firoozeh Technology LTD">
+ * <copyright file="Message.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,38 +16,28 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.basicApi
+package ir.firoozehcorp.gameservice.models.gsLive.command
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
 
 /**
- * Represents LeaderBoardDetails Data Model In Game Service Basic API
  * @author Alireza Ghodrati
  */
-class LeaderBoardDetails : Serializable {
-
-    /**
-     * Gets the LeaderBoard.
-     * @return the LeaderBoard
-     */
-    @SerializedName("leaderboard")
-    @Expose
-    var leaderboard: Leaderboard? = null
-
-
-    /**
-     * Gets the List Of Scores.
-     * @return the Achievement status
-     */
-    @SerializedName("scores")
-    @Expose
-    var scores: MutableList<Score>? = null
+internal class Message(@SerializedName("0")
+                       @Expose var isPrivate: Boolean,
+                       @SerializedName("1")
+                       @Expose
+                       var receiverId: String,
+                       @SerializedName("2")
+                       @Expose
+                       var senderId: String,
+                       @SerializedName("3")
+                       @Expose var data: String?) {
 
 
     override fun toString(): String {
-        return "LeaderBoardDetails(leaderboard=$leaderboard, scores=$scores)"
+        return "Message(isPrivate=$isPrivate, receiverId='$receiverId', senderId='$senderId', data=$data)"
     }
 
 

@@ -1,5 +1,5 @@
 /*
- * <copyright file="BucketOption.kt" company="Firoozeh Technology LTD">
+ * <copyright file="Area.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,14 +16,35 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.basicApi.bucket
+package ir.firoozehcorp.gameservice.models.gsLive.command
 
-import java.io.Serializable
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
 /**
- * Represents BucketOption Model In Game Service Basic API
  * @author Alireza Ghodrati
  */
-interface BucketOption : Serializable {
-    fun getParsedData(): String
+internal class Area {
+
+
+    @SerializedName("0")
+    @Expose
+    var ip: String? = null
+
+
+    @SerializedName("1")
+    @Expose
+    var protocol: String? = null
+
+
+    @SerializedName("2")
+    @Expose
+    var port: Int = 0
+
+
+    override fun toString(): String {
+        return "Area(ip=$ip, protocol=$protocol, port=$port)"
+    }
+
+
 }

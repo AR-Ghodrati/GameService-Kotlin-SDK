@@ -1,5 +1,5 @@
 /*
- * <copyright file="BucketOption.kt" company="Firoozeh Technology LTD">
+ * <copyright file="GSLiveType.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,14 +16,12 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.basicApi.bucket
-
-import java.io.Serializable
+package ir.firoozehcorp.gameservice.models.enums.gsLive
 
 /**
- * Represents BucketOption Model In Game Service Basic API
+ * Represents GSLiveType Of GSLive System
  * @author Alireza Ghodrati
  */
-interface BucketOption : Serializable {
-    fun getParsedData(): String
+enum class GSLiveType {
+    NotSet, TurnBased, RealTime, Core
 }

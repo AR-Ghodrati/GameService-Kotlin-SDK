@@ -1,5 +1,5 @@
 /*
- * <copyright file="BucketOption.kt" company="Firoozeh Technology LTD">
+ * <copyright file="ErrorEvent.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,14 +16,26 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.basicApi.bucket
+package ir.firoozehcorp.gameservice.models.gsLive.command
 
+import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 import java.io.Serializable
 
 /**
- * Represents BucketOption Model In Game Service Basic API
  * @author Alireza Ghodrati
  */
-interface BucketOption : Serializable {
-    fun getParsedData(): String
+class ErrorEvent : Serializable {
+
+    /**
+     * Gets the Error Happened Type
+     * @return Error Happened Type
+     */
+    var status: GSLiveType = GSLiveType.NotSet
+
+
+    /**
+     * Gets Gets the Error Text
+     * @return Gets the Error Text
+     */
+    var error: String = ""
 }

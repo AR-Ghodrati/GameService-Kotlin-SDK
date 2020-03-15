@@ -1,5 +1,5 @@
 /*
- * <copyright file="BucketOption.kt" company="Firoozeh Technology LTD">
+ * <copyright file="AuthPayload.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,14 +16,22 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.basicApi.bucket
+package ir.firoozehcorp.gameservice.models.gsLive.command
 
-import java.io.Serializable
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
 /**
- * Represents BucketOption Model In Game Service Basic API
  * @author Alireza Ghodrati
  */
-interface BucketOption : Serializable {
-    fun getParsedData(): String
+internal class AuthPayload(@SerializedName("0")
+                           @Expose var gameId: String?, @SerializedName("1")
+                           @Expose var token: String?) : Payload {
+
+
+    override fun toString(): String {
+        return "AuthPayload(gameId=$gameId, token=$token)"
+    }
+
+
 }

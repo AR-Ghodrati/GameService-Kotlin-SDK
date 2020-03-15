@@ -20,15 +20,16 @@ package ir.firoozehcorp.gameservice.models.basicApi
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 /**
  * @author Alireza Ghodrati
  */
-class SubmitScoreResponse {
+class SubmitScoreResponse : Serializable {
 
     /**
      * Gets the LeaderBoard.
-     * @return the LeaderBoard </value>
+     * @return the LeaderBoard
      */
     @SerializedName("leaderboard_r")
     @Expose
@@ -37,7 +38,7 @@ class SubmitScoreResponse {
 
     /**
      * Gets the Score Value.
-     * @return the Score Value </value>
+     * @return the Score Value
      */
     @SerializedName("score")
     @Expose
@@ -47,7 +48,7 @@ class SubmitScoreResponse {
     /**
      * Gets the Tries Value.
      * How Many Tries To Submit Score
-     * @return the Tries Value </value>
+     * @return the Tries Value
      */
     @SerializedName("tries")
     @Expose

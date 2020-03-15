@@ -20,11 +20,12 @@ package ir.firoozehcorp.gameservice.models.basicApi
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 /**
  * @author Alireza Ghodrati
  */
-class SaveDetails {
+class SaveDetails : Serializable {
 
     /**
      * Gets the Game id.

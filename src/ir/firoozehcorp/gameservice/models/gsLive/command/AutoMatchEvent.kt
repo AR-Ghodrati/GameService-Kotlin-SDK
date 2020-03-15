@@ -1,5 +1,5 @@
 /*
- * <copyright file="LeaderBoardDetails.kt" company="Firoozeh Technology LTD">
+ * <copyright file="AutoMatchEvent.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,38 +16,33 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.basicApi
+package ir.firoozehcorp.gameservice.models.gsLive.command
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+import ir.firoozehcorp.gameservice.models.enums.gsLive.AutoMatchStatus
 import java.io.Serializable
 
 /**
- * Represents LeaderBoardDetails Data Model In Game Service Basic API
+ * Represents AutoMatchEvent When AutoMatch Update Status in GSLive
  * @author Alireza Ghodrati
  */
-class LeaderBoardDetails : Serializable {
+class AutoMatchEvent : Serializable {
 
     /**
-     * Gets the LeaderBoard.
-     * @return the LeaderBoard
+     * Gets the AutoMatchStatus
+     * @return the AutoMatchStatus
      */
-    @SerializedName("leaderboard")
-    @Expose
-    var leaderboard: Leaderboard? = null
+    var status: AutoMatchStatus = AutoMatchStatus.NotSetYet
 
 
     /**
-     * Gets the List Of Scores.
-     * @return the Achievement status
+     * Gets the AutoMatch Players Queue
+     * @return the AutoMatch Players Queue
      */
-    @SerializedName("scores")
-    @Expose
-    var scores: MutableList<Score>? = null
+    var playerQueue: MutableList<Member> = null
 
 
     override fun toString(): String {
-        return "LeaderBoardDetails(leaderboard=$leaderboard, scores=$scores)"
+        return "AutoMatchEvent(status=$status, playerQueue=$playerQueue)"
     }
 
 

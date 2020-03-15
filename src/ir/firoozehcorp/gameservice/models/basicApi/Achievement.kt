@@ -30,7 +30,7 @@ class Achievement : Serializable {
 
     /**
      * Gets the Achievement Name.
-     * @return the Achievement Name</value>
+     * @return the Achievement Name
      */
     @SerializedName("name")
     @Expose
@@ -40,7 +40,7 @@ class Achievement : Serializable {
     /**
      * Gets the Achievement Key.
      * You Can Use It To Unlock Achievement
-     * @return the Achievement Key</value>
+     * @return the Achievement Key
      */
     @SerializedName("key")
     @Expose
@@ -49,7 +49,7 @@ class Achievement : Serializable {
 
     /**
      * Gets the Achievement Point.
-     * @return the Achievement Point</value>
+     * @return the Achievement Point
      */
     @SerializedName("point")
     @Expose
@@ -58,7 +58,7 @@ class Achievement : Serializable {
 
     /**
      * Gets the Achievement Description.
-     * @return the Achievement Description</value>
+     * @return the Achievement Description
      */
     @SerializedName("desc")
     @Expose
@@ -67,7 +67,7 @@ class Achievement : Serializable {
 
     /**
      * Gets the Achievement Cover URL.
-     * @return the Achievement Cover URL</value>
+     * @return the Achievement Cover URL
      */
     @SerializedName("image")
     @Expose
@@ -77,7 +77,7 @@ class Achievement : Serializable {
     /**
      * Gets the Achievement status.
      * if the status is True You Can Unlock Achievement
-     * @return the Achievement status</value>
+     * @return the Achievement status
      */
     @SerializedName("status")
     @Expose
@@ -87,7 +87,7 @@ class Achievement : Serializable {
     /**
      * Gets the Status of Earned Achievement
      * if the status is True You Earned this Achievement Before
-     * @return the Status of Earned Achievement</value>
+     * @return the Status of Earned Achievement
      */
     @SerializedName("earned")
     @Expose
@@ -96,7 +96,7 @@ class Achievement : Serializable {
 
     /**
      * Gets the Game id.
-     * @return the Game id</value>
+     * @return the Game id
      */
     @SerializedName("game")
     @Expose

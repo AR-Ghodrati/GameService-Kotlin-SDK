@@ -20,12 +20,13 @@ package ir.firoozehcorp.gameservice.models.basicApi
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 /**
  * Represents Score Data Model In Game Service Basic API
  * @author Alireza Ghodrati
  */
-class Score {
+class Score : Serializable {
 
     /**
      * Gets the Game id.

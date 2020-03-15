@@ -30,7 +30,7 @@ class Leaderboard : Serializable {
 
     /**
      * Gets the LeaderBoard Name.
-     * @return the LeaderBoard Name</value>
+     * @return the LeaderBoard Name
      */
     @SerializedName("name")
     @Expose
@@ -40,7 +40,7 @@ class Leaderboard : Serializable {
     /**
      * Gets the LeaderBoard Key.
      * You Can Use It To Submit Score in a LeaderBoard
-     * @return the LeaderBoard Key</value>
+     * @return the LeaderBoard Key
      */
     @SerializedName("key")
     @Expose
@@ -50,7 +50,7 @@ class Leaderboard : Serializable {
     /**
      * Gets the LeaderBoard status.
      * if the status is True You Can Submit Score in LeaderBoard
-     * @return the LeaderBoard status</value>
+     * @return the LeaderBoard status
      */
     @SerializedName("status")
     @Expose
@@ -59,7 +59,7 @@ class Leaderboard : Serializable {
 
     /**
      * Gets the LeaderBoard Cover URL.
-     * @return the LeaderBoard Cover URL</value>
+     * @return the LeaderBoard Cover URL
      */
     @SerializedName("image")
     @Expose
@@ -68,7 +68,7 @@ class Leaderboard : Serializable {
 
     /**
      * Gets the Game id.
-     * @return the Game id </value>
+     * @return the Game id
      */
     @SerializedName("game")
     @Expose
@@ -78,7 +78,7 @@ class Leaderboard : Serializable {
     /**
      * Gets the LeaderBoard Form Value.
      * this Value Sets In gameservice Developers Panel.
-     * @return the LeaderBoard From Value </value>
+     * @return the LeaderBoard From Value
      */
     @SerializedName("from")
     @Expose
@@ -88,7 +88,7 @@ class Leaderboard : Serializable {
     /**
      * Gets the LeaderBoard To Value.
      * this Value Sets In gameservice Developers Panel.
-     * @return the LeaderBoard To Value </value>
+     * @return the LeaderBoard To Value
      */
     @SerializedName("to")
     @Expose
@@ -98,7 +98,7 @@ class Leaderboard : Serializable {
     /**
      * Gets the LeaderBoard Order Type.
      * this Value Sets In gameservice Developers Panel.
-     * @return the LeaderBoard Order Type </value>
+     * @return the LeaderBoard Order Type
      */
     @SerializedName("order")
     @Expose
