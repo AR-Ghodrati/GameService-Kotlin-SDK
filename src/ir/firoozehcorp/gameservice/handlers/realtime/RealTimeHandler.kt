@@ -44,7 +44,6 @@ internal class RealTimeHandler(payload: StartPayload) : Closeable {
 
     companion object {
         var PlayerHash: String = ""
-        val GameId: String? = GameService.CurrentGame?.id
         val PlayToken: String? = GameService.PlayToken
         var CurrentRoom: Room? = null
         val gson: Gson = Gson()

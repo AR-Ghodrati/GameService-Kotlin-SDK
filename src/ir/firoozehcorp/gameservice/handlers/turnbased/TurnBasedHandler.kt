@@ -20,8 +20,8 @@ package ir.firoozehcorp.gameservice.handlers.turnbased
 
 import com.google.gson.Gson
 import ir.firoozehcorp.gameservice.core.GameService
-import ir.firoozehcorp.gameservice.handlers.realtime.request.IRequestHandler
-import ir.firoozehcorp.gameservice.handlers.realtime.response.IResponseHandler
+import ir.firoozehcorp.gameservice.handlers.turnbased.request.*
+import ir.firoozehcorp.gameservice.handlers.turnbased.response.IResponseHandler
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 import ir.firoozehcorp.gameservice.models.gsLive.Room
 import ir.firoozehcorp.gameservice.models.gsLive.command.StartPayload
@@ -44,7 +44,6 @@ internal class TurnBasedHandler(payload: StartPayload) : Closeable {
 
     companion object {
         var PlayerHash: String = ""
-        val GameId: String? = GameService.CurrentGame?.id
         val PlayToken: String? = GameService.PlayToken
         var CurrentRoom: Room? = null
         val gson: Gson = Gson()
@@ -61,7 +60,15 @@ internal class TurnBasedHandler(payload: StartPayload) : Closeable {
 
     private fun initRequestMessageHandlers() {
         requestHandlers = mutableMapOf(
-
+                AuthorizationHandler.signature to AuthorizationHandler(),
+                ChooseNextHandler.signature to ChooseNextHandler(),
+                CompleteHandler.signature to CompleteHandler(),
+                CurrentTurnHandler.signature to CurrentTurnHandler(),
+                FinishHandler.signature to FinishHandler(),
+                GetMemberHandler.signature to GetMemberHandler(),
+                LeaveRoomHandler.signature to LeaveRoomHandler(),
+                PingPongHandler.signature to PingPongHandler(),
+                TakeTurnHandler.signature to TakeTurnHandler()
         )
     }
 
