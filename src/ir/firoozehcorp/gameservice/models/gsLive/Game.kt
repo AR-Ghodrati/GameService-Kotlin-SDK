@@ -1,5 +1,5 @@
 /*
- * <copyright file="PingPongPayload.kt" company="Firoozeh Technology LTD">
+ * <copyright file="Game.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,21 +16,48 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.gsLive.realtime
+package ir.firoozehcorp.gameservice.models.gsLive
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ir.firoozehcorp.gameservice.models.gsLive.Payload
+import java.io.Serializable
 
 /**
+ * Represents Game Data Model In GameService MultiPlayer System (GSLive)
  * @author Alireza Ghodrati
  */
-internal class PingPongPayload(@SerializedName("1")
-                               @Expose var roomId: String?, @SerializedName("2")
-                               @Expose var hash: String?) : Payload() {
+class Game : Serializable {
+
+    /**
+     * Gets the Game id.
+     * @return the Game id.
+     */
+    @SerializedName("_id")
+    @Expose
+    lateinit var id: String
+
+
+    /**
+     * Gets the Game Logo URL.
+     * @return Gets the Game Logo URL.
+     */
+    @SerializedName("logo")
+    @Expose
+    var logo: String? = null
+
+
+    /**
+     * Gets the Game name.
+     * @return the Game name
+     */
+    @SerializedName("name")
+    @Expose
+    lateinit var name: String
 
 
     override fun toString(): String {
-        return "PingPongPayload(roomId=$roomId, hash=$hash)"
+        return "Game(id=$id, logo=$logo, name=$name)"
     }
+
+
 }

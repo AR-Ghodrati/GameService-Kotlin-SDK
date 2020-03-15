@@ -1,5 +1,5 @@
 /*
- * <copyright file="PingPongPayload.kt" company="Firoozeh Technology LTD">
+ * <copyright file="DetailDataPayload.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,21 +16,20 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.gsLive.realtime
+package ir.firoozehcorp.gameservice.models.gsLive
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ir.firoozehcorp.gameservice.models.gsLive.Payload
 
 /**
  * @author Alireza Ghodrati
  */
-internal class PingPongPayload(@SerializedName("1")
-                               @Expose var roomId: String?, @SerializedName("2")
-                               @Expose var hash: String?) : Payload() {
-
+internal class DetailDataPayload(@SerializedName("1")
+                                 @Expose var roomId: String?, @SerializedName("2")
+                                 @Expose var senderId: String?, @SerializedName("3")
+                                 @Expose var payload: String?) {
 
     override fun toString(): String {
-        return "PingPongPayload(roomId=$roomId, hash=$hash)"
+        return "DetailDataPayload(roomId=$roomId, senderId=$senderId, payload=$payload)"
     }
 }

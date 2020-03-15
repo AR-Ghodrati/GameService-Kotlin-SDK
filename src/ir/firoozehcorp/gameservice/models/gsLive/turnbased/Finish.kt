@@ -1,5 +1,5 @@
 /*
- * <copyright file="StartPayload.kt" company="Firoozeh Technology LTD">
+ * <copyright file="Finish.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,35 +16,36 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.gsLive.command
+package ir.firoozehcorp.gameservice.models.gsLive.turnbased
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ir.firoozehcorp.gameservice.models.gsLive.Room
+import ir.firoozehcorp.gameservice.models.Outcome
+import ir.firoozehcorp.gameservice.models.gsLive.Member
+import java.io.Serializable
 
 /**
+ * Represents Finish Data Model In GameService TurnBased MultiPlayer System
  * @author Alireza Ghodrati
  */
-internal class StartPayload {
+class Finish : Serializable {
 
+    /**
+     * Gets Member Data of Has Announced The End Of The Game.
+     * @return Member Data of Has Announced The End Of The Game.
+     */
     @SerializedName("0")
     @Expose
-    var room: Room? = null
+    lateinit var memberFinish: Member
 
 
+    /**
+     * Gets the Outcomes sent from the player.
+     * Call From Other Player With this Function @see("Finish")/>
+     * @return the Outcomes sent from the player
+     */
     @SerializedName("1")
     @Expose
-    var memberId: String? = null
-
-
-    @SerializedName("2")
-    @Expose
-    var area: Area? = null
-
-
-    override fun toString(): String {
-        return "StartPayload(room=$room, memberId=$memberId, area=$area)"
-    }
-
+    lateinit var outcomes: Outcome
 
 }

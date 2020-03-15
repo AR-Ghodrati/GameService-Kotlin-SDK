@@ -1,5 +1,5 @@
 /*
- * <copyright file="PingPongPayload.kt" company="Firoozeh Technology LTD">
+ * <copyright file="DataPayload.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,21 +16,52 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.gsLive.realtime
+package ir.firoozehcorp.gameservice.models.gsLive.turnbased
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import ir.firoozehcorp.gameservice.models.Outcome
 import ir.firoozehcorp.gameservice.models.gsLive.Payload
 
 /**
  * @author Alireza Ghodrati
  */
-internal class PingPongPayload(@SerializedName("1")
-                               @Expose var roomId: String?, @SerializedName("2")
-                               @Expose var hash: String?) : Payload() {
+internal class DataPayload : Payload() {
+
+
+    @SerializedName("0")
+    @Expose
+    var action: Int = -1
+
+
+    @SerializedName("1")
+    @Expose
+    var id: String? = null
+
+
+    @SerializedName("2")
+    @Expose
+    var data: String? = null
+
+
+    @SerializedName("3")
+    @Expose
+    var nextId: String? = null
+
+
+    @SerializedName("4")
+    @Expose
+    var outcomes: Outcome? = null
+
+
+    @SerializedName("5")
+    @Expose
+    var isPrivate: Boolean = false
 
 
     override fun toString(): String {
-        return "PingPongPayload(roomId=$roomId, hash=$hash)"
+        return "DataPayload(action=$action, id=$id, data=$data, nextId=$nextId, outcomes=$outcomes, isPrivate=$isPrivate)"
     }
+
+
 }

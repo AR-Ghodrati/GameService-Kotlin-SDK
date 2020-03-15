@@ -20,13 +20,14 @@ package ir.firoozehcorp.gameservice.models.gsLive.command
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import ir.firoozehcorp.gameservice.models.gsLive.Payload
 
 /**
  * @author Alireza Ghodrati
  */
 internal class AuthPayload(@SerializedName("0")
                            @Expose var gameId: String?, @SerializedName("1")
-                           @Expose var token: String?) : Payload {
+                           @Expose var token: String?) : Payload() {
 
 
     override fun toString(): String {

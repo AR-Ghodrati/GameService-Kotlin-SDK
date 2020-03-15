@@ -20,6 +20,7 @@ package ir.firoozehcorp.gameservice.models.gsLive.realtime
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import ir.firoozehcorp.gameservice.models.gsLive.Payload
 
 /**
  * @author Alireza Ghodrati

@@ -16,7 +16,7 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.gsLive.command
+package ir.firoozehcorp.gameservice.models.gsLive
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

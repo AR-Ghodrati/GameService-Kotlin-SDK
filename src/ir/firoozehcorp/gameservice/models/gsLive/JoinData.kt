@@ -1,5 +1,5 @@
 /*
- * <copyright file="StatusPayload.kt" company="Firoozeh Technology LTD">
+ * <copyright file="JoinData.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,29 +16,49 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.gsLive.realtime
+package ir.firoozehcorp.gameservice.models.gsLive
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ir.firoozehcorp.gameservice.models.gsLive.Payload
+import ir.firoozehcorp.gameservice.models.enums.gsLive.JoinType
+import java.io.Serializable
 
 /**
+ * Represents JoinData Data Model In GameService MultiPlayer System (GSLive)
  * @author Alireza Ghodrati
  */
-internal class StatusPayload : Payload() {
+class JoinData : Serializable {
 
+    /**
+     * Gets the Room Join Type.
+     * @return the Room Join Type
+     */
     @SerializedName("1")
     @Expose
-    var status: Boolean = false
+    lateinit var type: JoinType
 
 
+    /**
+     * Gets the Room Join Data.
+     * @return the Room Join Data
+     */
     @SerializedName("2")
     @Expose
-    var message: String? = null
+    lateinit var roomData: RoomData
+
+
+    /**
+     * Gets the Player Member Who Joined To Room.
+     * @return the Player Member Who Joined To Room
+     */
+    @SerializedName("3")
+    @Expose
+
+    lateinit var joinedMember: Member
 
 
     override fun toString(): String {
-        return "StatusPayload(status=$status, message=$message)"
+        return "JoinData(type=$type, roomData=$roomData, joinedMember=$joinedMember)"
     }
 
 

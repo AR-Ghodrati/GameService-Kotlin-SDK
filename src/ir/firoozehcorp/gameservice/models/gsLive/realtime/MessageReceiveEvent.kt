@@ -18,6 +18,8 @@
 
 package ir.firoozehcorp.gameservice.models.gsLive.realtime
 
+import ir.firoozehcorp.gameservice.models.enums.gsLive.GProtocolSendType
+import ir.firoozehcorp.gameservice.models.enums.gsLive.realtime.MessageType
 import java.io.Serializable
 
 /**
@@ -30,14 +32,14 @@ class MessageReceiveEvent : Serializable {
      * Gets the Received Message
      * @return the Received Message
      */
-    var newMessage: Message? = null
+    lateinit var newMessage: Message
 
 
     /**
      * Gets the Type of Received Message
      * @return Type of Received Message
      */
-    var messageType: MessageType? = null
+    var messageType: MessageType = MessageType.NotSet
 
 
     /**
@@ -45,7 +47,7 @@ class MessageReceiveEvent : Serializable {
      * if is Reliable , the Packet Loss is Minimized
      * @return the Type of Protocol Send Message
      */
-    var sendType: GProtocolSendType? = null
+    var sendType: GProtocolSendType = GProtocolSendType.NotSet
 
 
 }

@@ -1,5 +1,5 @@
 /*
- * <copyright file="PingPongPayload.kt" company="Firoozeh Technology LTD">
+ * <copyright file="GProtocolSendType.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,21 +16,13 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.gsLive.realtime
-
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
-import ir.firoozehcorp.gameservice.models.gsLive.Payload
+package ir.firoozehcorp.gameservice.models.enums.gsLive
 
 /**
+ * Represents GProtocolSendType Of Game Service RealTime
+ *  if is Reliable , the Packet Loss is Minimized.
  * @author Alireza Ghodrati
  */
-internal class PingPongPayload(@SerializedName("1")
-                               @Expose var roomId: String?, @SerializedName("2")
-                               @Expose var hash: String?) : Payload() {
-
-
-    override fun toString(): String {
-        return "PingPongPayload(roomId=$roomId, hash=$hash)"
-    }
+enum class GProtocolSendType {
+    NotSet, Reliable, UnReliable
 }

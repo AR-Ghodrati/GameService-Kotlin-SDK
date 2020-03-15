@@ -44,7 +44,7 @@ class Chat : Serializable {
      */
     @SerializedName("1")
     @Expose
-    var receiverId: String? = null
+    lateinit var receiverId: String
 
 
     /**
@@ -53,7 +53,7 @@ class Chat : Serializable {
      */
     @SerializedName("2")
     @Expose
-    var sender: User? = null
+    lateinit var sender: User
 
 
     /**
@@ -62,7 +62,7 @@ class Chat : Serializable {
      */
     @SerializedName("3")
     @Expose
-    var message: String? = null
+    lateinit var message: String
 
 
     /**

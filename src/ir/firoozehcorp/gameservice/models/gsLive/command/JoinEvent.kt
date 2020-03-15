@@ -19,6 +19,7 @@
 package ir.firoozehcorp.gameservice.models.gsLive.command
 
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
+import ir.firoozehcorp.gameservice.models.gsLive.JoinData
 
 /**
  * Represents JoinEvent

@@ -19,6 +19,7 @@
 package ir.firoozehcorp.gameservice.models.gsLive.command
 
 import ir.firoozehcorp.gameservice.models.enums.gsLive.AutoMatchStatus
+import ir.firoozehcorp.gameservice.models.gsLive.Member
 import java.io.Serializable
 
 /**
@@ -38,7 +39,7 @@ class AutoMatchEvent : Serializable {
      * Gets the AutoMatch Players Queue
      * @return the AutoMatch Players Queue
      */
-    var playerQueue: MutableList<Member> = null
+    lateinit var playerQueue: MutableList<Member>
 
 
     override fun toString(): String {

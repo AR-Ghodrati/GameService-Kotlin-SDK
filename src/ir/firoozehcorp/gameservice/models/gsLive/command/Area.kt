@@ -29,12 +29,12 @@ internal class Area {
 
     @SerializedName("0")
     @Expose
-    var ip: String? = null
+    lateinit var ip: String
 
 
     @SerializedName("1")
     @Expose
-    var protocol: String? = null
+    lateinit var protocol: String
 
 
     @SerializedName("2")

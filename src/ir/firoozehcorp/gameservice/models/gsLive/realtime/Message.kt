@@ -1,5 +1,5 @@
 /*
- * <copyright file="StartPayload.kt" company="Firoozeh Technology LTD">
+ * <copyright file="$this.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,34 +16,57 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.gsLive.command
+package ir.firoozehcorp.gameservice.models.gsLive.realtime
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ir.firoozehcorp.gameservice.models.gsLive.Room
+import java.io.Serializable
 
 /**
+ * Represents Message Data Model In GameService RealTime MultiPlayer System
  * @author Alireza Ghodrati
  */
-internal class StartPayload {
-
-    @SerializedName("0")
-    @Expose
-    var room: Room? = null
+class Message : Serializable {
 
 
+    /**
+     * Gets the RoomId Receive This Message.
+     * @return the RoomId Receive This Message.
+     */
     @SerializedName("1")
     @Expose
-    var memberId: String? = null
+    lateinit var roomId: String
 
 
+    /**
+     * Gets the Sender Id.
+     * @return the Sender Id.
+     */
     @SerializedName("2")
     @Expose
-    var area: Area? = null
+    lateinit var senderId: String
+
+
+    /**
+     * Gets the Receiver Id.
+     * @return the Receiver Id.
+     */
+    @SerializedName("3")
+    @Expose
+    lateinit var receiverId: String
+
+
+    /**
+     * Gets the Message Data
+     * @return the Message Data
+     */
+    @SerializedName("4")
+    @Expose
+    var data: String? = null
 
 
     override fun toString(): String {
-        return "StartPayload(room=$room, memberId=$memberId, area=$area)"
+        return "Message(roomId=$roomId, senderId=$senderId, receiverId=$receiverId, data=$data)"
     }
 
 
