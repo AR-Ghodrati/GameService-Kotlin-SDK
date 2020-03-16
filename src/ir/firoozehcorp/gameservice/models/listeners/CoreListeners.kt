@@ -29,32 +29,32 @@ import ir.firoozehcorp.gameservice.models.internal.EventHandler
 open class CoreListeners {
 
     internal interface GProtocolListener : EventHandler.IEventHandler<Void?> {
-        override fun invoke(element: Void?)
+        override fun invoke(element: Void?, from: Class<*>?)
     }
 
     internal interface AuthorisationListener : EventHandler.IEventHandler<String> {
-        override fun invoke(element: String)
+        override fun invoke(element: String, from: Class<*>?)
     }
 
     internal interface GSLiveSystemListener : EventHandler.IEventHandler<StartPayload> {
-        override fun invoke(element: StartPayload)
+        override fun invoke(element: StartPayload, from: Class<*>?)
     }
 
     internal interface PingListener : EventHandler.IEventHandler<Void?> {
-        override fun invoke(element: Void?)
+        override fun invoke(element: Void?, from: Class<*>?)
     }
 
     internal interface DisposeListener : EventHandler.IEventHandler<Void?> {
-        override fun invoke(element: Void?)
+        override fun invoke(element: Void?, from: Class<*>?)
     }
 
 
     interface LoginListener : EventHandler.IEventHandler<Void?> {
-        override fun invoke(element: Void?)
+        override fun invoke(element: Void?, from: Class<*>?)
     }
 
     interface ErrorListener : EventHandler.IEventHandler<ErrorEvent> {
-        override fun invoke(element: ErrorEvent)
+        override fun invoke(element: ErrorEvent, from: Class<*>?)
     }
 
 

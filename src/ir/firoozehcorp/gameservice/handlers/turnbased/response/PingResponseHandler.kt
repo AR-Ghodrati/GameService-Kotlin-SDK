@@ -33,6 +33,6 @@ internal class PingResponseHandler : BaseResponseHandler() {
     }
 
     override fun handleResponse(packet: Packet, jsonHandler: Gson) {
-        CoreListeners.Ping.invokeListeners(null)
+        CoreListeners.Ping.invokeListeners(null, javaClass)
     }
 }

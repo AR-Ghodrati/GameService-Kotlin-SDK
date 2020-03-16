@@ -29,15 +29,15 @@ class ChatListeners {
 
 
     interface ChatReceivedListener : EventHandler.IEventHandler<Chat> {
-        override fun invoke(element: Chat)
+        override fun invoke(element: Chat, from: Class<*>?)
     }
 
     interface SubscribeChannelListener : EventHandler.IEventHandler<String> {
-        override fun invoke(element: String)
+        override fun invoke(element: String, from: Class<*>?)
     }
 
     interface UnSubscribeChannelListener : EventHandler.IEventHandler<String> {
-        override fun invoke(element: String)
+        override fun invoke(element: String, from: Class<*>?)
     }
 
 

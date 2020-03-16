@@ -34,6 +34,6 @@ internal class AuthResponseHandler : BaseResponseHandler() {
     }
 
     override fun handleResponse(packet: Packet, type: GProtocolSendType, jsonHandler: Gson) {
-        CoreListeners.Authorized.invokeListeners(packet.hash.toString())
+        CoreListeners.Authorized.invokeListeners(packet.hash.toString(), javaClass)
     }
 }

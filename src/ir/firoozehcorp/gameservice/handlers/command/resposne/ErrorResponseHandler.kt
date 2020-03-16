@@ -38,6 +38,6 @@ internal class ErrorResponseHandler : BaseResponseHandler() {
         CoreListeners.Error.invokeListeners(ErrorEvent().apply {
             type = GSLiveType.Core
             error = packet.message.toString()
-        })
+        }, javaClass)
     }
 }

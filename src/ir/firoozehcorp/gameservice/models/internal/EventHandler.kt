@@ -25,7 +25,7 @@ package ir.firoozehcorp.gameservice.models.internal
 class EventHandler<I : EventHandler.IEventHandler<T>, T> {
 
     interface IEventHandler<T> {
-        fun invoke(element: T)
+        fun invoke(element: T, from: Class<*>? = null)
     }
 
     private var listeners: MutableList<I>? = null
@@ -55,9 +55,9 @@ class EventHandler<I : EventHandler.IEventHandler<T>, T> {
     }
 
 
-    internal fun invokeListeners(element: T) {
+    internal fun invokeListeners(element: T, from: Class<*>? = null) {
         listeners?.forEach {
-            it.invoke(element)
+            it.invoke(element, from)
         }
     }
 

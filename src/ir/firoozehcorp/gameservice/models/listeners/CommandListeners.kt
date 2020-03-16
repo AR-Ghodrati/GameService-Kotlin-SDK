@@ -1,5 +1,5 @@
 /*
- * <copyright file="$this.kt" company="Firoozeh Technology LTD">
+ * <copyright file="CommandListeners.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,32 +32,32 @@ import ir.firoozehcorp.gameservice.models.internal.EventHandler
 open class CommandListeners : CoreListeners() {
 
     interface AvailableRoomsListener : EventHandler.IEventHandler<MutableList<Room>> {
-        override fun invoke(element: MutableList<Room>)
+        override fun invoke(element: MutableList<Room>, from: Class<*>?)
     }
 
     interface AutoMatchUpdatedListener : EventHandler.IEventHandler<AutoMatchEvent> {
-        override fun invoke(element: AutoMatchEvent)
+        override fun invoke(element: AutoMatchEvent, from: Class<*>?)
     }
 
     interface AutoMatchCanceledListener : EventHandler.IEventHandler<AutoMatchCancel> {
-        override fun invoke(element: AutoMatchCancel)
+        override fun invoke(element: AutoMatchCancel, from: Class<*>?)
     }
 
     interface InviteInboxListener : EventHandler.IEventHandler<MutableList<Invite>> {
-        override fun invoke(element: MutableList<Invite>)
+        override fun invoke(element: MutableList<Invite>, from: Class<*>?)
     }
 
     interface NewInviteListener : EventHandler.IEventHandler<Invite> {
-        override fun invoke(element: Invite)
+        override fun invoke(element: Invite, from: Class<*>?)
     }
 
 
     interface FindUserListener : EventHandler.IEventHandler<MutableList<User>> {
-        override fun invoke(element: MutableList<User>)
+        override fun invoke(element: MutableList<User>, from: Class<*>?)
     }
 
     interface InvitationSentListener : EventHandler.IEventHandler<Boolean> {
-        override fun invoke(element: Boolean)
+        override fun invoke(element: Boolean, from: Class<*>?)
     }
 
 

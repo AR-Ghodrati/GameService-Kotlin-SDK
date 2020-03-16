@@ -1,5 +1,5 @@
 /*
- * <copyright file="$this.kt" company="Firoozeh Technology LTD">
+ * <copyright file="TurnBasedListeners.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,37 +32,37 @@ import ir.firoozehcorp.gameservice.models.internal.EventHandler
 open class TurnBasedListeners : CommandListeners() {
 
     interface JoinedRoomListener : EventHandler.IEventHandler<JoinEvent> {
-        override fun invoke(element: JoinEvent)
+        override fun invoke(element: JoinEvent, from: Class<*>?)
     }
 
     interface LeftRoomListener : EventHandler.IEventHandler<Member> {
-        override fun invoke(element: Member)
+        override fun invoke(element: Member, from: Class<*>?)
     }
 
     interface TakeTurnListener : EventHandler.IEventHandler<Turn> {
-        override fun invoke(element: Turn)
+        override fun invoke(element: Turn, from: Class<*>?)
     }
 
     interface ChoosedNextListener : EventHandler.IEventHandler<Member> {
-        override fun invoke(element: Member)
+        override fun invoke(element: Member, from: Class<*>?)
     }
 
 
     interface FinishedListener : EventHandler.IEventHandler<Finish> {
-        override fun invoke(element: Finish)
+        override fun invoke(element: Finish, from: Class<*>?)
     }
 
 
     interface CompletedListener : EventHandler.IEventHandler<Complete> {
-        override fun invoke(element: Complete)
+        override fun invoke(element: Complete, from: Class<*>?)
     }
 
     interface CurrentTurnMemberListener : EventHandler.IEventHandler<Member> {
-        override fun invoke(element: Member)
+        override fun invoke(element: Member, from: Class<*>?)
     }
 
     interface RoomMembersDetailListener : EventHandler.IEventHandler<MutableList<Member>> {
-        override fun invoke(element: MutableList<Member>)
+        override fun invoke(element: MutableList<Member>, from: Class<*>?)
     }
 
 

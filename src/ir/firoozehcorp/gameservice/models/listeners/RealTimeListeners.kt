@@ -1,5 +1,5 @@
 /*
- * <copyright file="$this.kt" company="Firoozeh Technology LTD">
+ * <copyright file="RealTimeListeners.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,19 +30,19 @@ import ir.firoozehcorp.gameservice.models.internal.EventHandler
 open class RealTimeListeners : CommandListeners() {
 
     interface JoinedRoomListener : EventHandler.IEventHandler<JoinEvent> {
-        override fun invoke(element: JoinEvent)
+        override fun invoke(element: JoinEvent, from: Class<*>?)
     }
 
     interface LeftRoomListener : EventHandler.IEventHandler<Member> {
-        override fun invoke(element: Member)
+        override fun invoke(element: Member, from: Class<*>?)
     }
 
     interface NewMessageListener : EventHandler.IEventHandler<MessageReceiveEvent> {
-        override fun invoke(element: MessageReceiveEvent)
+        override fun invoke(element: MessageReceiveEvent, from: Class<*>?)
     }
 
     interface RoomMembersDetailListener : EventHandler.IEventHandler<MutableList<Member>> {
-        override fun invoke(element: MutableList<Member>)
+        override fun invoke(element: MutableList<Member>, from: Class<*>?)
     }
 
 
