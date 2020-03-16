@@ -18,8 +18,8 @@
 
 package ir.firoozehcorp.gameservice.handlers.turnbased.request
 
+import ir.firoozehcorp.gameservice.handlers.HandlerCore.Companion.gson
 import ir.firoozehcorp.gameservice.handlers.turnbased.TurnBasedHandler
-import ir.firoozehcorp.gameservice.handlers.turnbased.TurnBasedHandler.Companion.gson
 import ir.firoozehcorp.gameservice.models.consts.TurnBase
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
 import ir.firoozehcorp.gameservice.models.gsLive.turnbased.DataPayload

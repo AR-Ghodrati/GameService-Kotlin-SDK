@@ -28,11 +28,13 @@ import java.io.Closeable
  */
 internal abstract class HandlerCore : Closeable {
 
+    companion object {
+        val gson: Gson = Gson()
+    }
+
     protected lateinit var observer: GsLiveSystemObserver
     protected var disposed = false
     protected var isFirstInit = false
-    protected val gson: Gson = Gson()
-
 
     abstract override fun close()
 

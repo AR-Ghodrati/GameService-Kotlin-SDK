@@ -18,27 +18,28 @@
 
 package ir.firoozehcorp.gameservice.handlers.turnbased
 
-import com.google.gson.Gson
 import ir.firoozehcorp.gameservice.core.GameService
+import ir.firoozehcorp.gameservice.core.sockets.GsSocketClient
 import ir.firoozehcorp.gameservice.core.sockets.GsTcpClient
+import ir.firoozehcorp.gameservice.handlers.HandlerCore
 import ir.firoozehcorp.gameservice.handlers.turnbased.request.*
 import ir.firoozehcorp.gameservice.handlers.turnbased.response.*
+import ir.firoozehcorp.gameservice.models.GameServiceException
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
+import ir.firoozehcorp.gameservice.models.gsLive.APacket
 import ir.firoozehcorp.gameservice.models.gsLive.Room
+import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
 import ir.firoozehcorp.gameservice.models.gsLive.command.StartPayload
+import ir.firoozehcorp.gameservice.models.internal.interfaces.GameServiceCallback
 import ir.firoozehcorp.gameservice.models.listeners.CoreListeners
 import ir.firoozehcorp.gameservice.utils.GsLiveSystemObserver
-import java.io.Closeable
 
 /**
  * @author Alireza Ghodrati
  */
-internal class TurnBasedHandler(payload: StartPayload) : Closeable {
+internal class TurnBasedHandler(payload: StartPayload) : HandlerCore() {
 
-    private val tcpClient: GsTcpClient
-    private val observer: GsLiveSystemObserver
-    private var _isDisposed = false
-    private var _isFirstInit = false
+    private val tcpClient: GsTcpClient = GsTcpClient(payload.area)
 
 
     private lateinit var responseHandlers: MutableMap<Int, IResponseHandler>
@@ -49,20 +50,41 @@ internal class TurnBasedHandler(payload: StartPayload) : Closeable {
         var PlayerHash: String = ""
         val PlayToken: String? = GameService.PlayToken
         var CurrentRoom: Room? = null
-        val gson: Gson = Gson()
     }
 
     init {
-        tcpClient = GsTcpClient(payload.area)
         CurrentRoom = payload.room
         observer = GsLiveSystemObserver(GSLiveType.TurnBased)
 
-        CoreListeners.Ping += object : CoreListeners.PingListener {
-            override fun invoke(element: Void?, from: Class<*>?) {
+        setListeners()
 
+        initRequestMessageHandlers()
+        initResponseMessageHandlers()
+    }
+
+
+    private fun setListeners() {
+
+        tcpClient.onError += object : GsSocketClient.ErrorListener {
+            override fun invoke(element: GameServiceException, from: Class<*>?) {
+                if (disposed) return
+                init()
+            }
+        }
+        tcpClient.onDataReceived += object : GsSocketClient.DataReceivedListener {
+            override fun invoke(element: Packet, from: Class<*>?) {
+                GameService.SynchronizationContext?.send({
+                    responseHandlers[element.action]?.handlePacket(element, gson)
+                }, null)
             }
         }
 
+        CoreListeners.Ping += object : CoreListeners.PingListener {
+            override fun invoke(element: Void?, from: Class<*>?) {
+                if (from != PingResponseHandler::class.java) return
+                request(PingPongHandler.signature)
+            }
+        }
         CoreListeners.Authorized += object : CoreListeners.AuthorisationListener {
             override fun invoke(element: String, from: Class<*>?) {
                 if (from != AuthResponseHandler::class.java) return
@@ -70,11 +92,7 @@ internal class TurnBasedHandler(payload: StartPayload) : Closeable {
                 tcpClient.updatePwd(element)
             }
         }
-
-        initRequestMessageHandlers()
-        initResponseMessageHandlers()
     }
-
 
     private fun initRequestMessageHandlers() {
         requestHandlers = mutableMapOf(
@@ -108,7 +126,28 @@ internal class TurnBasedHandler(payload: StartPayload) : Closeable {
     }
 
 
-    override fun close() {
+    override fun init() {
+        tcpClient.init(object : GameServiceCallback<Boolean> {
+            override fun onFailure(error: GameServiceException) {}
+            override fun onResponse(response: Boolean) {
+                tcpClient.startReceiving()
+            }
+        })
+    }
 
+    override fun request(handlerName: String, payload: Any?) {
+        requestHandlers[handlerName]?.handleAction(payload)?.let { send(it) }
+    }
+
+    override fun send(packet: APacket) {
+        if (!observer.increase()) return
+        tcpClient.send(packet)
+    }
+
+    override fun close() {
+        disposed = true
+        isFirstInit = false
+        tcpClient.stopReceiving()
+        observer.dispose()
     }
 }

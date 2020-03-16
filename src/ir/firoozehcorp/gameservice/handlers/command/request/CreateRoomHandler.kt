@@ -19,8 +19,8 @@
 package ir.firoozehcorp.gameservice.handlers.command.request
 
 import ir.firoozehcorp.gameservice.core.gslive.GSLiveOption
+import ir.firoozehcorp.gameservice.handlers.HandlerCore.Companion.gson
 import ir.firoozehcorp.gameservice.handlers.command.CommandHandler
-import ir.firoozehcorp.gameservice.handlers.command.CommandHandler.Companion.gson
 import ir.firoozehcorp.gameservice.models.consts.Command
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
 import ir.firoozehcorp.gameservice.models.gsLive.command.RoomDetail

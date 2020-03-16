@@ -39,8 +39,7 @@ import ir.firoozehcorp.gameservice.utils.GsLiveSystemObserver
  */
 internal class CommandHandler : HandlerCore() {
 
-    private val tcpClient: GsTcpClient
-
+    private val tcpClient: GsTcpClient = GsTcpClient(Command.area)
 
     private lateinit var responseHandlers: MutableMap<Int, IResponseHandler>
     private lateinit var requestHandlers: MutableMap<String, IRequestHandler>
@@ -53,7 +52,6 @@ internal class CommandHandler : HandlerCore() {
     }
 
     init {
-        tcpClient = GsTcpClient(Command.area)
         observer = GsLiveSystemObserver(GSLiveType.Core)
 
         setListeners()
@@ -143,7 +141,6 @@ internal class CommandHandler : HandlerCore() {
             override fun onResponse(response: Boolean) {
                 tcpClient.startReceiving()
             }
-
         })
     }
 
