@@ -1,5 +1,5 @@
 /*
- * <copyright file="GSLiveRT.kt" company="Firoozeh Technology LTD">
+ * <copyright file="GSLiveTB.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,22 +20,21 @@ package ir.firoozehcorp.gameservice.core.gslive
 
 import ir.firoozehcorp.gameservice.core.GameService
 import ir.firoozehcorp.gameservice.handlers.command.request.*
-import ir.firoozehcorp.gameservice.handlers.realtime.request.GetMemberHandler
-import ir.firoozehcorp.gameservice.handlers.realtime.request.LeaveRoomHandler
-import ir.firoozehcorp.gameservice.handlers.realtime.request.SendPrivateMessageHandler
-import ir.firoozehcorp.gameservice.handlers.realtime.request.SendPublicMessageHandler
+import ir.firoozehcorp.gameservice.handlers.turnbased.request.*
 import ir.firoozehcorp.gameservice.models.GameServiceException
+import ir.firoozehcorp.gameservice.models.Outcomes
 import ir.firoozehcorp.gameservice.models.annotations.NotNull
+import ir.firoozehcorp.gameservice.models.annotations.Nullable
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GProtocolSendType
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 import ir.firoozehcorp.gameservice.models.gsLive.command.RoomDetail
-import ir.firoozehcorp.gameservice.models.gsLive.realtime.DataPayload
+import ir.firoozehcorp.gameservice.models.gsLive.turnbased.DataPayload
 
 /**
- * Represents Game Service Realtime MultiPlayer System
+ * Represents Game Service TurnBased MultiPlayer System
  * @author Alireza Ghodrati
  */
-object GSLiveRT {
+object GSLiveTB {
 
 
     /**
@@ -52,7 +51,7 @@ object GSLiveRT {
 
     /**
      * Create AutoMatch With Option Like :  Min , Max , Role
-     * @param option  AutoMatch Option
+     * @param option AutoMatch Option
      */
     @Throws(GameServiceException::class)
     fun autoMatch(@NotNull option: GSLiveOption.AutoMatchOption) {
@@ -114,36 +113,89 @@ object GSLiveRT {
 
 
     /**
-     * Send A Data To All Players in Room.
-     * @param data Data To BroadCast
-     * @param sendType Send Type
+     * If is your Turn, you can send data to other players using this function.
+     * Also if You Want to Move Your Turn to the Next player
+     * put the next player ID in the function entry
+     * You can use this function several times
+     * @param data Room's Role
+     * @param whoIsNext Next Player's ID
      */
     @Throws(GameServiceException::class)
-    fun sendPublicMessage(@NotNull data: String, sendType: GProtocolSendType) {
+    fun takeTurn(@Nullable data: String? = null, @Nullable whoIsNext: String? = null) {
         if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
-        if (data.isEmpty()) throw GameServiceException("data Cant Be EmptyOrNull")
-        if (GSLive.handler.realTimeHandler == null) throw GameServiceException("You Must Create or Join Room First")
+        if (GSLive.handler.turnBasedHandler == null) throw GameServiceException("You Must Create or Join Room First")
 
-        GSLive.handler.realTimeHandler?.request(SendPublicMessageHandler.signature, DataPayload().apply { payload = data }, sendType)
+        GSLive.handler.turnBasedHandler?.request(TakeTurnHandler.signature, DataPayload()
+                .apply {
+                    this.data = data
+                    this.nextId = whoIsNext
+                })
     }
 
 
     /**
-     * Send A Data To Specific Player in Room.
-     * @param data  Data To BroadCast
-     * @param receiverId  (Type : MemberID)Player's ID<
+     * If it's your turn, you can transfer the turn to the next player without sending data
+     *  if whoIsNext Set Null , Server Automatically Selects Next Turn
+     * @param whoIsNext Next Player's ID
      */
     @Throws(GameServiceException::class)
-    fun sendPrivateMessage(@NotNull data: String, @NotNull receiverId: String) {
+    fun chooseNext(@Nullable whoIsNext: String? = null) {
         if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
-        if (data.isEmpty() && receiverId.isEmpty()) throw GameServiceException("data Or receiverId Cant Be EmptyOrNull")
-        if (GSLive.handler.realTimeHandler == null) throw GameServiceException("You Must Create or Join Room First")
+        if (GSLive.handler.turnBasedHandler == null) throw GameServiceException("You Must Create or Join Room First")
 
-        GSLive.handler.realTimeHandler?.request(SendPrivateMessageHandler.signature, DataPayload()
-                .apply {
-                    this.receiverId = receiverId
-                    payload = data
-                }, GProtocolSendType.Reliable)
+        GSLive.handler.turnBasedHandler?.request(ChooseNextHandler.signature, DataPayload().apply { nextId = whoIsNext })
+    }
+
+
+    /**
+     * Leave The Current Room , if whoIsNext Set Null , Server Automatically Selects Next Turn ata
+     * @param whoIsNext (Type : Member's ID) Player's id You Want To Select Next Turn
+     */
+    @Throws(GameServiceException::class)
+    fun leaveRoom(@Nullable whoIsNext: String? = null) {
+        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GSLive.handler.turnBasedHandler == null) throw GameServiceException("You Must Create or Join Room First")
+
+        GSLive.handler.turnBasedHandler?.request(LeaveRoomHandler.signature, DataPayload().apply { nextId = whoIsNext })
+        GSLive.handler.turnBasedHandler?.close()
+    }
+
+
+    /**
+     * If you want to announce the end of the game, use this function to send the result of your game to other players
+     * @param outcomes A set of players and their results
+     */
+    @Throws(GameServiceException::class)
+    fun finish(@NotNull outcomes: Outcomes) {
+        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GSLive.handler.turnBasedHandler == null) throw GameServiceException("You Must Create or Join Room First")
+
+        GSLive.handler.turnBasedHandler?.request(FinishHandler.signature, DataPayload().apply { this.outcomes = outcomes })
+    }
+
+
+    /**
+     * If you would like to confirm one of the results posted by other Players
+     * @param memberId The Specific player ID
+     */
+    @Throws(GameServiceException::class)
+    fun complete(@NotNull memberId: String) {
+        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GSLive.handler.turnBasedHandler == null) throw GameServiceException("You Must Create or Join Room First")
+
+        GSLive.handler.turnBasedHandler?.request(CompleteHandler.signature, DataPayload().apply { id = memberId })
+    }
+
+
+    /**
+     * Leave The Current Room
+     */
+    @Throws(GameServiceException::class)
+    fun getCurrentTurnMember() {
+        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GSLive.handler.turnBasedHandler == null) throw GameServiceException("You Must Create or Join Room First")
+
+        GSLive.handler.turnBasedHandler?.request(CurrentTurnHandler.signature)
     }
 
 
@@ -153,9 +205,9 @@ object GSLiveRT {
     @Throws(GameServiceException::class)
     fun getRoomMembersDetail() {
         if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
-        if (GSLive.handler.realTimeHandler == null) throw GameServiceException("You Must Create or Join Room First")
+        if (GSLive.handler.turnBasedHandler == null) throw GameServiceException("You Must Create or Join Room First")
 
-        GSLive.handler.realTimeHandler?.request(GetMemberHandler.signature, type = GProtocolSendType.Reliable)
+        GSLive.handler.turnBasedHandler?.request(GetMemberHandler.signature)
     }
 
 
@@ -183,7 +235,7 @@ object GSLiveRT {
                 .apply {
                     user = userId
                     id = roomId
-                    type = GSLiveType.RealTime.ordinal
+                    type = GSLiveType.TurnBased.ordinal
                 })
     }
 
@@ -201,7 +253,7 @@ object GSLiveRT {
         GSLive.handler.commandHandler.request(AcceptInviteHandler.signature, RoomDetail()
                 .apply {
                     invite = inviteId
-                    type = GSLiveType.RealTime.ordinal
+                    type = GSLiveType.TurnBased.ordinal
                 })
     }
 

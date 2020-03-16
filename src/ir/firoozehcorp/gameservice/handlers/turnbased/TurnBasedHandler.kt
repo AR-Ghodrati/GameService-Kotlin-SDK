@@ -140,7 +140,7 @@ internal class TurnBasedHandler(payload: StartPayload) : HandlerCore() {
         requestHandlers[handlerName]?.handleAction(payload)?.let { send(it) }
     }
 
-    override fun request(handlerName: String, payload: Any?, type: GProtocolSendType) {
+    public override fun request(handlerName: String, payload: Any?, type: GProtocolSendType) {
 
     }
 

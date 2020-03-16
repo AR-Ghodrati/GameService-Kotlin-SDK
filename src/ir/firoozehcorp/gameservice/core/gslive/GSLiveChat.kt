@@ -23,6 +23,7 @@ import ir.firoozehcorp.gameservice.handlers.command.request.SendChannelMessageHa
 import ir.firoozehcorp.gameservice.handlers.command.request.SubscribeChannelHandler
 import ir.firoozehcorp.gameservice.handlers.command.request.UnSubscribeChannelHandler
 import ir.firoozehcorp.gameservice.models.GameServiceException
+import ir.firoozehcorp.gameservice.models.annotations.NotNull
 
 /**
  * Represents Game Service Chat System
@@ -33,10 +34,10 @@ object GSLiveChat {
 
     /**
      * Subscribe In Channel With channelName.
-     * @param channelName (NOTNULL)Name of Channel You want To Subscribe
+     * @param channelName Name of Channel You want To Subscribe
      */
     @Throws(GameServiceException::class)
-    fun subscribeChannel(channelName: String) {
+    fun subscribeChannel(@NotNull channelName: String) {
         if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (channelName.isEmpty()) throw GameServiceException("channelName Cant Be EmptyOrNull")
 
@@ -46,10 +47,10 @@ object GSLiveChat {
 
     /**
      * UnSubscribeChannel With channelName.
-     * @param channelName (NOTNULL) Name of Channel You want To UnSubscribe
+     * @param channelName Name of Channel You want To UnSubscribe
      */
     @Throws(GameServiceException::class)
-    fun unSubscribeChannel(channelName: String) {
+    fun unSubscribeChannel(@NotNull channelName: String) {
         if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (channelName.isEmpty()) throw GameServiceException("channelName Cant Be EmptyOrNull")
 
@@ -59,11 +60,11 @@ object GSLiveChat {
 
     /**
      * Send Message In SubscribedChannel.
-     * @param channelName (NOTNULL) Name of Channel You want To Send Message
-     * @param message (NOTNULL)Message Data
+     * @param channelName Name of Channel You want To Send Message
+     * @param message Message Data
      */
     @Throws(GameServiceException::class)
-    fun sendChannelMessage(channelName: String, message: String) {
+    fun sendChannelMessage(@NotNull channelName: String, @NotNull message: String) {
         if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (channelName.isEmpty() && message.isEmpty()) throw GameServiceException("channelName Or message Cant Be EmptyOrNull")
 
