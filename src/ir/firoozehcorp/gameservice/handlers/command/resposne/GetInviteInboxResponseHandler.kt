@@ -19,8 +19,11 @@
 package ir.firoozehcorp.gameservice.handlers.command.resposne
 
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import ir.firoozehcorp.gameservice.models.consts.Command
+import ir.firoozehcorp.gameservice.models.gsLive.Invite
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
+import ir.firoozehcorp.gameservice.models.listeners.CommandListeners
 
 /**
  * @author Alireza Ghodrati
@@ -32,6 +35,7 @@ internal class GetInviteInboxResponseHandler : BaseResponseHandler() {
     }
 
     override fun handleResponse(packet: Packet, jsonHandler: Gson) {
-
+        val invites = jsonHandler.fromJson<MutableList<Invite>>(packet.data, object : TypeToken<MutableList<Invite>>() {}.type)
+        CommandListeners.InviteInboxReceived.invokeListeners(invites)
     }
 }

@@ -19,7 +19,9 @@
 package ir.firoozehcorp.gameservice.handlers.command.resposne
 
 import com.google.gson.Gson
+import ir.firoozehcorp.gameservice.core.GameService
 import ir.firoozehcorp.gameservice.models.consts.Command
+import ir.firoozehcorp.gameservice.models.gsLive.command.Notification
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
 
 /**
@@ -32,6 +34,7 @@ internal class NotificationResponseHandler : BaseResponseHandler() {
     }
 
     override fun handleResponse(packet: Packet, jsonHandler: Gson) {
-
+        val notification = jsonHandler.fromJson(packet.data, Notification::class.java)
+        GameService.OnNotificationReceived.invokeListeners(notification)
     }
 }

@@ -19,8 +19,13 @@
 package ir.firoozehcorp.gameservice.handlers.command.resposne
 
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import ir.firoozehcorp.gameservice.models.consts.Command
+import ir.firoozehcorp.gameservice.models.enums.gsLive.AutoMatchStatus
+import ir.firoozehcorp.gameservice.models.gsLive.Member
+import ir.firoozehcorp.gameservice.models.gsLive.command.AutoMatchEvent
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
+import ir.firoozehcorp.gameservice.models.listeners.CommandListeners
 
 /**
  * @author Alireza Ghodrati
@@ -32,6 +37,26 @@ internal class AutoMatchResponseHandler : BaseResponseHandler() {
     }
 
     override fun handleResponse(packet: Packet, jsonHandler: Gson) {
+        packet.message?.let { message ->
+            when (message) {
+                "waiting_queue" -> {
+                    CommandListeners.AutoMatchUpdated.invokeListeners(
+                            AutoMatchEvent().apply {
+                                status = AutoMatchStatus.OnWaiting
+                                playerQueue = mutableListOf()
+                            }
+                    )
+                }
+                else -> {
+                    CommandListeners.AutoMatchUpdated.invokeListeners(
+                            AutoMatchEvent().apply {
+                                status = AutoMatchStatus.OnUserJoined
+                                playerQueue = jsonHandler.fromJson<MutableList<Member>>(packet.data, object : TypeToken<MutableList<Member>>() {}.type)
+                            }
+                    )
+                }
+            }
 
+        }
     }
 }

@@ -21,6 +21,8 @@ package ir.firoozehcorp.gameservice.handlers.command.resposne
 import com.google.gson.Gson
 import ir.firoozehcorp.gameservice.models.consts.Command
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
+import ir.firoozehcorp.gameservice.models.gsLive.command.StartPayload
+import ir.firoozehcorp.gameservice.models.listeners.CoreListeners
 
 /**
  * @author Alireza Ghodrati
@@ -32,6 +34,7 @@ internal class JoinRoomResponseHandler : BaseResponseHandler() {
     }
 
     override fun handleResponse(packet: Packet, jsonHandler: Gson) {
-
+        val startPayload = jsonHandler.fromJson(packet.data, StartPayload::class.java)
+        CoreListeners.GsLiveSystemStarted.invokeListeners(startPayload)
     }
 }

@@ -21,6 +21,7 @@ package ir.firoozehcorp.gameservice.handlers.command.resposne
 import com.google.gson.Gson
 import ir.firoozehcorp.gameservice.models.consts.Command
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
+import ir.firoozehcorp.gameservice.models.listeners.CommandListeners
 
 /**
  * @author Alireza Ghodrati
@@ -32,6 +33,6 @@ internal class InviteUserResponseHandler : BaseResponseHandler() {
     }
 
     override fun handleResponse(packet: Packet, jsonHandler: Gson) {
-
+        CommandListeners.InvitationSent.invokeListeners(true)
     }
 }

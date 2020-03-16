@@ -19,10 +19,10 @@
 package ir.firoozehcorp.gameservice.handlers.command.resposne
 
 import com.google.gson.Gson
-import ir.firoozehcorp.gameservice.handlers.ChatListeners
 import ir.firoozehcorp.gameservice.models.consts.Command
 import ir.firoozehcorp.gameservice.models.gsLive.chat.Chat
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
+import ir.firoozehcorp.gameservice.models.listeners.ChatListeners
 
 /**
  * @author Alireza Ghodrati

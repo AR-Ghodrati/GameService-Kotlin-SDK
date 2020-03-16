@@ -30,7 +30,7 @@ class ErrorEvent : Serializable {
      * Gets the Error Happened Type
      * @return Error Happened Type
      */
-    var status: GSLiveType = GSLiveType.NotSet
+    var type: GSLiveType = GSLiveType.NotSet
 
 
     /**

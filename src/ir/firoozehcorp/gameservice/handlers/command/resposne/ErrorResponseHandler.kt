@@ -20,7 +20,10 @@ package ir.firoozehcorp.gameservice.handlers.command.resposne
 
 import com.google.gson.Gson
 import ir.firoozehcorp.gameservice.models.consts.Command
+import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
+import ir.firoozehcorp.gameservice.models.gsLive.command.ErrorEvent
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
+import ir.firoozehcorp.gameservice.models.listeners.CoreListeners
 
 /**
  * @author Alireza Ghodrati
@@ -32,6 +35,9 @@ internal class ErrorResponseHandler : BaseResponseHandler() {
     }
 
     override fun handleResponse(packet: Packet, jsonHandler: Gson) {
-
+        CoreListeners.Error.invokeListeners(ErrorEvent().apply {
+            type = GSLiveType.Core
+            error = packet.message.toString()
+        })
     }
 }

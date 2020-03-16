@@ -24,6 +24,8 @@ import ir.firoozehcorp.gameservice.core.apiWebRequest.DownloadRequest
 import ir.firoozehcorp.gameservice.models.GameServiceException
 import ir.firoozehcorp.gameservice.models.basicApi.*
 import ir.firoozehcorp.gameservice.models.basicApi.bucket.BucketOption
+import ir.firoozehcorp.gameservice.models.gsLive.command.Notification
+import ir.firoozehcorp.gameservice.models.internal.EventHandler
 import ir.firoozehcorp.gameservice.models.internal.GSTime
 import ir.firoozehcorp.gameservice.models.internal.Game
 import ir.firoozehcorp.gameservice.models.internal.interfaces.GameServiceCallback
@@ -44,8 +46,12 @@ object GameService {
     internal var IsGuest = false
     internal var Configuration: GameServiceClientConfiguration? = null
     //public static GSLive.GSLive GSLive { get; private set; }
-    //private static DownloadManager _downloadManager;
 
+    interface NotificationListener : EventHandler.IEventHandler<Notification> {
+        override fun invoke(element: Notification)
+    }
+
+    val OnNotificationReceived: EventHandler<NotificationListener, Notification> = EventHandler()
 
     /**
      * Set configuration For Initialize Game Service.
@@ -60,9 +66,6 @@ object GameService {
         //GSLive = new GSLive.GSLive();
     }
 
-
-    /*internal static void OnNotificationReceived(Notification notification)
-            => NotificationReceived?.Invoke(null,notification);*/
 
 
     /**

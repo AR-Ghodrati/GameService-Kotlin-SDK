@@ -1,5 +1,5 @@
 /*
- * <copyright file="CoreListeners.kt" company="Firoozeh Technology LTD">
+ * <copyright file="$this.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +16,7 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.handlers
+package ir.firoozehcorp.gameservice.models.listeners
 
 import ir.firoozehcorp.gameservice.models.gsLive.command.ErrorEvent
 import ir.firoozehcorp.gameservice.models.gsLive.command.StartPayload
@@ -28,8 +28,8 @@ import ir.firoozehcorp.gameservice.models.internal.EventHandler
  */
 open class CoreListeners {
 
-    internal interface GProtocolListener : EventHandler.IEventHandler<Void> {
-        override fun invoke(element: Void)
+    internal interface GProtocolListener : EventHandler.IEventHandler<Void?> {
+        override fun invoke(element: Void?)
     }
 
     internal interface AuthorisationListener : EventHandler.IEventHandler<String> {
@@ -40,17 +40,17 @@ open class CoreListeners {
         override fun invoke(element: StartPayload)
     }
 
-    internal interface PingListener : EventHandler.IEventHandler<Void> {
-        override fun invoke(element: Void)
+    internal interface PingListener : EventHandler.IEventHandler<Void?> {
+        override fun invoke(element: Void?)
     }
 
-    internal interface DisposeListener : EventHandler.IEventHandler<Void> {
-        override fun invoke(element: Void)
+    internal interface DisposeListener : EventHandler.IEventHandler<Void?> {
+        override fun invoke(element: Void?)
     }
 
 
-    interface LoginListener : EventHandler.IEventHandler<Void> {
-        override fun invoke(element: Void)
+    interface LoginListener : EventHandler.IEventHandler<Void?> {
+        override fun invoke(element: Void?)
     }
 
     interface ErrorListener : EventHandler.IEventHandler<ErrorEvent> {
@@ -60,17 +60,17 @@ open class CoreListeners {
 
     companion object {
 
-        internal val GProtocolConnected: EventHandler<GProtocolListener, Void> = EventHandler()
+        internal val GProtocolConnected: EventHandler<GProtocolListener, Void?> = EventHandler()
         internal val Authorized: EventHandler<AuthorisationListener, String> = EventHandler()
         internal val GsLiveSystemStarted: EventHandler<GSLiveSystemListener, StartPayload> = EventHandler()
-        internal val Ping: EventHandler<PingListener, Void> = EventHandler()
-        internal val Dispose: EventHandler<DisposeListener, Void> = EventHandler()
+        internal val Ping: EventHandler<PingListener, Void?> = EventHandler()
+        internal val Dispose: EventHandler<DisposeListener, Void?> = EventHandler()
 
 
         /**
          * Calls When Your Game Successfully Connected To GameService
          */
-        val SuccessfullyLogined: EventHandler<LoginListener, Void> = EventHandler()
+        val SuccessfullyLogined: EventHandler<LoginListener, Void?> = EventHandler()
 
 
         /**
