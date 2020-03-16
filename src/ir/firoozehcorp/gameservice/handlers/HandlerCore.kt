@@ -18,13 +18,21 @@
 
 package ir.firoozehcorp.gameservice.handlers
 
+import com.google.gson.Gson
 import ir.firoozehcorp.gameservice.models.gsLive.APacket
+import ir.firoozehcorp.gameservice.utils.GsLiveSystemObserver
 import java.io.Closeable
 
 /**
  * @author Alireza Ghodrati
  */
 internal abstract class HandlerCore : Closeable {
+
+    protected lateinit var observer: GsLiveSystemObserver
+    protected var disposed = false
+    protected var isFirstInit = false
+    protected val gson: Gson = Gson()
+
 
     abstract override fun close()
 

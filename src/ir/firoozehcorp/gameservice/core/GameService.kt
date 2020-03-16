@@ -18,6 +18,7 @@
 
 package ir.firoozehcorp.gameservice.core
 
+import com.tunnelvisionlabs.util.concurrent.SynchronizationContext
 import ir.firoozehcorp.gameservice.builder.GameServiceClientConfiguration
 import ir.firoozehcorp.gameservice.core.apiWebRequest.ApiRequest
 import ir.firoozehcorp.gameservice.core.apiWebRequest.DownloadRequest
@@ -45,10 +46,11 @@ object GameService {
     internal var StartPlaying: Long = 0
     internal var IsGuest = false
     internal var Configuration: GameServiceClientConfiguration? = null
+    internal var SynchronizationContext: SynchronizationContext? = null
     //public static GSLive.GSLive GSLive { get; private set; }
 
     interface NotificationListener : EventHandler.IEventHandler<Notification> {
-        override fun invoke(element: Notification)
+        override fun invoke(element: Notification, from: Class<*>?)
     }
 
     val OnNotificationReceived: EventHandler<NotificationListener, Notification> = EventHandler()

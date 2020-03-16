@@ -19,9 +19,12 @@
 package ir.firoozehcorp.gameservice.core.sockets
 
 import com.google.gson.Gson
+import ir.firoozehcorp.gameservice.models.GameServiceException
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
+import ir.firoozehcorp.gameservice.models.gsLive.APacket
 import ir.firoozehcorp.gameservice.models.gsLive.command.Area
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
+import ir.firoozehcorp.gameservice.models.internal.EventHandler
 import ir.firoozehcorp.gameservice.models.internal.interfaces.GameServiceCallback
 import java.io.BufferedReader
 import java.io.DataOutputStream
@@ -34,6 +37,14 @@ import java.util.concurrent.atomic.AtomicBoolean
  */
 internal abstract class GsSocketClient {
 
+    internal interface ErrorListener : EventHandler.IEventHandler<GameServiceException> {
+        override fun invoke(element: GameServiceException, from: Class<*>?)
+    }
+
+    internal interface DataReceivedListener : EventHandler.IEventHandler<Packet> {
+        override fun invoke(element: Packet, from: Class<*>?)
+    }
+
     protected lateinit var socket: Socket
     protected var gson: Gson = Gson()
     protected lateinit var input: BufferedReader
@@ -43,17 +54,19 @@ internal abstract class GsSocketClient {
 
     protected var isLogEnable = false
 
+    val onError: EventHandler<ErrorListener, GameServiceException> = EventHandler()
+    val onDataReceived: EventHandler<DataReceivedListener, Packet> = EventHandler()
 
     protected val l_START = '{'
     protected val l_END = '}'
 
 
     protected abstract fun init(callback: GameServiceCallback<Boolean>)
-    protected abstract fun startReceiving(callback: GameServiceCallback<Packet>)
+    protected abstract fun startReceiving()
     protected abstract fun stopReceiving()
     protected abstract fun updatePwd(newPwd: String?)
     protected abstract fun setType(type: GSLiveType?)
-    protected abstract fun send(packet: Packet?)
+    protected abstract fun send(packet: APacket?)
     protected abstract fun isAvailable(): Boolean
 
 }

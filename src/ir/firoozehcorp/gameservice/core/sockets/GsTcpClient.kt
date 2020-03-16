@@ -21,6 +21,7 @@ package ir.firoozehcorp.gameservice.core.sockets
 import com.google.gson.stream.JsonReader
 import ir.firoozehcorp.gameservice.models.GameServiceException
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
+import ir.firoozehcorp.gameservice.models.gsLive.APacket
 import ir.firoozehcorp.gameservice.models.gsLive.command.Area
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
 import ir.firoozehcorp.gameservice.models.internal.interfaces.GameServiceCallback
@@ -55,7 +56,7 @@ internal class GsTcpClient(area: Area) : GsSocketClient() {
         }
     }
 
-    public override fun startReceiving(callback: GameServiceCallback<Packet>) {
+    public override fun startReceiving() {
         thread(priority = Thread.MAX_PRIORITY) {
             try {
                 while (isRunning.get()) {
@@ -77,7 +78,7 @@ internal class GsTcpClient(area: Area) : GsSocketClient() {
                                 val reader = JsonReader(StringReader(data.substring(start, index + 1)))
                                 reader.isLenient = true
                                 val packet: Packet = gson.fromJson(reader, Packet::class.java)
-                                callback.onResponse(packet)
+                                onDataReceived.invokeListeners(packet)
                             }
                         }
                         index++
@@ -85,7 +86,7 @@ internal class GsTcpClient(area: Area) : GsSocketClient() {
                 }
             } catch (e: Exception) {
                 when (e) {
-                    is SocketException, is IOException -> callback.onFailure(GameServiceException(e.message))
+                    is SocketException, is IOException -> onError.invokeListeners(GameServiceException(e.message))
                     else -> {
                     }
                 }
@@ -111,7 +112,7 @@ internal class GsTcpClient(area: Area) : GsSocketClient() {
     public override fun setType(type: GSLiveType?) {
     }
 
-    public override fun send(packet: Packet?) {
+    public override fun send(packet: APacket?) {
         thread(priority = Thread.MAX_PRIORITY) {
             try {
                 out.write(gson
