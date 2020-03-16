@@ -21,7 +21,7 @@ package ir.firoozehcorp.gameservice.handlers.realtime
 import com.google.gson.Gson
 import ir.firoozehcorp.gameservice.core.GameService
 import ir.firoozehcorp.gameservice.handlers.realtime.request.*
-import ir.firoozehcorp.gameservice.handlers.realtime.response.IResponseHandler
+import ir.firoozehcorp.gameservice.handlers.realtime.response.*
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 import ir.firoozehcorp.gameservice.models.gsLive.Room
 import ir.firoozehcorp.gameservice.models.gsLive.command.StartPayload
@@ -38,7 +38,7 @@ internal class RealTimeHandler(payload: StartPayload) : Closeable {
     private var _isFirstInit = false
 
 
-    private lateinit var responseHandlers: MutableMap<String, IResponseHandler>
+    private lateinit var responseHandlers: MutableMap<Int, IResponseHandler>
     private lateinit var requestHandlers: MutableMap<String, IRequestHandler>
 
 
@@ -70,8 +70,15 @@ internal class RealTimeHandler(payload: StartPayload) : Closeable {
 
 
     private fun initResponseMessageHandlers() {
-
-
+        responseHandlers = mutableMapOf(
+                AuthResponseHandler.action to AuthResponseHandler(),
+                ErrorResponseHandler.action to ErrorResponseHandler(),
+                JoinRoomResponseHandler.action to JoinRoomResponseHandler(),
+                LeaveRoomResponseHandler.action to LeaveRoomResponseHandler(),
+                MemberDetailsResponseHandler.action to MemberDetailsResponseHandler(),
+                PrivateMessageResponseHandler.action to PrivateMessageResponseHandler(),
+                PublicMessageResponseHandler.action to PublicMessageResponseHandler()
+        )
     }
 
     override fun close() {
