@@ -1,5 +1,5 @@
 /*
- * <copyright file="IResponseHandler.kt" company="Firoozeh Technology LTD">
+ * <copyright file="ChatResponseHandler.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,11 +19,22 @@
 package ir.firoozehcorp.gameservice.handlers.command.resposne
 
 import com.google.gson.Gson
+import ir.firoozehcorp.gameservice.handlers.ChatListeners
+import ir.firoozehcorp.gameservice.models.consts.Command
+import ir.firoozehcorp.gameservice.models.gsLive.chat.Chat
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
 
 /**
  * @author Alireza Ghodrati
  */
-internal abstract class IResponseHandler {
-    abstract fun handlePacket(packet: Packet, jsonHandler: Gson)
+internal class ChatResponseHandler : BaseResponseHandler() {
+
+    companion object {
+        const val action = Command.ActionChat
+    }
+
+    override fun handleResponse(packet: Packet, jsonHandler: Gson) {
+        val chat = jsonHandler.fromJson(packet.data, Chat::class.java)
+        ChatListeners.invokeChatReceivedListeners(chat)
+    }
 }
