@@ -31,7 +31,7 @@ import ir.firoozehcorp.gameservice.models.listeners.CoreListeners
 internal class ErrorResponseHandler : BaseResponseHandler() {
 
     companion object {
-        const val action = Command.ActionAuth
+        const val action = Command.Error
     }
 
     override fun handleResponse(packet: Packet, jsonHandler: Gson) {

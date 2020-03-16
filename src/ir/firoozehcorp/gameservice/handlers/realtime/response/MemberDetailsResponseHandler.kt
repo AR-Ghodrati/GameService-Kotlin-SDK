@@ -1,5 +1,5 @@
 /*
- * <copyright file="IResponseHandler.kt" company="Firoozeh Technology LTD">
+ * <copyright file="MemberDetailsResponseHandler.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,13 +19,24 @@
 package ir.firoozehcorp.gameservice.handlers.realtime.response
 
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import ir.firoozehcorp.gameservice.models.consts.RealTime
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GProtocolSendType
+import ir.firoozehcorp.gameservice.models.gsLive.Member
 import ir.firoozehcorp.gameservice.models.gsLive.realtime.Packet
-
+import ir.firoozehcorp.gameservice.models.listeners.RealTimeListeners
 
 /**
  * @author Alireza Ghodrati
  */
-internal abstract class IResponseHandler {
-    abstract fun handlePacket(packet: Packet, type: GProtocolSendType, jsonHandler: Gson)
+internal class MemberDetailsResponseHandler : BaseResponseHandler() {
+
+    companion object {
+        const val action = RealTime.ActionMembersDetail
+    }
+
+    override fun handleResponse(packet: Packet, type: GProtocolSendType, jsonHandler: Gson) {
+        val members = jsonHandler.fromJson<MutableList<Member>>(packet.payload, object : TypeToken<MutableList<Member>>() {}.type)
+        RealTimeListeners.RoomMembersDetailReceived.invokeListeners(members)
+    }
 }
