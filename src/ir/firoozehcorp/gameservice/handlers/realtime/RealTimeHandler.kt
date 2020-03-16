@@ -20,22 +20,20 @@ package ir.firoozehcorp.gameservice.handlers.realtime
 
 import com.google.gson.Gson
 import ir.firoozehcorp.gameservice.core.GameService
+import ir.firoozehcorp.gameservice.handlers.HandlerCore
 import ir.firoozehcorp.gameservice.handlers.realtime.request.*
 import ir.firoozehcorp.gameservice.handlers.realtime.response.*
+import ir.firoozehcorp.gameservice.models.enums.gsLive.GProtocolSendType
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
+import ir.firoozehcorp.gameservice.models.gsLive.APacket
 import ir.firoozehcorp.gameservice.models.gsLive.Room
 import ir.firoozehcorp.gameservice.models.gsLive.command.StartPayload
 import ir.firoozehcorp.gameservice.utils.GsLiveSystemObserver
-import java.io.Closeable
 
 /**
  * @author Alireza Ghodrati
  */
-internal class RealTimeHandler(payload: StartPayload) : Closeable {
-
-    private val observer: GsLiveSystemObserver
-    private var _isDisposed = false
-    private var _isFirstInit = false
+internal class RealTimeHandler(payload: StartPayload) : HandlerCore() {
 
 
     private lateinit var responseHandlers: MutableMap<Int, IResponseHandler>
@@ -81,7 +79,25 @@ internal class RealTimeHandler(payload: StartPayload) : Closeable {
         )
     }
 
-    override fun close() {
+
+    public override fun init() {
 
     }
+
+    public override fun request(handlerName: String, payload: Any?) {
+    }
+
+    public override fun request(handlerName: String, payload: Any?, type: GProtocolSendType) {
+    }
+
+    override fun send(packet: APacket) {
+    }
+
+    override fun close() {
+        disposed = true
+        isFirstInit = false
+        //tcpClient.stopReceiving()
+        observer.dispose()
+    }
+
 }

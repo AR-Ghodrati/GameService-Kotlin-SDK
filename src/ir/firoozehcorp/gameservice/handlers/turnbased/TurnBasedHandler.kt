@@ -25,6 +25,7 @@ import ir.firoozehcorp.gameservice.handlers.HandlerCore
 import ir.firoozehcorp.gameservice.handlers.turnbased.request.*
 import ir.firoozehcorp.gameservice.handlers.turnbased.response.*
 import ir.firoozehcorp.gameservice.models.GameServiceException
+import ir.firoozehcorp.gameservice.models.enums.gsLive.GProtocolSendType
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 import ir.firoozehcorp.gameservice.models.gsLive.APacket
 import ir.firoozehcorp.gameservice.models.gsLive.Room
@@ -126,7 +127,7 @@ internal class TurnBasedHandler(payload: StartPayload) : HandlerCore() {
     }
 
 
-    override fun init() {
+    public override fun init() {
         tcpClient.init(object : GameServiceCallback<Boolean> {
             override fun onFailure(error: GameServiceException) {}
             override fun onResponse(response: Boolean) {
@@ -135,8 +136,12 @@ internal class TurnBasedHandler(payload: StartPayload) : HandlerCore() {
         })
     }
 
-    override fun request(handlerName: String, payload: Any?) {
+    public override fun request(handlerName: String, payload: Any?) {
         requestHandlers[handlerName]?.handleAction(payload)?.let { send(it) }
+    }
+
+    override fun request(handlerName: String, payload: Any?, type: GProtocolSendType) {
+
     }
 
     override fun send(packet: APacket) {

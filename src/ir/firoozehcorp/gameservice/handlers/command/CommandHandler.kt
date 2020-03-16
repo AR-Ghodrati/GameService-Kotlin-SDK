@@ -27,6 +27,7 @@ import ir.firoozehcorp.gameservice.handlers.command.resposne.*
 import ir.firoozehcorp.gameservice.handlers.turnbased.TurnBasedHandler
 import ir.firoozehcorp.gameservice.models.GameServiceException
 import ir.firoozehcorp.gameservice.models.consts.Command
+import ir.firoozehcorp.gameservice.models.enums.gsLive.GProtocolSendType
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 import ir.firoozehcorp.gameservice.models.gsLive.APacket
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
@@ -144,8 +145,12 @@ internal class CommandHandler : HandlerCore() {
         })
     }
 
-    override fun request(handlerName: String, payload: Any?) {
+    public override fun request(handlerName: String, payload: Any?) {
         requestHandlers[handlerName]?.handleAction(payload)?.let { send(it) }
+    }
+
+    override fun request(handlerName: String, payload: Any?, type: GProtocolSendType) {
+
     }
 
     override fun send(packet: APacket) {

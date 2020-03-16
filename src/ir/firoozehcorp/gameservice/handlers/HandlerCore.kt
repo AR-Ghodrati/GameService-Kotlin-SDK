@@ -19,6 +19,7 @@
 package ir.firoozehcorp.gameservice.handlers
 
 import com.google.gson.Gson
+import ir.firoozehcorp.gameservice.models.enums.gsLive.GProtocolSendType
 import ir.firoozehcorp.gameservice.models.gsLive.APacket
 import ir.firoozehcorp.gameservice.utils.GsLiveSystemObserver
 import java.io.Closeable
@@ -40,5 +41,6 @@ internal abstract class HandlerCore : Closeable {
 
     protected abstract fun init()
     protected abstract fun request(handlerName: String, payload: Any? = null)
+    protected abstract fun request(handlerName: String, payload: Any? = null, type: GProtocolSendType = GProtocolSendType.UnReliable)
     protected abstract fun send(packet: APacket)
 }
