@@ -1,5 +1,5 @@
 /*
- * <copyright file="IResponseHandler.kt" company="Firoozeh Technology LTD">
+ * <copyright file="CompleteResponseHandler.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,12 +19,22 @@
 package ir.firoozehcorp.gameservice.handlers.turnbased.response
 
 import com.google.gson.Gson
+import ir.firoozehcorp.gameservice.models.consts.TurnBase
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
-
+import ir.firoozehcorp.gameservice.models.gsLive.turnbased.Complete
+import ir.firoozehcorp.gameservice.models.listeners.TurnBasedListeners
 
 /**
  * @author Alireza Ghodrati
  */
-internal abstract class IResponseHandler {
-    abstract fun handlePacket(packet: Packet, jsonHandler: Gson)
+internal class CompleteResponseHandler : BaseResponseHandler() {
+
+    companion object {
+        const val action = TurnBase.OnComplete
+    }
+
+    override fun handleResponse(packet: Packet, jsonHandler: Gson) {
+        val complete = jsonHandler.fromJson(packet.data, Complete::class.java)
+        TurnBasedListeners.Completed.invokeListeners(complete)
+    }
 }
