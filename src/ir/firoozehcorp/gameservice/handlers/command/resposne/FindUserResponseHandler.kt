@@ -1,5 +1,5 @@
 /*
- * <copyright file="FindUserInboxResponseHandler.kt" company="Firoozeh Technology LTD">
+ * <copyright file="FindUserResponseHandler.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,7 +28,7 @@ import ir.firoozehcorp.gameservice.models.listeners.CommandListeners
 /**
  * @author Alireza Ghodrati
  */
-internal class FindUserInboxResponseHandler : BaseResponseHandler() {
+internal class FindUserResponseHandler : BaseResponseHandler() {
 
     companion object {
         const val action = Command.ActionFindUser

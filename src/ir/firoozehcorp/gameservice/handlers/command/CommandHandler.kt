@@ -22,7 +22,7 @@ import com.google.gson.Gson
 import ir.firoozehcorp.gameservice.core.GameService
 import ir.firoozehcorp.gameservice.core.sockets.GsTcpClient
 import ir.firoozehcorp.gameservice.handlers.command.request.*
-import ir.firoozehcorp.gameservice.handlers.command.resposne.IResponseHandler
+import ir.firoozehcorp.gameservice.handlers.command.resposne.*
 import ir.firoozehcorp.gameservice.models.consts.Command
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 import ir.firoozehcorp.gameservice.utils.GsLiveSystemObserver
@@ -40,7 +40,7 @@ internal class CommandHandler : Closeable {
     private var _isFirstInit = false
 
 
-    private lateinit var responseHandlers: MutableMap<String, IResponseHandler>
+    private lateinit var responseHandlers: MutableMap<Int, IResponseHandler>
     private lateinit var requestHandlers: MutableMap<String, IRequestHandler>
 
 
@@ -80,8 +80,22 @@ internal class CommandHandler : Closeable {
 
 
     private fun initResponseMessageHandlers() {
-
-
+        responseHandlers = mutableMapOf(
+                AutoMatchResponseHandler.action to AutoMatchResponseHandler(),
+                AuthResponseHandler.action to AuthResponseHandler(),
+                CancelAutoMatchResponseHandler.action to CancelAutoMatchResponseHandler(),
+                ChatResponseHandler.action to ChatResponseHandler(),
+                ErrorResponseHandler.action to ErrorResponseHandler(),
+                FindUserResponseHandler.action to FindUserResponseHandler(),
+                GetInviteInboxResponseHandler.action to GetInviteInboxResponseHandler(),
+                InviteReceivedResponseHandler.action to InviteReceivedResponseHandler(),
+                InviteUserResponseHandler.action to InviteUserResponseHandler(),
+                JoinRoomResponseHandler.action to JoinRoomResponseHandler(),
+                NotificationResponseHandler.action to NotificationResponseHandler(),
+                PingResponseHandler.action to PingResponseHandler(),
+                SubscribeChannelResponseHandler.action to SubscribeChannelResponseHandler(),
+                UnSubscribeChannelResponseHandler.action to UnSubscribeChannelResponseHandler()
+        )
     }
 
     override fun close() {
