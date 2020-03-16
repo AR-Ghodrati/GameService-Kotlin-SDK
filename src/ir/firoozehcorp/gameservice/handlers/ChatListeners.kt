@@ -19,103 +19,47 @@
 package ir.firoozehcorp.gameservice.handlers
 
 import ir.firoozehcorp.gameservice.models.gsLive.chat.Chat
+import ir.firoozehcorp.gameservice.models.internal.EventHandler
 
 /**
- * Represents ChatEventHandlers
+ * Represents ChatListeners
  * @author Alireza Ghodrati
  */
-object ChatListeners {
+class ChatListeners {
 
-    interface ChatReceivedListener {
-        fun onChatReceived(newChat: Chat)
+
+    interface ChatReceivedListener : EventHandler.IEventHandler<Chat> {
+        override fun invoke(element: Chat)
     }
 
-    interface SubscribeChannelListener {
-        fun onSubscribeChannel(channelName: String)
+    interface SubscribeChannelListener : EventHandler.IEventHandler<String> {
+        override fun invoke(element: String)
     }
 
-    interface UnSubscribeChannelListener {
-        fun onUnSubscribeChannel(channelName: String)
-    }
-
-
-    private var chatReceivedListeners: MutableList<ChatReceivedListener>? = null
-    private var subscribeChannelListeners: MutableList<SubscribeChannelListener>? = null
-    private var unSubscribeChannelListeners: MutableList<UnSubscribeChannelListener>? = null
-
-
-    /**
-     * Calls When New Chat Received
-     */
-    fun addChatReceivedListener(listener: ChatReceivedListener) {
-        if (chatReceivedListeners == null) chatReceivedListeners = mutableListOf(listener)
-        else {
-            chatReceivedListeners?.let {
-                if (!it.contains(listener)) it.add(listener)
-            }
-        }
-    }
-
-    fun removeChatReceivedListener(listener: ChatReceivedListener) {
-        chatReceivedListeners?.let {
-            if (it.contains(listener)) it.remove(listener)
-        }
+    interface UnSubscribeChannelListener : EventHandler.IEventHandler<String> {
+        override fun invoke(element: String)
     }
 
 
-    /**
-     * Calls When Current Player Subscribe Channel
-     */
-    fun addSubscribeChannelListener(listener: SubscribeChannelListener) {
-        if (subscribeChannelListeners == null) subscribeChannelListeners = mutableListOf(listener)
-        else {
-            subscribeChannelListeners?.let {
-                if (!it.contains(listener)) it.add(listener)
-            }
-        }
-    }
-
-    fun removeSubscribeChannelListener(listener: SubscribeChannelListener) {
-        subscribeChannelListeners?.let {
-            if (it.contains(listener)) it.remove(listener)
-        }
-    }
+    companion object {
+        /**
+         * Calls When New Chat Received
+         */
+        val NewChatReceived: EventHandler<ChatReceivedListener, Chat> = EventHandler()
 
 
-    /**
-     * Calls When Current Player UnSubscribe Channel
-     */
-    fun addUnSubscribeChannelListener(listener: UnSubscribeChannelListener) {
-        if (unSubscribeChannelListeners == null) unSubscribeChannelListeners = mutableListOf(listener)
-        else {
-            unSubscribeChannelListeners?.let {
-                if (!it.contains(listener)) it.add(listener)
-            }
-        }
-    }
+        /**
+         * Calls When Current Player Subscribe Channel
+         */
 
-    fun removeUnSubscribeChannelListener(listener: UnSubscribeChannelListener) {
-        unSubscribeChannelListeners?.let {
-            if (it.contains(listener)) it.remove(listener)
-        }
+        val SubscribedChannel: EventHandler<SubscribeChannelListener, String> = EventHandler()
+
+
+        /**
+         * Calls When Current Player UnSubscribe Channel
+         */
+        val UnSubscribedChannel: EventHandler<UnSubscribeChannelListener, String> = EventHandler()
     }
 
 
-    internal fun invokeChatReceivedListeners(newChat: Chat) {
-        chatReceivedListeners?.forEach {
-            it.onChatReceived(newChat)
-        }
-    }
-
-    internal fun invokeSubscribeChannelListeners(name: String) {
-        subscribeChannelListeners?.forEach {
-            it.onSubscribeChannel(name)
-        }
-    }
-
-    internal fun invokeUnSubscribeChannelListeners(name: String) {
-        unSubscribeChannelListeners?.forEach {
-            it.onUnSubscribeChannel(name)
-        }
-    }
 }

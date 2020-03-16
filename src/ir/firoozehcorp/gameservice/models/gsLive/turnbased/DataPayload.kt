@@ -20,7 +20,7 @@ package ir.firoozehcorp.gameservice.models.gsLive.turnbased
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ir.firoozehcorp.gameservice.models.Outcome
+import ir.firoozehcorp.gameservice.models.Outcomes
 import ir.firoozehcorp.gameservice.models.gsLive.Payload
 
 /**
@@ -51,7 +51,7 @@ internal class DataPayload : Payload() {
 
     @SerializedName("4")
     @Expose
-    var outcomes: Outcome? = null
+    var outcomes: Outcomes? = null
 
 
     @SerializedName("5")

@@ -1,5 +1,5 @@
 /*
- * <copyright file="Finish.kt" company="Firoozeh Technology LTD">
+ * <copyright file="Complete.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,31 +21,36 @@ package ir.firoozehcorp.gameservice.models.gsLive.turnbased
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import ir.firoozehcorp.gameservice.models.Outcomes
-import ir.firoozehcorp.gameservice.models.gsLive.Member
 import java.io.Serializable
 
 /**
- * Represents Finish Data Model In GameService TurnBased MultiPlayer System
+ * Represents Complete Data Model In GameService TurnBased MultiPlayer System
  * @author Alireza Ghodrati
  */
-class Finish : Serializable {
+class Complete : Serializable {
 
     /**
-     * Gets Member Data of Has Announced The End Of The Game.
-     * @return Member Data of Has Announced The End Of The Game.
+     * Gets the Accept Counts from Other Players.
+     * @return the Accept Counts from Other Players.
      */
-    @SerializedName("0")
+    @SerializedName("Accept")
     @Expose
-    lateinit var memberFinish: Member
+    var acceptCounts: String? = null
 
 
     /**
-     * Gets the Outcomes sent from the player.
-     * Call From Other Player With this Function @see("Finish")/>
-     * @return the Outcomes sent from the player
+     * Gets the Game Result(Outcomes).
+     * (Type : Dictionary(MemberID,Outcome))
+     * @return the Game Result(Outcomes).
      */
-    @SerializedName("1")
+    @SerializedName("Outcomes")
     @Expose
-    lateinit var outcomes: Outcomes
+    lateinit var result: Outcomes
+
+
+    override fun toString(): String {
+        return "Complete(acceptCounts=$acceptCounts, result=$result)"
+    }
+
 
 }

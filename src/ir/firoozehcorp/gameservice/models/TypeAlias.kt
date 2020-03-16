@@ -27,4 +27,4 @@ import ir.firoozehcorp.gameservice.models.gsLive.turnbased.Outcome
 /**
 (Type : Dictionary(MemberID,Outcome))
  */
-typealias Outcome = MutableMap<String, Outcome>
+typealias Outcomes = MutableMap<String, Outcome>

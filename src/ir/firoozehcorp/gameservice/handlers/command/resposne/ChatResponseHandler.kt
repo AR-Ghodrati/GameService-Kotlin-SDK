@@ -35,6 +35,6 @@ internal class ChatResponseHandler : BaseResponseHandler() {
 
     override fun handleResponse(packet: Packet, jsonHandler: Gson) {
         val chat = jsonHandler.fromJson(packet.data, Chat::class.java)
-        ChatListeners.invokeChatReceivedListeners(chat)
+        ChatListeners.NewChatReceived.invokeListeners(chat)
     }
 }

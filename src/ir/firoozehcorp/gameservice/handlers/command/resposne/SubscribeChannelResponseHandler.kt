@@ -33,6 +33,6 @@ internal class SubscribeChannelResponseHandler : BaseResponseHandler() {
     }
 
     override fun handleResponse(packet: Packet, jsonHandler: Gson) {
-        ChatListeners.invokeSubscribeChannelListeners(packet.message.toString())
+        ChatListeners.SubscribedChannel.invokeListeners(packet.message.toString())
     }
 }

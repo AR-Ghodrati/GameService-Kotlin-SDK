@@ -1,5 +1,5 @@
 /*
- * <copyright file="UnSubscribeChannelResponseHandler.kt" company="Firoozeh Technology LTD">
+ * <copyright file="AutoMatchCancel.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,23 +16,12 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.handlers.command.resposne
-
-import com.google.gson.Gson
-import ir.firoozehcorp.gameservice.handlers.ChatListeners
-import ir.firoozehcorp.gameservice.models.consts.Command
-import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
+package ir.firoozehcorp.gameservice.models.enums.gsLive.command
 
 /**
+ * Represents AutoMatchCancel
  * @author Alireza Ghodrati
  */
-internal class UnSubscribeChannelResponseHandler : BaseResponseHandler() {
-
-    companion object {
-        const val action = Command.ActionUnSubscribe
-    }
-
-    override fun handleResponse(packet: Packet, jsonHandler: Gson) {
-        ChatListeners.UnSubscribedChannel.invokeListeners(packet.message.toString())
-    }
+enum class AutoMatchCancel {
+    Success, NotInQueue
 }
