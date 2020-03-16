@@ -136,7 +136,7 @@ internal class CommandHandler : HandlerCore() {
     }
 
 
-    override fun init() {
+    public override fun init() {
         tcpClient.init(object : GameServiceCallback<Boolean> {
             override fun onFailure(error: GameServiceException) {}
             override fun onResponse(response: Boolean) {

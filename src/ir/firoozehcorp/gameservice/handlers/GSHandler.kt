@@ -83,6 +83,10 @@ internal class GSHandler : Closeable {
         realTimeHandler?.init()
     }
 
+    fun init() {
+        commandHandler.init()
+    }
+
     override fun close() {
         commandHandler.close()
         realTimeHandler?.close()

@@ -22,7 +22,10 @@ import com.tunnelvisionlabs.util.concurrent.SynchronizationContext
 import ir.firoozehcorp.gameservice.builder.GameServiceClientConfiguration
 import ir.firoozehcorp.gameservice.core.apiWebRequest.ApiRequest
 import ir.firoozehcorp.gameservice.core.apiWebRequest.DownloadRequest
+import ir.firoozehcorp.gameservice.core.gslive.GSLive
 import ir.firoozehcorp.gameservice.models.GameServiceException
+import ir.firoozehcorp.gameservice.models.annotations.NotNull
+import ir.firoozehcorp.gameservice.models.annotations.Nullable
 import ir.firoozehcorp.gameservice.models.basicApi.*
 import ir.firoozehcorp.gameservice.models.basicApi.bucket.BucketOption
 import ir.firoozehcorp.gameservice.models.gsLive.command.Notification
@@ -30,6 +33,7 @@ import ir.firoozehcorp.gameservice.models.internal.EventHandler
 import ir.firoozehcorp.gameservice.models.internal.GSTime
 import ir.firoozehcorp.gameservice.models.internal.Game
 import ir.firoozehcorp.gameservice.models.internal.interfaces.GameServiceCallback
+import ir.firoozehcorp.gameservice.models.listeners.CoreListeners
 import ir.firoozehcorp.gameservice.utils.NetworkUtil
 
 /**
@@ -47,7 +51,8 @@ object GameService {
     internal var IsGuest = false
     internal var Configuration: GameServiceClientConfiguration? = null
     internal var SynchronizationContext: SynchronizationContext? = null
-    //public static GSLive.GSLive GSLive { get; private set; }
+
+    lateinit var GSLive: GSLive
 
     interface NotificationListener : EventHandler.IEventHandler<Notification> {
         override fun invoke(element: Notification, from: Class<*>?)
@@ -64,8 +69,7 @@ object GameService {
         if (configuration == null) throw GameServiceException("Configuration Cant Be Null")
         if (isAuthenticated()) throw GameServiceException("Must Logout First To ReConfiguration")
         Configuration = configuration
-        //_downloadManager = new DownloadManager(Configuration);
-        //GSLive = new GSLive.GSLive();
+        GSLive = GSLive()
     }
 
 
@@ -96,12 +100,12 @@ object GameService {
 
     /**
      * With this command you can save your Current Status in Game
-     * @param saveName (Not NULL)Specifies the saveGameName
+     * @param saveName Specifies the saveGameName
      * @param saveObj the Object that you Want To Save it
      * @param callback returns SaveDetails
      */
     @Throws(GameServiceException::class)
-    fun saveGame(saveName: String, saveObj: Any, callback: GameServiceCallback<SaveDetails>) {
+    fun saveGame(@NotNull saveName: String, saveObj: Any, callback: GameServiceCallback<SaveDetails>) {
         if (!isAuthenticated()) throw GameServiceException("gameservice Not Available")
         ApiRequest.saveGame(saveName, saveObj, callback)
     }
@@ -110,12 +114,12 @@ object GameService {
     /**
      * This command allows you to Submit Player Score with the ID of the leaderBoard
      * you have Registered in the Developer panel
-     * @param leaderBoardKey (Not NULL)Specifies the leaderBoardId
+     * @param leaderBoardKey Specifies the leaderBoardId
      * @param scoreValue scoreValue(The value must not exceed the maximum value Registered in the Developer Panel)
      * @param callback returns SubmitScoreResponse
      */
     @Throws(GameServiceException::class)
-    fun submitScore(leaderBoardKey: String, scoreValue: Int, callback: GameServiceCallback<SubmitScoreResponse>) {
+    fun submitScore(@NotNull leaderBoardKey: String, scoreValue: Int, callback: GameServiceCallback<SubmitScoreResponse>) {
         if (!isAuthenticated()) throw GameServiceException("gameservice Not Available")
         if (leaderBoardKey.isEmpty()) throw GameServiceException("leaderBoardKey Cant Be EmptyOrNull")
         if (scoreValue <= 0) throw GameServiceException("Invalid ScoreValue")
@@ -127,11 +131,11 @@ object GameService {
     /**
      * With this command you can Unlock achievement with the achievement ID
      * you have Registered in the Developer panel
-     * @param achievementKey (Not NULL)The ID of Achievement you Want To Unlock it
+     * @param achievementKey The ID of Achievement you Want To Unlock it
      * @param callback returns unlocked Achievement
      */
     @Throws(GameServiceException::class)
-    fun unlockAchievement(achievementKey: String, callback: GameServiceCallback<Achievement>) {
+    fun unlockAchievement(@NotNull achievementKey: String, callback: GameServiceCallback<Achievement>) {
         if (!isAuthenticated()) throw GameServiceException("gameservice Not Available")
         if (achievementKey.isEmpty()) throw GameServiceException("achievementKey Cant Be EmptyOrNull")
 
@@ -153,12 +157,12 @@ object GameService {
     /**
      * With this command you can get a LeaderBoardDetails with the ID of the LeaderBoard list
      * you have Registered in the Developer panel
-     * @param leaderBoardKey (Not NULL)The ID of leaderBoard you Want To get Detail
+     * @param leaderBoardKey The ID of leaderBoard you Want To get Detail
      * @param scoreLimit (Min = 10,Max = 50) The Score List Limits
      * @param callback returns LeaderBoardDetails
      */
     @Throws(GameServiceException::class)
-    fun getLeaderBoardDetails(leaderBoardKey: String, scoreLimit: Int = 10, callback: GameServiceCallback<LeaderBoardDetails>) {
+    fun getLeaderBoardDetails(@NotNull leaderBoardKey: String, scoreLimit: Int = 10, callback: GameServiceCallback<LeaderBoardDetails>) {
         if (!isAuthenticated()) throw GameServiceException("gameservice Not Available")
         if (leaderBoardKey.isEmpty()) throw GameServiceException("leaderBoardKey Cant Be EmptyOrNull")
         if (scoreLimit < 10 || scoreLimit > 50) throw GameServiceException("Invalid scoreLimit")
@@ -202,12 +206,12 @@ object GameService {
 
     /**
      * This command will return all information about the bucket with a specific ID
-     * @param bucketId (Not NULL)The ID of bucket you Want To get Detail
+     * @param bucketId The ID of bucket you Want To get Detail
      * @param options (Optional)The bucket Options
      * @param callback return List of all bucket Items
      */
     @Throws(GameServiceException::class)
-    fun <T> getBucketItems(bucketId: String, bucketType: Class<T>, options: Array<BucketOption>? = null, callback: GameServiceCallback<MutableList<T>>) {
+    fun <T> getBucketItems(@NotNull bucketId: String, bucketType: Class<T>, @Nullable options: Array<BucketOption>? = null, callback: GameServiceCallback<MutableList<T>>) {
         if (!isAuthenticated()) throw GameServiceException("gameservice Not Available")
         if (bucketId.isEmpty()) throw GameServiceException("BucketId Cant Be EmptyOrNull")
         ApiRequest.getBucketItems(bucketId, options, bucketType, callback)
@@ -216,12 +220,12 @@ object GameService {
 
     /**
      * This command returns one of the Specific bucket information with a specific ID
-     * @param bucketId (Not NULL)The ID of bucket you Want To get Detail
-     * @param itemId (Not NULL)The ID of BucketItem you Want To get Detail
+     * @param bucketId The ID of bucket you Want To get Detail
+     * @param itemId The ID of BucketItem you Want To get Detail
      * @param callback return a bucket Item
      */
     @Throws(GameServiceException::class)
-    fun <T> getBucketItem(bucketId: String, itemId: String, bucketType: Class<T>, callback: GameServiceCallback<T>) {
+    fun <T> getBucketItem(@NotNull bucketId: String, @NotNull itemId: String, bucketType: Class<T>, callback: GameServiceCallback<T>) {
         if (!isAuthenticated()) throw GameServiceException("gameservice Not Available")
         if (bucketId.isEmpty()) throw GameServiceException("BucketId Cant Be EmptyOrNull")
         if (itemId.isEmpty()) throw GameServiceException("BucketItemId Cant Be EmptyOrNull")
@@ -232,13 +236,13 @@ object GameService {
 
     /**
      * This command will edit one of the bucket information with a specific ID
-     * @param bucketId (Not NULL)The ID of bucket you Want To get Detail
-     * @param itemId (Not NULL)The ID of BucketItem you Want To get Detail
-     * @param editedBucket (Not NULL)The Object of BucketItem you Want To Edit Detail
+     * @param bucketId The ID of bucket you Want To get Detail
+     * @param itemId The ID of BucketItem you Want To get Detail
+     * @param editedBucket The Object of BucketItem you Want To Edit Detail
      * @param callback return Edited bucket Item
      */
     @Throws(GameServiceException::class)
-    fun <T> editBucketItem(bucketId: String, itemId: String, editedBucket: T, bucketType: Class<T>, callback: GameServiceCallback<T>) {
+    fun <T> editBucketItem(@NotNull bucketId: String, @NotNull itemId: String, @NotNull editedBucket: T, bucketType: Class<T>, callback: GameServiceCallback<T>) {
         if (!isAuthenticated()) throw GameServiceException("gameservice Not Available")
         if (bucketId.isEmpty()) throw GameServiceException("BucketId Cant Be EmptyOrNull")
         if (itemId.isEmpty()) throw GameServiceException("BucketItemId Cant Be EmptyOrNull")
@@ -249,12 +253,12 @@ object GameService {
 
     /**
      * This command will Add new bucket information with a specific ID
-     * @param bucketId (Not NULL)The ID of bucket you Want To get Detail
-     * @param newBucket Not NULL)The Object of BucketItem you Want To Add
+     * @param bucketId The ID of bucket you Want To get Detail
+     * @param newBucket The Object of BucketItem you Want To Add
      * @param callback  return Added bucket Item
      */
     @Throws(GameServiceException::class)
-    fun <T> addBucketItem(bucketId: String, newBucket: T, bucketType: Class<T>, callback: GameServiceCallback<T>) {
+    fun <T> addBucketItem(@NotNull bucketId: String, @NotNull newBucket: T, bucketType: Class<T>, callback: GameServiceCallback<T>) {
         if (!isAuthenticated()) throw GameServiceException("gameservice Not Available")
         if (bucketId.isEmpty()) throw GameServiceException("BucketId Cant Be EmptyOrNull")
 
@@ -264,11 +268,11 @@ object GameService {
 
     /**
      * This command will delete All of the bucket Items information with a specific ID
-     * @param bucketId (Not NULL)The ID of bucket you Want To Delete All Items
+     * @param bucketId The ID of bucket you Want To Delete All Items
      * @param callback Return true if Remove Successfully
      */
     @Throws(GameServiceException::class)
-    fun deleteBucketItems(bucketId: String, callback: GameServiceCallback<Boolean>) {
+    fun deleteBucketItems(@NotNull bucketId: String, callback: GameServiceCallback<Boolean>) {
         if (!isAuthenticated()) throw GameServiceException("gameservice Not Available")
         if (bucketId.isEmpty()) throw GameServiceException("BucketId Cant Be EmptyOrNull")
 
@@ -278,12 +282,12 @@ object GameService {
 
     /**
      * This command will delete one of the bucket information with a specific ID
-     * @param bucketId (Not NULL)The ID of bucket you Want To Delete one of Items
-     * @param itemId (Not NULL)The ID of BucketItem you Want To Delete it
+     * @param bucketId The ID of bucket you Want To Delete one of Items
+     * @param itemId The ID of BucketItem you Want To Delete it
      * @param callback Return true if Remove Successfully
      */
     @Throws(GameServiceException::class)
-    fun deleteBucketItem(bucketId: String, itemId: String, callback: GameServiceCallback<Boolean>) {
+    fun deleteBucketItem(@NotNull bucketId: String, @NotNull itemId: String, callback: GameServiceCallback<Boolean>) {
         if (!isAuthenticated()) throw GameServiceException("gameservice Not Available")
         if (bucketId.isEmpty()) throw GameServiceException("BucketId Cant Be EmptyOrNull")
 
@@ -303,12 +307,12 @@ object GameService {
 
     /**
      * Download Asset With Tag
-     * @param assetTag (Not NULL)Specifies the Asset tag that Set in Developers Panel
-     * @param dirPath (Not NULL)Specifies the Download File Directory Path
+     * @param assetTag Specifies the Asset tag that Set in Developers Panel
+     * @param dirPath Specifies the Download File Directory Path
      * @param callback return True if Download Done
      */
     @Throws(GameServiceException::class)
-    fun downloadAsset(assetTag: String, dirPath: String, callback: GameServiceCallback<Boolean>) {
+    fun downloadAsset(@NotNull assetTag: String, @NotNull dirPath: String, callback: GameServiceCallback<Boolean>) {
         if (Configuration == null) throw GameServiceException("You Must Configuration First")
         if (assetTag.isEmpty()) throw GameServiceException("assetTag Cant Be EmptyOrNull")
         if (dirPath.isEmpty()) throw GameServiceException("DownloadDirPath Cant Be EmptyOrNull")
@@ -323,7 +327,7 @@ object GameService {
      * @param callback returns UserToken if Login Successfully
      */
     @Throws(GameServiceException::class)
-    fun login(email: String, password: String, callback: GameServiceCallback<String>) {
+    fun login(@NotNull email: String, @NotNull password: String, callback: GameServiceCallback<String>) {
         if (!NetworkUtil.isConnected()) throw GameServiceException("Network Unreachable")
         if (Configuration == null) throw GameServiceException("You Must Configuration First")
         if (email.isEmpty()) throw GameServiceException("Email Cant Be Empty")
@@ -340,7 +344,7 @@ object GameService {
                         StartPlaying = System.currentTimeMillis()
                         isAvailable = true
                         IsGuest = false
-                        //await core.GSLive.GSLive.Init();
+                        GSLive.init()
                         callback.onResponse(UserToken.toString())
                     }
 
@@ -365,7 +369,7 @@ object GameService {
      * It May Throw Exception
      */
     @Throws(GameServiceException::class)
-    fun login(userToken: String, callback: GameServiceCallback<Boolean>) {
+    fun login(@NotNull userToken: String, callback: GameServiceCallback<Boolean>) {
         if (!NetworkUtil.isConnected()) throw GameServiceException("Network Unreachable")
         if (Configuration == null) throw GameServiceException("You Must Configuration First")
         if (userToken.isEmpty()) throw GameServiceException("userToken Cant Be Empty")
@@ -379,7 +383,7 @@ object GameService {
                 StartPlaying = System.currentTimeMillis()
                 isAvailable = true
                 IsGuest = false
-                //await core.GSLive.GSLive.Init();
+                GSLive.init()
                 callback.onResponse(true)
             }
 
@@ -394,11 +398,11 @@ object GameService {
     /**
      * Normal Login With GoogleSignInUser To Game Service
      * It May Throw Exception
-     * @param idToken (Not NULL)Specifies the idToken From GoogleSignInUser Class
+     * @param idToken Specifies the idToken From GoogleSignInUser Class
      * @param callback returns UserToken if Login Successfully
      */
     @Throws(GameServiceException::class)
-    fun loginWithGoogle(idToken: String, callback: GameServiceCallback<String>) {
+    fun loginWithGoogle(@NotNull idToken: String, callback: GameServiceCallback<String>) {
         if (!NetworkUtil.isConnected()) throw GameServiceException("Network Unreachable")
         if (Configuration == null) throw GameServiceException("You Must Configuration First")
         if (idToken.isEmpty()) throw GameServiceException("userToken Cant Be Empty")
@@ -414,7 +418,7 @@ object GameService {
                         StartPlaying = System.currentTimeMillis()
                         isAvailable = true
                         IsGuest = false
-                        //await core.GSLive.GSLive.Init();
+                        GSLive.init()
                         callback.onResponse(UserToken.toString())
                     }
 
@@ -454,7 +458,7 @@ object GameService {
                         isAvailable = true
                         IsGuest = false
                         callback.onResponse(true)
-                        //CoreEventHandlers.SuccessfullyLogined?.Invoke(null,null);
+                        CoreListeners.SuccessfullyLogined.invokeListeners(null)
                     }
 
                     override fun onFailure(error: GameServiceException) {
@@ -478,7 +482,7 @@ object GameService {
      * @return return UserToken if signUp Successfully
      */
     @Throws(GameServiceException::class)
-    fun signUp(nickName: String, email: String, password: String, callback: GameServiceCallback<String>) {
+    fun signUp(@NotNull nickName: String, @NotNull email: String, @NotNull password: String, callback: GameServiceCallback<String>) {
         if (!NetworkUtil.isConnected()) throw GameServiceException("Network Unreachable")
         if (Configuration == null) throw GameServiceException("You Must Configuration First")
         if (nickName.isEmpty()) throw GameServiceException("NickName Cant Be Empty")
@@ -496,7 +500,7 @@ object GameService {
                         StartPlaying = System.currentTimeMillis()
                         isAvailable = true
                         IsGuest = false
-                        //await core.GSLive.GSLive.Init();
+                        GSLive.init()
                         callback.onResponse(UserToken.toString())
                     }
 
@@ -541,6 +545,6 @@ object GameService {
         PlayToken = null
         isAvailable = false
         IsGuest = false
-        //GSLive?.Dispose();
+        GSLive.dispose()
     }
 }

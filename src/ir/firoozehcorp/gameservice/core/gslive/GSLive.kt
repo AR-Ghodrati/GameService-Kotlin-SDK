@@ -20,6 +20,7 @@ package ir.firoozehcorp.gameservice.core.gslive
 
 import ir.firoozehcorp.gameservice.handlers.GSHandler
 
+
 /**
  * Represents Game Service MultiPlayer System (GSLive)
  * @author Alireza Ghodrati
@@ -28,6 +29,27 @@ class GSLive {
 
     companion object {
         internal val handler: GSHandler = GSHandler()
+    }
+
+    var realTime: GSLiveRT = GSLiveRT
+    var turnBase: GSLiveTB = GSLiveTB
+    var chat: GSLiveChat = GSLiveChat
+
+
+    fun init() {
+        handler.init()
+    }
+
+    fun dispose() {
+        handler.close()
+    }
+
+    fun isRealTimeAvailable(): Boolean {
+        return handler.realTimeHandler != null
+    }
+
+    fun isTurnBasedAvailable(): Boolean {
+        return handler.turnBasedHandler != null
     }
 
 
