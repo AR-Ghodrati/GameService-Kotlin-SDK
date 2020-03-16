@@ -40,7 +40,10 @@ internal abstract class HandlerCore : Closeable {
     abstract override fun close()
 
     protected abstract fun init()
+
     protected abstract fun request(handlerName: String, payload: Any? = null)
-    protected abstract fun request(handlerName: String, payload: Any? = null, type: GProtocolSendType = GProtocolSendType.UnReliable)
+    protected abstract fun request(handlerName: String, payload: Any? = null, type: GProtocolSendType = GProtocolSendType.NotSet)
+
     protected abstract fun send(packet: APacket)
+    protected abstract fun send(packet: APacket, type: GProtocolSendType = GProtocolSendType.NotSet)
 }

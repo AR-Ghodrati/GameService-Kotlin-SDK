@@ -158,6 +158,10 @@ internal class CommandHandler : HandlerCore() {
         tcpClient.send(packet)
     }
 
+    override fun send(packet: APacket, type: GProtocolSendType) {
+
+    }
+
 
     override fun close() {
         disposed = true

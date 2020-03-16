@@ -26,7 +26,7 @@ import ir.firoozehcorp.gameservice.models.gsLive.realtime.Packet
  */
 internal abstract class BaseRequestHandler : IRequestHandler() {
 
-    override fun handleAction(payload: Any): Packet {
+    override fun handleAction(payload: Any?): Packet {
         if (checkAction(payload)) return doAction(payload)
         throw IllegalArgumentException()
     }

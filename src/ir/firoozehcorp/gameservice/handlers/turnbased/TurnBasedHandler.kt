@@ -149,6 +149,10 @@ internal class TurnBasedHandler(payload: StartPayload) : HandlerCore() {
         tcpClient.send(packet)
     }
 
+    override fun send(packet: APacket, type: GProtocolSendType) {
+
+    }
+
     override fun close() {
         disposed = true
         isFirstInit = false

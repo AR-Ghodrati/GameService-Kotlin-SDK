@@ -88,9 +88,15 @@ internal class RealTimeHandler(payload: StartPayload) : HandlerCore() {
     }
 
     public override fun request(handlerName: String, payload: Any?, type: GProtocolSendType) {
+        requestHandlers[handlerName]?.handleAction(payload)?.let { send(it, type) }
     }
 
     override fun send(packet: APacket) {
+    }
+
+    override fun send(packet: APacket, type: GProtocolSendType) {
+        if (!observer.increase()) return
+        //
     }
 
     override fun close() {
