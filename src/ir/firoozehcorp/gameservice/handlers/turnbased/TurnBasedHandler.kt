@@ -21,7 +21,7 @@ package ir.firoozehcorp.gameservice.handlers.turnbased
 import com.google.gson.Gson
 import ir.firoozehcorp.gameservice.core.GameService
 import ir.firoozehcorp.gameservice.handlers.turnbased.request.*
-import ir.firoozehcorp.gameservice.handlers.turnbased.response.IResponseHandler
+import ir.firoozehcorp.gameservice.handlers.turnbased.response.*
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 import ir.firoozehcorp.gameservice.models.gsLive.Room
 import ir.firoozehcorp.gameservice.models.gsLive.command.StartPayload
@@ -38,7 +38,7 @@ internal class TurnBasedHandler(payload: StartPayload) : Closeable {
     private var _isFirstInit = false
 
 
-    private lateinit var responseHandlers: MutableMap<String, IResponseHandler>
+    private lateinit var responseHandlers: MutableMap<Int, IResponseHandler>
     private lateinit var requestHandlers: MutableMap<String, IRequestHandler>
 
 
@@ -74,7 +74,19 @@ internal class TurnBasedHandler(payload: StartPayload) : Closeable {
 
 
     private fun initResponseMessageHandlers() {
-
+        responseHandlers = mutableMapOf(
+                AuthResponseHandler.action to AuthResponseHandler(),
+                ChooseNextResponseHandler.action to ChooseNextResponseHandler(),
+                CompleteResponseHandler.action to CompleteResponseHandler(),
+                CurrentTurnResponseHandler.action to CurrentTurnResponseHandler(),
+                ErrorResponseHandler.action to ErrorResponseHandler(),
+                FinishResponseHandler.action to FinishResponseHandler(),
+                JoinRoomResponseHandler.action to JoinRoomResponseHandler(),
+                PingResponseHandler.action to PingResponseHandler(),
+                LeaveRoomResponseHandler.action to LeaveRoomResponseHandler(),
+                MemberDetailsResponseHandler.action to MemberDetailsResponseHandler(),
+                TakeTurnResponseHandler.action to TakeTurnResponseHandler()
+        )
 
     }
 
