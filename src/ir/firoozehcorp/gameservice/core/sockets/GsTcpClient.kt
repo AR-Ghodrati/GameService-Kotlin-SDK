@@ -44,7 +44,7 @@ internal class GsTcpClient(area: Area) : GsSocketClient() {
         endpoint = area
     }
 
-    override fun init(callback: GameServiceCallback<Boolean>) {
+    public override fun init(callback: GameServiceCallback<Boolean>) {
         thread(priority = Thread.MAX_PRIORITY) {
             socket = Socket()
             socket.connect(InetSocketAddress(InetAddress.getByName(endpoint.ip), endpoint.port), 6000)
@@ -55,7 +55,7 @@ internal class GsTcpClient(area: Area) : GsSocketClient() {
         }
     }
 
-    override fun startReceiving(callback: GameServiceCallback<Packet>) {
+    public override fun startReceiving(callback: GameServiceCallback<Packet>) {
         thread(priority = Thread.MAX_PRIORITY) {
             try {
                 while (isRunning.get()) {
@@ -94,7 +94,7 @@ internal class GsTcpClient(area: Area) : GsSocketClient() {
         }
     }
 
-    override fun stopReceiving() {
+    public override fun stopReceiving() {
         try {
             isRunning.set(false)
             socket.close()
@@ -105,13 +105,13 @@ internal class GsTcpClient(area: Area) : GsSocketClient() {
         }
     }
 
-    override fun updatePwd(newPwd: String?) {
+    public override fun updatePwd(newPwd: String?) {
     }
 
-    override fun setType(type: GSLiveType?) {
+    public override fun setType(type: GSLiveType?) {
     }
 
-    override fun send(packet: Packet?) {
+    public override fun send(packet: Packet?) {
         thread(priority = Thread.MAX_PRIORITY) {
             try {
                 out.write(gson
@@ -124,7 +124,7 @@ internal class GsTcpClient(area: Area) : GsSocketClient() {
         }
     }
 
-    override fun isAvailable(): Boolean {
+    public override fun isAvailable(): Boolean {
         return isRunning.get()
     }
 }

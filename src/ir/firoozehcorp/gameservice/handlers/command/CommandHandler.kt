@@ -21,17 +21,23 @@ package ir.firoozehcorp.gameservice.handlers.command
 import com.google.gson.Gson
 import ir.firoozehcorp.gameservice.core.GameService
 import ir.firoozehcorp.gameservice.core.sockets.GsTcpClient
+import ir.firoozehcorp.gameservice.handlers.HandlerCore
 import ir.firoozehcorp.gameservice.handlers.command.request.*
 import ir.firoozehcorp.gameservice.handlers.command.resposne.*
+import ir.firoozehcorp.gameservice.handlers.turnbased.TurnBasedHandler
+import ir.firoozehcorp.gameservice.models.GameServiceException
 import ir.firoozehcorp.gameservice.models.consts.Command
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
+import ir.firoozehcorp.gameservice.models.gsLive.APacket
+import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
+import ir.firoozehcorp.gameservice.models.internal.interfaces.GameServiceCallback
+import ir.firoozehcorp.gameservice.models.listeners.CoreListeners
 import ir.firoozehcorp.gameservice.utils.GsLiveSystemObserver
-import java.io.Closeable
 
 /**
  * @author Alireza Ghodrati
  */
-internal class CommandHandler : Closeable {
+internal class CommandHandler : HandlerCore(), GameServiceCallback<Packet> {
 
 
     private val tcpClient: GsTcpClient
@@ -54,6 +60,25 @@ internal class CommandHandler : Closeable {
     init {
         tcpClient = GsTcpClient(Command.area)
         observer = GsLiveSystemObserver(GSLiveType.Core)
+
+
+        CoreListeners.Ping += object : CoreListeners.PingListener {
+            override fun invoke(element: Void?, from: Class<*>?) {
+
+            }
+        }
+
+        CoreListeners.Authorized += object : CoreListeners.AuthorisationListener {
+            override fun invoke(element: String, from: Class<*>?) {
+                if (from != AuthResponseHandler::class.java) return
+                TurnBasedHandler.PlayerHash = element
+                tcpClient.updatePwd(element)
+
+                if (_isFirstInit) return
+                _isFirstInit = true
+                CoreListeners.SuccessfullyLogined.invokeListeners(null)
+            }
+        }
 
         initRequestMessageHandlers()
         initResponseMessageHandlers()
@@ -78,7 +103,6 @@ internal class CommandHandler : Closeable {
         )
     }
 
-
     private fun initResponseMessageHandlers() {
         responseHandlers = mutableMapOf(
                 AutoMatchResponseHandler.action to AutoMatchResponseHandler(),
@@ -98,8 +122,34 @@ internal class CommandHandler : Closeable {
         )
     }
 
+
+    override fun init() {
+        tcpClient.init(object : GameServiceCallback<Boolean> {
+            override fun onFailure(error: GameServiceException) {}
+            override fun onResponse(response: Boolean) {
+                tcpClient.startReceiving(this@CommandHandler)
+            }
+
+        })
+    }
+
+    override fun request(handlerName: String, payload: Any?) {
+        requestHandlers[handlerName]?.handleAction(payload)?.let { send(it) }
+    }
+
+    override fun send(packet: APacket) {
+    }
+
     override fun close() {
 
     }
+
+    override fun onResponse(response: Packet) {
+
+    }
+
+    override fun onFailure(error: GameServiceException) {
+    }
+
 
 }

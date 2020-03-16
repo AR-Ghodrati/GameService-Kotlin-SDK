@@ -24,5 +24,5 @@ import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
  * @author Alireza Ghodrati
  */
 internal abstract class IRequestHandler {
-    protected abstract fun handleAction(payload: Any): Packet
+    abstract fun handleAction(payload: Any?): Packet
 }

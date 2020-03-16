@@ -42,7 +42,7 @@ internal class InviteUserHandler : BaseRequestHandler() {
 
 
     override fun checkAction(payload: Any?): Boolean {
-        return payload is RoomDetail
+        return payload != null && payload is RoomDetail
     }
 
     override fun doAction(payload: Any?): Packet {

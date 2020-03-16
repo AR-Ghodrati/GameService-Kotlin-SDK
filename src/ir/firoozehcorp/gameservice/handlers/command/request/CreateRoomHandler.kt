@@ -54,7 +54,7 @@ internal class CreateRoomHandler : BaseRequestHandler() {
 
 
     override fun checkAction(payload: Any?): Boolean {
-        return payload is GSLiveOption.CreateRoomOption
+        return payload != null && payload is GSLiveOption.CreateRoomOption
     }
 
     override fun doAction(payload: Any?): Packet {

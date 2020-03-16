@@ -47,7 +47,7 @@ internal class SendPrivateMessageHandler : BaseRequestHandler() {
 
 
     override fun checkAction(payload: Any?): Boolean {
-        return payload is DataPayload
+        return payload != null && payload is DataPayload
     }
 
     override fun doAction(payload: Any?): Packet {

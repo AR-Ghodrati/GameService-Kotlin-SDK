@@ -45,7 +45,7 @@ internal class SendChannelMessageHandler : BaseRequestHandler() {
 
 
     override fun checkAction(payload: Any?): Boolean {
-        return payload is Pair<*, *>
+        return payload != null && payload is Pair<*, *>
     }
 
     override fun doAction(payload: Any?): Packet {

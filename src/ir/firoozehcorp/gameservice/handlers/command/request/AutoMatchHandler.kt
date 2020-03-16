@@ -52,7 +52,7 @@ internal class AutoMatchHandler : BaseRequestHandler() {
 
 
     override fun checkAction(payload: Any?): Boolean {
-        return payload is GSLiveOption.AutoMatchOption
+        return payload != null && payload is GSLiveOption.AutoMatchOption
     }
 
     override fun doAction(payload: Any?): Packet {

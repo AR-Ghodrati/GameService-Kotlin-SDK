@@ -29,17 +29,17 @@ internal class StartPayload {
 
     @SerializedName("0")
     @Expose
-    var room: Room? = null
+    lateinit var room: Room
 
 
     @SerializedName("1")
     @Expose
-    var memberId: String? = null
+    lateinit var memberId: String
 
 
     @SerializedName("2")
     @Expose
-    var area: Area? = null
+    lateinit var area: Area
 
 
     override fun toString(): String {

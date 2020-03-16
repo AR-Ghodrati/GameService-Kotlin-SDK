@@ -38,7 +38,7 @@ internal class UnSubscribeChannelHandler : BaseRequestHandler() {
 
 
     override fun checkAction(payload: Any?): Boolean {
-        return payload is String
+        return payload != null && payload is String
     }
 
     override fun doAction(payload: Any?): Packet {

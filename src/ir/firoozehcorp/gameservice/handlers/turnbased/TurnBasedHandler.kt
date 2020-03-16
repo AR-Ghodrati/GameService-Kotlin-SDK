@@ -20,11 +20,13 @@ package ir.firoozehcorp.gameservice.handlers.turnbased
 
 import com.google.gson.Gson
 import ir.firoozehcorp.gameservice.core.GameService
+import ir.firoozehcorp.gameservice.core.sockets.GsTcpClient
 import ir.firoozehcorp.gameservice.handlers.turnbased.request.*
 import ir.firoozehcorp.gameservice.handlers.turnbased.response.*
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 import ir.firoozehcorp.gameservice.models.gsLive.Room
 import ir.firoozehcorp.gameservice.models.gsLive.command.StartPayload
+import ir.firoozehcorp.gameservice.models.listeners.CoreListeners
 import ir.firoozehcorp.gameservice.utils.GsLiveSystemObserver
 import java.io.Closeable
 
@@ -33,6 +35,7 @@ import java.io.Closeable
  */
 internal class TurnBasedHandler(payload: StartPayload) : Closeable {
 
+    private val tcpClient: GsTcpClient
     private val observer: GsLiveSystemObserver
     private var _isDisposed = false
     private var _isFirstInit = false
@@ -50,8 +53,23 @@ internal class TurnBasedHandler(payload: StartPayload) : Closeable {
     }
 
     init {
+        tcpClient = GsTcpClient(payload.area)
         CurrentRoom = payload.room
         observer = GsLiveSystemObserver(GSLiveType.TurnBased)
+
+        CoreListeners.Ping += object : CoreListeners.PingListener {
+            override fun invoke(element: Void?, from: Class<*>?) {
+
+            }
+        }
+
+        CoreListeners.Authorized += object : CoreListeners.AuthorisationListener {
+            override fun invoke(element: String, from: Class<*>?) {
+                if (from != AuthResponseHandler::class.java) return
+                PlayerHash = element
+                tcpClient.updatePwd(element)
+            }
+        }
 
         initRequestMessageHandlers()
         initResponseMessageHandlers()
@@ -72,7 +90,6 @@ internal class TurnBasedHandler(payload: StartPayload) : Closeable {
         )
     }
 
-
     private fun initResponseMessageHandlers() {
         responseHandlers = mutableMapOf(
                 AuthResponseHandler.action to AuthResponseHandler(),
@@ -89,6 +106,7 @@ internal class TurnBasedHandler(payload: StartPayload) : Closeable {
         )
 
     }
+
 
     override fun close() {
 
