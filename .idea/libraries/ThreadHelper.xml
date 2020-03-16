@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ThreadHelper">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/ThreadHelper.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
