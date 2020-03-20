@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="GProtocolNative">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/GProtocolNative.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

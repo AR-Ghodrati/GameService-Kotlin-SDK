@@ -20,14 +20,21 @@ package ir.firoozehcorp.gameservice.handlers.realtime
 
 import com.google.gson.Gson
 import ir.firoozehcorp.gameservice.core.GameService
+import ir.firoozehcorp.gameservice.core.sockets.GProtocolClient
+import ir.firoozehcorp.gameservice.core.sockets.GsUdpClient
 import ir.firoozehcorp.gameservice.handlers.HandlerCore
 import ir.firoozehcorp.gameservice.handlers.realtime.request.*
 import ir.firoozehcorp.gameservice.handlers.realtime.response.*
+import ir.firoozehcorp.gameservice.handlers.turnbased.TurnBasedHandler
+import ir.firoozehcorp.gameservice.models.GameServiceException
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GProtocolSendType
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 import ir.firoozehcorp.gameservice.models.gsLive.APacket
 import ir.firoozehcorp.gameservice.models.gsLive.Room
 import ir.firoozehcorp.gameservice.models.gsLive.command.StartPayload
+import ir.firoozehcorp.gameservice.models.gsLive.realtime.Packet
+import ir.firoozehcorp.gameservice.models.internal.interfaces.GameServiceCallback
+import ir.firoozehcorp.gameservice.models.listeners.CoreListeners
 import ir.firoozehcorp.gameservice.utils.GsLiveSystemObserver
 
 /**
@@ -36,6 +43,7 @@ import ir.firoozehcorp.gameservice.utils.GsLiveSystemObserver
 internal class RealTimeHandler(payload: StartPayload) : HandlerCore() {
 
 
+    private var client: GsUdpClient = GsUdpClient(payload.area)
     private lateinit var responseHandlers: MutableMap<Int, IResponseHandler>
     private lateinit var requestHandlers: MutableMap<String, IRequestHandler>
 
@@ -50,6 +58,8 @@ internal class RealTimeHandler(payload: StartPayload) : HandlerCore() {
     init {
         CurrentRoom = payload.room
         observer = GsLiveSystemObserver(GSLiveType.RealTime)
+
+        setListeners()
 
         initRequestMessageHandlers()
         initResponseMessageHandlers()
@@ -80,8 +90,42 @@ internal class RealTimeHandler(payload: StartPayload) : HandlerCore() {
     }
 
 
-    public override fun init() {
+    private fun setListeners() {
+        client.onError += object : GProtocolClient.ErrorListener {
+            override fun invoke(element: GameServiceException, from: Class<*>?) {
+                if (disposed) return
+                init()
+            }
+        }
+        client.onDataReceived += object : GProtocolClient.DataReceivedListener {
+            override fun invoke(element: Pair<Packet, GProtocolSendType>, from: Class<*>?) {
+                GameService.SynchronizationContext?.send({
+                    responseHandlers[element.first.action]?.handlePacket(element.first, element.second, gson)
+                }, null)
+            }
+        }
 
+        CoreListeners.Authorized += object : CoreListeners.AuthorisationListener {
+            override fun invoke(element: String, from: Class<*>?) {
+                if (from != AuthResponseHandler::class.java) return
+                TurnBasedHandler.PlayerHash = element
+                client.updatePwd(element)
+            }
+        }
+        CoreListeners.GProtocolConnected += object : CoreListeners.GProtocolListener {
+            override fun invoke(element: Void?, from: Class<*>?) {
+                request(AuthorizationHandler.signature, type = GProtocolSendType.Reliable)
+            }
+        }
+    }
+
+    public override fun init() {
+        client.init(object : GameServiceCallback<Boolean> {
+            override fun onFailure(error: GameServiceException) {}
+            override fun onResponse(response: Boolean) {
+                client.startReceiving()
+            }
+        })
     }
 
     public override fun request(handlerName: String, payload: Any?) {
@@ -96,13 +140,13 @@ internal class RealTimeHandler(payload: StartPayload) : HandlerCore() {
 
     override fun send(packet: APacket, type: GProtocolSendType) {
         if (!observer.increase()) return
-        //
+        client.send(packet, type)
     }
 
     override fun close() {
         disposed = true
         isFirstInit = false
-        //tcpClient.stopReceiving()
+        client.stopReceiving()
         observer.dispose()
     }
 
