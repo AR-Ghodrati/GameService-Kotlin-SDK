@@ -30,15 +30,18 @@ internal class Login {
     @SerializedName("status")
     @Expose
     var status: Boolean = false
+        private set
 
 
     @SerializedName("token")
     @Expose
     var token: String? = null
+        private set
 
 
     @SerializedName("game")
     @Expose
     var game: Game? = null
+        private set
 
 }

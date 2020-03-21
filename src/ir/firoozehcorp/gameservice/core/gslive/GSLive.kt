@@ -31,16 +31,16 @@ class GSLive {
         internal val handler: GSHandler = GSHandler()
     }
 
-    var realTime: GSLiveRT = GSLiveRT
-    var turnBase: GSLiveTB = GSLiveTB
-    var chat: GSLiveChat = GSLiveChat
+    val realTime: GSLiveRT = GSLiveRT
+    val turnBase: GSLiveTB = GSLiveTB
+    val chat: GSLiveChat = GSLiveChat
 
 
-    fun init() {
+    internal fun init() {
         handler.init()
     }
 
-    fun dispose() {
+    internal fun dispose() {
         handler.close()
     }
 

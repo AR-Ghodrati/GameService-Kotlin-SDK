@@ -36,6 +36,7 @@ class Message : Serializable {
     @SerializedName("1")
     @Expose
     lateinit var roomId: String
+        internal set
 
 
     /**
@@ -45,6 +46,7 @@ class Message : Serializable {
     @SerializedName("2")
     @Expose
     lateinit var senderId: String
+        internal set
 
 
     /**
@@ -54,6 +56,7 @@ class Message : Serializable {
     @SerializedName("3")
     @Expose
     lateinit var receiverId: String
+        internal set
 
 
     /**
@@ -63,6 +66,7 @@ class Message : Serializable {
     @SerializedName("4")
     @Expose
     var data: String? = null
+        internal set
 
 
     override fun toString(): String {

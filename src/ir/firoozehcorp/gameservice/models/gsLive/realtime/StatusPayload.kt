@@ -30,11 +30,13 @@ internal class StatusPayload : Payload() {
     @SerializedName("1")
     @Expose
     var status: Boolean = false
+        private set
 
 
     @SerializedName("2")
     @Expose
     var message: String? = null
+        private set
 
 
     override fun toString(): String {

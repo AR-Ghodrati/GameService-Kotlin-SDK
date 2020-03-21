@@ -34,6 +34,7 @@ class SaveDetails : Serializable {
     @SerializedName("game")
     @Expose
     var gameId: String? = null
+        private set
 
 
     /**
@@ -43,6 +44,7 @@ class SaveDetails : Serializable {
     @SerializedName("user")
     @Expose
     var userId: String? = null
+        private set
 
 
     /**
@@ -52,6 +54,7 @@ class SaveDetails : Serializable {
     @SerializedName("name")
     @Expose
     var name: String? = null
+        private set
 
 
     /**
@@ -61,6 +64,7 @@ class SaveDetails : Serializable {
     @SerializedName("lastmodify")
     @Expose
     var lastModify: String? = null
+        private set
 
 
     override fun toString(): String {

@@ -30,56 +30,67 @@ internal class RoomDetail {
     @SerializedName("0")
     @Expose
     var id: String? = null
+        internal set
 
 
     @SerializedName("1")
     @Expose
     var user: String? = null
+        internal set
 
 
     @SerializedName("2")
     @Expose
     var invite: String? = null
+        internal set
 
 
     @SerializedName("3")
     @Expose
     var name: String? = null
+        internal set
 
 
     @SerializedName("4")
     @Expose
     var type: Int = -1
+        internal set
 
 
     @SerializedName("5")
     @Expose
     var min: Int = -1
+        internal set
 
 
     @SerializedName("6")
     @Expose
     var max: Int = -1
+        internal set
 
 
     @SerializedName("7")
     @Expose
     var gsLiveType: Int = -1
+        internal set
 
 
     @SerializedName("8")
     @Expose
     var role: String? = null
+        internal set
 
 
     @SerializedName("9")
     @Expose
     var isPrivate: Boolean = false
+        internal set
 
 
     @SerializedName("10")
     @Expose
     var isPersist: Boolean = false
+        internal set
 
 
     override fun toString(): String {

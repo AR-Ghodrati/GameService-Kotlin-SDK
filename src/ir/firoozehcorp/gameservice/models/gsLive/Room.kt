@@ -37,6 +37,7 @@ class Room : Serializable {
     @SerializedName("_id")
     @Expose
     lateinit var id: String
+        private set
 
 
     /**
@@ -46,6 +47,7 @@ class Room : Serializable {
     @SerializedName("name")
     @Expose
     lateinit var name: String
+        private set
 
 
     /**
@@ -55,6 +57,7 @@ class Room : Serializable {
     @SerializedName("logo")
     @Expose
     var logo: String? = null
+        private set
 
 
     /**
@@ -64,6 +67,7 @@ class Room : Serializable {
     @SerializedName("creator")
     @Expose
     var creator: String? = null
+        private set
 
 
     /**
@@ -73,6 +77,7 @@ class Room : Serializable {
     @SerializedName("min")
     @Expose
     var min: Int = 0
+        private set
 
 
     /**
@@ -82,6 +87,7 @@ class Room : Serializable {
     @SerializedName("max")
     @Expose
     var max: Int = 0
+        private set
 
 
     /**
@@ -91,6 +97,7 @@ class Room : Serializable {
     @SerializedName("role")
     @Expose
     lateinit var role: String
+        private set
 
 
     /**
@@ -100,6 +107,7 @@ class Room : Serializable {
     @SerializedName("game")
     @Expose
     var gameId: String? = null
+        private set
 
 
     /**
@@ -109,6 +117,7 @@ class Room : Serializable {
     @SerializedName("private")
     @Expose
     var isPrivate: Boolean = false
+        private set
 
 
     /**
@@ -118,6 +127,7 @@ class Room : Serializable {
     @SerializedName("status")
     @Expose
     var status: Int = 0
+        private set
 
 
     /**
@@ -127,6 +137,7 @@ class Room : Serializable {
     @SerializedName("syncMode")
     @Expose
     var type: GSLiveType = GSLiveType.NotSet
+        private set
 
 
     override fun toString(): String {

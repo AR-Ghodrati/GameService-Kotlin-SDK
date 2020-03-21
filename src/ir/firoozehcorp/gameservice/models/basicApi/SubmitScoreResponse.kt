@@ -34,6 +34,7 @@ class SubmitScoreResponse : Serializable {
     @SerializedName("leaderboard_r")
     @Expose
     var leaderboard: Leaderboard? = null
+        private set
 
 
     /**
@@ -43,6 +44,7 @@ class SubmitScoreResponse : Serializable {
     @SerializedName("score")
     @Expose
     var score: Int = 0
+        private set
 
 
     /**
@@ -53,6 +55,7 @@ class SubmitScoreResponse : Serializable {
     @SerializedName("tries")
     @Expose
     var tries: Int = 0
+        private set
 
 
     override fun toString(): String {

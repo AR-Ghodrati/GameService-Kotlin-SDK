@@ -35,6 +35,7 @@ class LeaderBoardDetails : Serializable {
     @SerializedName("leaderboard")
     @Expose
     var leaderboard: Leaderboard? = null
+        private set
 
 
     /**
@@ -44,6 +45,7 @@ class LeaderBoardDetails : Serializable {
     @SerializedName("scores")
     @Expose
     var scores: MutableList<Score>? = null
+        private set
 
 
     override fun toString(): String {

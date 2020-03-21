@@ -24,6 +24,7 @@ import com.google.gson.annotations.SerializedName
  * @author Alireza Ghodrati
  */
 class SystemInfo {
+
     @SerializedName("DeviceId")
     @Expose
     var deviceUniqueId: String? = null

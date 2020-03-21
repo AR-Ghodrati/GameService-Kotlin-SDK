@@ -29,9 +29,11 @@ internal class Error {
     @SerializedName("status")
     @Expose
     var status: Boolean = false
+        private set
 
     @SerializedName("msg")
     @Expose
     var message: String? = null
+        private set
 
 }

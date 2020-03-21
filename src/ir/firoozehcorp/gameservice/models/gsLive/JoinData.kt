@@ -36,6 +36,7 @@ class JoinData : Serializable {
     @SerializedName("1")
     @Expose
     lateinit var type: JoinType
+        private set
 
 
     /**
@@ -45,6 +46,7 @@ class JoinData : Serializable {
     @SerializedName("2")
     @Expose
     lateinit var roomData: RoomData
+        private set
 
 
     /**
@@ -53,8 +55,8 @@ class JoinData : Serializable {
      */
     @SerializedName("3")
     @Expose
-
     lateinit var joinedMember: Member
+        private set
 
 
     override fun toString(): String {

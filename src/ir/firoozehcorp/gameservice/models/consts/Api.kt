@@ -21,7 +21,7 @@ package ir.firoozehcorp.gameservice.models.consts
 /**
  * @author Alireza Ghodrati
  */
-object Api {
+internal object Api {
 
     const val BaseUrl1 = "https://gamesservice.ir"
     private const val BaseUrl2 = "https://api.gamesservice.ir"

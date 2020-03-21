@@ -36,6 +36,7 @@ class User : Serializable {
     @SerializedName("_id")
     @Expose
     var id: String? = null
+        private set
 
 
     /**
@@ -45,6 +46,7 @@ class User : Serializable {
     @SerializedName("name")
     @Expose
     var name: String? = null
+        private set
 
 
     /**
@@ -54,6 +56,7 @@ class User : Serializable {
     @SerializedName("logo")
     @Expose
     var logo: String? = null
+        private set
 
 
     /**
@@ -63,6 +66,7 @@ class User : Serializable {
     @SerializedName("point")
     @Expose
     var point: Int = 0
+        private set
 
 
     /**
@@ -72,7 +76,7 @@ class User : Serializable {
     @SerializedName("isMe")
     @Expose
     var isMe: Boolean = false
-
+        private set
 
     /**
      * get this User Is Guest or Not.
@@ -82,6 +86,7 @@ class User : Serializable {
     @SerializedName("guest")
     @Expose
     var isGuest: Boolean = false
+        private set
 
 
     override fun toString(): String {

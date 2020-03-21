@@ -28,18 +28,22 @@ class Game {
     @SerializedName("id")
     @Expose
     var id: String? = null
+        private set
 
     @SerializedName("_id")
     @Expose
     private var _id: String? = null
 
+
     @SerializedName("name")
     @Expose
     var name: String? = null
+        private set
 
     @SerializedName("package")
     @Expose
     var `package`: String? = null
+        private set
 
     override fun toString(): String {
         return "Game{" +

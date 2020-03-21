@@ -45,14 +45,10 @@ internal abstract class GProtocolClient {
     protected var gson: Gson = Gson()
     protected lateinit var endpoint: Area
 
-    protected var isLogEnable = false
     protected var IsAvailable = false
 
     val onError: EventHandler<ErrorListener, GameServiceException> = EventHandler()
     val onDataReceived: EventHandler<DataReceivedListener, Pair<Packet, GProtocolSendType>> = EventHandler()
-
-    protected val l_START = '{'
-    protected val l_END = '}'
 
 
     protected abstract fun init(callback: GameServiceCallback<Boolean>)

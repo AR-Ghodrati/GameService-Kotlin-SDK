@@ -37,6 +37,7 @@ class NotificationActionData : Serializable {
     @SerializedName("1")
     @Expose
     var packageName: String? = null
+        private set
 
 
     /**
@@ -47,6 +48,7 @@ class NotificationActionData : Serializable {
     @SerializedName("2")
     @Expose
     var marketType: MarketType = MarketType.NotSet
+        private set
 
 
     /**
@@ -57,6 +59,7 @@ class NotificationActionData : Serializable {
     @SerializedName("3")
     @Expose
     var linkAddress: String? = null
+        private set
 
 
     /**
@@ -67,6 +70,7 @@ class NotificationActionData : Serializable {
     @SerializedName("4")
     @Expose
     var emailAddress: String? = null
+        private set
 
 
     /**
@@ -77,6 +81,7 @@ class NotificationActionData : Serializable {
     @SerializedName("5")
     @Expose
     var emailTitle: String? = null
+        private set
 
 
     /**
@@ -87,6 +92,7 @@ class NotificationActionData : Serializable {
     @SerializedName("6")
     @Expose
     var emailBody: String? = null
+        private set
 
 
     /**
@@ -97,6 +103,7 @@ class NotificationActionData : Serializable {
     @SerializedName("7")
     @Expose
     var telegramChannel: String? = null
+        private set
 
 
     /**
@@ -107,6 +114,7 @@ class NotificationActionData : Serializable {
     @SerializedName("8")
     @Expose
     var intentAction: String? = null
+        private set
 
 
     override fun toString(): String {

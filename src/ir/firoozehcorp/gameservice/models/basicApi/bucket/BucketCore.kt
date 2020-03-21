@@ -35,6 +35,7 @@ open class BucketCore : Serializable {
     @SerializedName("id")
     @Expose(serialize = false)
     var id: String? = null
+        private set
 
 
     /**
@@ -44,6 +45,7 @@ open class BucketCore : Serializable {
     @SerializedName("owner")
     @Expose(serialize = false)
     var ownerId: String? = null
+        private set
 
 
     override fun toString(): String {

@@ -35,6 +35,7 @@ class Score : Serializable {
     @SerializedName("game")
     @Expose
     var gameId: String? = null
+        private set
 
 
     /**
@@ -44,6 +45,7 @@ class Score : Serializable {
     @SerializedName("user")
     @Expose
     var user: User? = null
+        private set
 
 
     /**
@@ -53,6 +55,7 @@ class Score : Serializable {
     @SerializedName("value")
     @Expose
     var value: Int = 0
+        private set
 
 
     /**
@@ -62,6 +65,7 @@ class Score : Serializable {
     @SerializedName("rank")
     @Expose
     var rank: Int = 0
+        private set
 
 
     /**
@@ -71,6 +75,7 @@ class Score : Serializable {
     @SerializedName("tries")
     @Expose
     var tries: Int = 0
+        private set
 
 
     override fun toString(): String {

@@ -35,6 +35,7 @@ class Leaderboard : Serializable {
     @SerializedName("name")
     @Expose
     var name: String? = null
+        private set
 
 
     /**
@@ -45,6 +46,7 @@ class Leaderboard : Serializable {
     @SerializedName("key")
     @Expose
     var key: String? = null
+        private set
 
 
     /**
@@ -55,6 +57,7 @@ class Leaderboard : Serializable {
     @SerializedName("status")
     @Expose
     var status: Boolean = false
+        private set
 
 
     /**
@@ -64,6 +67,7 @@ class Leaderboard : Serializable {
     @SerializedName("image")
     @Expose
     var image: String? = null
+        private set
 
 
     /**
@@ -73,6 +77,7 @@ class Leaderboard : Serializable {
     @SerializedName("game")
     @Expose
     var game: String? = null
+        private set
 
 
     /**
@@ -83,6 +88,7 @@ class Leaderboard : Serializable {
     @SerializedName("from")
     @Expose
     var from: Int = 0
+        private set
 
 
     /**
@@ -93,6 +99,7 @@ class Leaderboard : Serializable {
     @SerializedName("to")
     @Expose
     var to: Int = 0
+        private set
 
 
     /**
@@ -103,6 +110,7 @@ class Leaderboard : Serializable {
     @SerializedName("order")
     @Expose
     var order: Int = 0
+        private set
 
 
     override fun toString(): String {

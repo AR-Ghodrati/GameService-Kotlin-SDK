@@ -35,6 +35,7 @@ class Game : Serializable {
     @SerializedName("_id")
     @Expose
     lateinit var id: String
+        private set
 
 
     /**
@@ -44,6 +45,7 @@ class Game : Serializable {
     @SerializedName("logo")
     @Expose
     var logo: String? = null
+        private set
 
 
     /**
@@ -53,6 +55,7 @@ class Game : Serializable {
     @SerializedName("name")
     @Expose
     lateinit var name: String
+        private set
 
 
     override fun toString(): String {

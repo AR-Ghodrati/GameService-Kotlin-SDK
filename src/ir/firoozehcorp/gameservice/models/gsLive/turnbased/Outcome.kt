@@ -35,6 +35,7 @@ class Outcome : Serializable {
     @SerializedName("0")
     @Expose
     var placement: Int = -1
+        private set
 
 
     /**
@@ -44,6 +45,7 @@ class Outcome : Serializable {
     @SerializedName("1")
     @Expose
     var result: String? = null
+        private set
 
 
     override fun toString(): String {

@@ -36,6 +36,7 @@ class Complete : Serializable {
     @SerializedName("Accept")
     @Expose
     var acceptCounts: String? = null
+        private set
 
 
     /**
@@ -46,6 +47,7 @@ class Complete : Serializable {
     @SerializedName("Outcomes")
     @Expose
     lateinit var result: Outcomes
+        private set
 
 
     override fun toString(): String {

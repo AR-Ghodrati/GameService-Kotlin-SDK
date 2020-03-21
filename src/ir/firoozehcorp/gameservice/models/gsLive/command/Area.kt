@@ -30,16 +30,19 @@ internal class Area {
     @SerializedName("0")
     @Expose
     lateinit var ip: String
+        internal set
 
 
     @SerializedName("1")
     @Expose
     lateinit var protocol: String
+        internal set
 
 
     @SerializedName("2")
     @Expose
     var port: Int = 0
+        internal set
 
 
     override fun toString(): String {

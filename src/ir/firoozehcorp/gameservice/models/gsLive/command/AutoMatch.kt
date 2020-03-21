@@ -30,21 +30,25 @@ internal class AutoMatch {
     @SerializedName("min")
     @Expose
     var min: Int = 0
+        private set
 
 
     @SerializedName("max")
     @Expose
     var max: Int = 0
+        private set
 
 
     @SerializedName("role")
     @Expose
     var role: String? = null
+        private set
 
 
     @SerializedName("accept")
     @Expose
     var accept: Boolean = false
+        private set
 
 
     override fun toString(): String {

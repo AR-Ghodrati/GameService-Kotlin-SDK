@@ -8,6 +8,7 @@
       <element id="library" level="project" name="com.google.code.gson:gson:2.8.6" />
       <element id="library" level="project" name="com.squareup.okhttp3:okhttp:4.1.1" />
       <element id="library" level="project" name="ThreadHelper" />
+      <element id="library" level="project" name="GProtocolNative" />
     </root>
   </artifact>
 </component>

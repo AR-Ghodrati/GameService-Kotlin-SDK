@@ -36,6 +36,7 @@ class Notification : Serializable {
     @SerializedName("1")
     @Expose
     lateinit var title: String
+        private set
 
 
     /**
@@ -45,6 +46,7 @@ class Notification : Serializable {
     @SerializedName("2")
     @Expose
     lateinit var description: String
+        private set
 
 
     /**
@@ -54,6 +56,7 @@ class Notification : Serializable {
     @SerializedName("4")
     @Expose
     var tapAction: TapActionType = TapActionType.CloseNotification
+        private set
 
 
     /**
@@ -63,6 +66,7 @@ class Notification : Serializable {
     @SerializedName("5")
     @Expose
     lateinit var actionData: NotificationActionData
+        private set
 
 
     /**
@@ -72,6 +76,7 @@ class Notification : Serializable {
     @SerializedName("6")
     @Expose
     var jsonData: String? = null
+        private set
 
 
     override fun toString(): String {

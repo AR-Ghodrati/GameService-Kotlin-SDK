@@ -38,6 +38,7 @@ class Invite : Serializable {
     @SerializedName("_id")
     @Expose
     lateinit var id: String
+        private set
 
 
     /**
@@ -47,6 +48,7 @@ class Invite : Serializable {
     @SerializedName("inviter")
     @Expose
     lateinit var inviter: User
+        private set
 
 
     /**
@@ -56,6 +58,7 @@ class Invite : Serializable {
     @SerializedName("inviter")
     @Expose
     lateinit var invited: String
+        private set
 
 
     /**
@@ -65,6 +68,7 @@ class Invite : Serializable {
     @SerializedName("room")
     @Expose
     lateinit var room: Room
+        private set
 
 
     /**
@@ -74,4 +78,5 @@ class Invite : Serializable {
     @SerializedName("game")
     @Expose
     lateinit var game: Game
+        private set
 }

@@ -43,16 +43,26 @@ import ir.firoozehcorp.gameservice.utils.NetworkUtil
 object GameService {
 
     private const val Tag = "FiroozehGameService"
+
     internal var isAvailable = false
+        private set
     internal var UserToken: String? = null
+        private set
     internal var PlayToken: String? = null
+        private set
     internal var CurrentGame: Game? = null
+        private set
     internal var StartPlaying: Long = 0
+        private set
     internal var IsGuest = false
+        private set
     internal var Configuration: GameServiceClientConfiguration? = null
+        private set
     internal var SynchronizationContext: SynchronizationContext? = null
+        private set
 
     lateinit var GSLive: GSLive
+        private set
 
     interface NotificationListener : EventHandler.IEventHandler<Notification> {
         override fun invoke(element: Notification, from: Class<*>?)

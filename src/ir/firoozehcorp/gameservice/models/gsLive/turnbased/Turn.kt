@@ -36,6 +36,7 @@ class Turn : Serializable {
     @SerializedName("0")
     @Expose
     var data: String? = null
+        private set
 
 
     /**
@@ -45,6 +46,7 @@ class Turn : Serializable {
     @SerializedName("1")
     @Expose
     lateinit var whoTakeTurn: Member
+        private set
 
 
     override fun toString(): String {

@@ -35,6 +35,7 @@ class Achievement : Serializable {
     @SerializedName("name")
     @Expose
     var name: String? = null
+        private set
 
 
     /**
@@ -45,6 +46,7 @@ class Achievement : Serializable {
     @SerializedName("key")
     @Expose
     var key: String? = null
+        private set
 
 
     /**
@@ -54,6 +56,7 @@ class Achievement : Serializable {
     @SerializedName("point")
     @Expose
     var point: Int = 0
+        private set
 
 
     /**
@@ -63,6 +66,7 @@ class Achievement : Serializable {
     @SerializedName("desc")
     @Expose
     var description: String? = null
+        private set
 
 
     /**
@@ -72,6 +76,7 @@ class Achievement : Serializable {
     @SerializedName("image")
     @Expose
     var image: String? = null
+        private set
 
 
     /**
@@ -82,6 +87,7 @@ class Achievement : Serializable {
     @SerializedName("status")
     @Expose
     var status: Boolean = false
+        private set
 
 
     /**
@@ -92,6 +98,7 @@ class Achievement : Serializable {
     @SerializedName("earned")
     @Expose
     var earned: Boolean = false
+        private set
 
 
     /**
@@ -101,6 +108,7 @@ class Achievement : Serializable {
     @SerializedName("game")
     @Expose
     var game: String? = null
+        private set
 
 
     override fun toString(): String {

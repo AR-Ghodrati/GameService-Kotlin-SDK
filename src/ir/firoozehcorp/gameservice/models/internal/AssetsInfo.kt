@@ -27,24 +27,30 @@ import com.google.gson.annotations.SerializedName
 
 
 internal class AssetsInfo {
+
     @SerializedName("status")
     @Expose
     var status: Boolean = false
+        private set
 
 
     @SerializedName("data")
     @Expose
     var data: Data? = null
+        private set
 
 
     internal class Data {
+
         @SerializedName("size")
         @Expose
         var size: Long = 0
+            private set
 
 
         @SerializedName("downloadLink")
         @Expose
         var link: String? = null
+            private set
     }
 }

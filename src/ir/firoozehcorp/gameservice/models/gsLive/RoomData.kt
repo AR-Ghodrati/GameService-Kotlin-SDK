@@ -35,6 +35,7 @@ class RoomData : Serializable {
     @SerializedName("1")
     @Expose
     lateinit var id: String
+        private set
 
 
     /**
@@ -44,6 +45,7 @@ class RoomData : Serializable {
     @SerializedName("2")
     @Expose
     lateinit var name: String
+        private set
 
 
     /**
@@ -53,6 +55,7 @@ class RoomData : Serializable {
     @SerializedName("3")
     @Expose
     var logo: String? = null
+        private set
 
 
     /**
@@ -62,6 +65,7 @@ class RoomData : Serializable {
     @SerializedName("4")
     @Expose
     var creator: String? = null
+        private set
 
 
     /**
@@ -71,6 +75,7 @@ class RoomData : Serializable {
     @SerializedName("5")
     @Expose
     var min: Int = 0
+        private set
 
 
     /**
@@ -80,6 +85,7 @@ class RoomData : Serializable {
     @SerializedName("6")
     @Expose
     var max: Int = 0
+        private set
 
 
     /**
@@ -89,6 +95,7 @@ class RoomData : Serializable {
     @SerializedName("7")
     @Expose
     var role: String? = null
+        private set
 
 
     /**
@@ -98,6 +105,7 @@ class RoomData : Serializable {
     @SerializedName("8")
     @Expose
     var isPrivate: Boolean = false
+        private set
 
 
     /**
@@ -107,6 +115,7 @@ class RoomData : Serializable {
     @SerializedName("9")
     @Expose
     var status: Int = 0
+        private set
 
 
     /**
@@ -116,6 +125,7 @@ class RoomData : Serializable {
     @SerializedName("10")
     @Expose
     var joinedPlayers: Int = 0
+        private set
 
 
     override fun toString(): String {
