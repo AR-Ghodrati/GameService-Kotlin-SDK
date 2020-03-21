@@ -62,13 +62,12 @@ object GameService {
     internal var SynchronizationContext: SynchronizationContext? = null
         private set
 
-    lateinit var GSLive: GSLive
-        private set
-
     interface NotificationListener : EventHandler.IEventHandler<Notification> {
         override fun invoke(element: Notification, from: Class<*>?)
     }
 
+
+    val GSLive: GSLive = GSLive()
     val OnNotificationReceived: EventHandler<NotificationListener, Notification> = EventHandler()
 
     /**
@@ -80,7 +79,6 @@ object GameService {
         if (configuration == null) throw GameServiceException("Configuration Cant Be Null")
         if (isAuthenticated()) throw GameServiceException("Must Logout First To ReConfiguration")
         Configuration = configuration
-        GSLive = GSLive()
     }
 
 

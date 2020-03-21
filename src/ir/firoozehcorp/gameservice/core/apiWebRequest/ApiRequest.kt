@@ -61,7 +61,7 @@ internal object ApiRequest {
                     }
 
                     override fun onResponse(call: Call, response: Response) {
-                        if (response.isSuccessful) callback.onResponse(gson.fromJson(response.body?.string(), AssetInfo::class.java))
+                        if (response.isSuccessful) callback.onResponse(gson.fromJson(response.body?.string(), AssetInfo::class.java).apply { assetData?.name = Tag })
                         else callback.onFailure(GameServiceException(gson.fromJson(response.body?.string(), Error::class.java).message))
                     }
 

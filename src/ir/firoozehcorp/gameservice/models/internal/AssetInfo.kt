@@ -56,5 +56,15 @@ class AssetInfo {
         @Expose
         var link: String? = null
             private set
+
+        override fun toString(): String {
+            return "AssetData(size=$size, name='$name', link=$link)"
+        }
     }
+
+    override fun toString(): String {
+        return "AssetInfo(status=$status, assetData=$assetData)"
+    }
+
+
 }
