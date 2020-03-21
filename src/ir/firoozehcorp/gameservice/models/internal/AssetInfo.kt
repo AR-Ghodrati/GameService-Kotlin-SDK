@@ -26,7 +26,7 @@ import com.google.gson.annotations.SerializedName
  */
 
 
-internal class AssetsInfo {
+class AssetInfo {
 
     @SerializedName("status")
     @Expose
@@ -36,16 +36,20 @@ internal class AssetsInfo {
 
     @SerializedName("data")
     @Expose
-    var data: Data? = null
+    var assetData: AssetData? = null
         private set
 
 
-    internal class Data {
+    inner class AssetData {
 
         @SerializedName("size")
         @Expose
         var size: Long = 0
             private set
+
+
+        var name: String = ""
+            internal set
 
 
         @SerializedName("downloadLink")

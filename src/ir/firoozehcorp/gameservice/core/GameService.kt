@@ -29,6 +29,7 @@ import ir.firoozehcorp.gameservice.models.annotations.Nullable
 import ir.firoozehcorp.gameservice.models.basicApi.*
 import ir.firoozehcorp.gameservice.models.basicApi.bucket.BucketOption
 import ir.firoozehcorp.gameservice.models.gsLive.command.Notification
+import ir.firoozehcorp.gameservice.models.internal.AssetInfo
 import ir.firoozehcorp.gameservice.models.internal.EventHandler
 import ir.firoozehcorp.gameservice.models.internal.GSTime
 import ir.firoozehcorp.gameservice.models.internal.Game
@@ -316,6 +317,20 @@ object GameService {
 
 
     /**
+     * Gets Asset Info With AssetTag
+     * @param assetTag Specifies the Asset tag that Set in Developers Panel
+     * @param callback return The AssetInfo
+     */
+    @Throws(GameServiceException::class)
+    fun getAssetInfo(@NotNull assetTag: String, callback: GameServiceCallback<AssetInfo>) {
+        if (Configuration == null) throw GameServiceException("You Must Configuration First")
+        if (assetTag.isEmpty()) throw GameServiceException("assetTag Cant Be EmptyOrNull")
+
+        ApiRequest.getAssetInfo(Configuration?.clientId.toString(), assetTag, callback)
+    }
+
+
+    /**
      * Download Asset With Tag
      * @param assetTag Specifies the Asset tag that Set in Developers Panel
      * @param dirPath Specifies the Download File Directory Path
@@ -328,6 +343,21 @@ object GameService {
         if (dirPath.isEmpty()) throw GameServiceException("DownloadDirPath Cant Be EmptyOrNull")
 
         DownloadRequest.downloadAsset(dirPath, assetTag, Configuration?.clientId.toString(), callback)
+    }
+
+
+    /**
+     * Download Asset With AssetInfo
+     * @param assetInfo Specifies the Asset Info
+     * @param dirPath Specifies the Download File Directory Path
+     * @param callback return True if Download Done
+     */
+    @Throws(GameServiceException::class)
+    fun downloadAsset(@NotNull assetInfo: AssetInfo, @NotNull dirPath: String, callback: GameServiceCallback<Boolean>) {
+        if (Configuration == null) throw GameServiceException("You Must Configuration First")
+        if (dirPath.isEmpty()) throw GameServiceException("DownloadDirPath Cant Be EmptyOrNull")
+
+        DownloadRequest.downloadAssetWithInfo(dirPath, assetInfo, callback)
     }
 
 

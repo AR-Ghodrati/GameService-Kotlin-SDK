@@ -26,7 +26,7 @@ import ir.firoozehcorp.gameservice.models.basicApi.*
 import ir.firoozehcorp.gameservice.models.basicApi.bucket.BucketOption
 import ir.firoozehcorp.gameservice.models.basicApi.tResponse.*
 import ir.firoozehcorp.gameservice.models.consts.Api
-import ir.firoozehcorp.gameservice.models.internal.AssetsInfo
+import ir.firoozehcorp.gameservice.models.internal.AssetInfo
 import ir.firoozehcorp.gameservice.models.internal.GSTime
 import ir.firoozehcorp.gameservice.models.internal.interfaces.GameServiceCallback
 import ir.firoozehcorp.gameservice.models.internal.jsonPatameterized.BucketOf
@@ -53,8 +53,7 @@ internal object ApiRequest {
             .create()
 
 
-
-    internal fun getDataPackInfo(gameId: String, Tag: String, callback: GameServiceCallback<AssetsInfo>) {
+    internal fun getAssetInfo(gameId: String, Tag: String, callback: GameServiceCallback<AssetInfo>) {
         GSWebRequest.get(Api.BaseUrl1 + "/game/" + gameId + "/datapack/?tag=" + Tag, createPlayTokenHeader())
                 .enqueue(object : Callback {
                     override fun onFailure(call: Call, e: IOException) {
@@ -62,7 +61,7 @@ internal object ApiRequest {
                     }
 
                     override fun onResponse(call: Call, response: Response) {
-                        if (response.isSuccessful) callback.onResponse(gson.fromJson(response.body?.string(), AssetsInfo::class.java))
+                        if (response.isSuccessful) callback.onResponse(gson.fromJson(response.body?.string(), AssetInfo::class.java))
                         else callback.onFailure(GameServiceException(gson.fromJson(response.body?.string(), Error::class.java).message))
                     }
 
