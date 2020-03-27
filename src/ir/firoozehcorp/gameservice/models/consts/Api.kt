@@ -38,6 +38,8 @@ internal object Api {
 
     const val CurrentTime = "$BaseUrl2/syncedtime"
 
+    const val FaaS = "https://faas.gamesservice.ir/"
+
     const val UserProfileLogo = "$BaseUrl1/Application/image"
     const val UserProfile = "$BaseUrl1/Application"
 }

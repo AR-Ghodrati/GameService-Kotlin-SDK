@@ -360,6 +360,21 @@ object GameService {
 
 
     /**
+     * Execute Cloud Function
+     * @param functionId Specifies the function Id that Set in Developers Panel
+     * @param functionParameters Specifies the Function Input Parameter Class that Set in Developers Panel
+     * @param callback return The AssetInfo
+     */
+    @Throws(GameServiceException::class)
+    fun executeCloudFunction(@NotNull functionId: String, @Nullable functionParameters: Any? = null, callback: GameServiceCallback<String>) {
+        if (Configuration == null) throw GameServiceException("You Must Configuration First")
+        if (functionId.isEmpty()) throw GameServiceException("functionId Cant Be EmptyOrNull")
+
+        ApiRequest.executeCloudFunction(functionId, functionParameters, callback)
+    }
+
+
+    /**
      * Normal Login (InFirstOnly) To Game Service
      * It May Throw Exception
      * @param callback returns UserToken if Login Successfully

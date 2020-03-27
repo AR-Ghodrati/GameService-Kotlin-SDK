@@ -460,6 +460,22 @@ internal object ApiRequest {
     }
 
 
+    internal fun executeCloudFunction(functionId: String, functionParameters: Any?, callback: GameServiceCallback<String>) {
+        GSWebRequest.post(Api.FaaS + functionId, gson.toJson(functionParameters), createPlayTokenHeader())
+                .enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        callback.onFailure(GameServiceException(e.message))
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        if (response.isSuccessful) callback.onResponse(response.body?.string().toString())
+                        else callback.onFailure(GameServiceException(gson.fromJson(response.body?.string(), Error::class.java).message))
+                    }
+
+                })
+    }
+
+
     private fun createSubmitScoreMap(scoreValue: Int): MutableMap<String, Int> {
         return mutableMapOf(
                 "value" to scoreValue
