@@ -17,6 +17,7 @@
  */
 package ir.firoozehcorp.gameservice.core.apiWebRequest
 
+import ir.firoozehcorp.gameservice.core.GameService
 import okhttp3.Call
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -34,6 +35,7 @@ object GSWebRequest {
     private var client = OkHttpClient()
     private val JSON = "application/json; charset=utf-8".toMediaType()
     private val MEDIA_TYPE_PNG = "image/png".toMediaType()
+    private val UserAgent = "KotlinSDK ${GameService.version()}"
 
 
     @Throws(IOException::class)
@@ -94,14 +96,15 @@ object GSWebRequest {
 
     @Throws(IOException::class)
     fun download(URL: String): Call {
-        val request = Request.Builder().url(URL).build()
+        val request = addHeaders(Request.Builder()).url(URL).build()
         return client.newCall(request)
     }
 
 
-    private fun addHeaders(builder: Request.Builder, headers: MutableMap<String, String>?)
+    private fun addHeaders(builder: Request.Builder, headers: MutableMap<String, String>? = null)
             : Request.Builder {
         headers?.forEach { (name, value) -> builder.addHeader(name, value) }
+        builder.addHeader("User-Agent", UserAgent)
         return builder
     }
 }

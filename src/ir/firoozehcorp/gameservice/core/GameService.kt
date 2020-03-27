@@ -571,7 +571,7 @@ object GameService {
      * @return The Current gameservice Version
      */
     fun version(): String {
-        return "2.0.3"
+        return "2.1.0"
     }
 
     /**
