@@ -361,16 +361,17 @@ object GameService {
 
     /**
      * Execute Cloud Function
+     * note : if Function is public , You Can Call it without Login first
      * @param functionId Specifies the function Id that Set in Developers Panel
      * @param functionParameters Specifies the Function Input Parameter Class that Set in Developers Panel
      * @param callback return The AssetInfo
      */
     @Throws(GameServiceException::class)
-    fun executeCloudFunction(@NotNull functionId: String, @Nullable functionParameters: Any? = null, callback: GameServiceCallback<String>) {
-        if (Configuration == null) throw GameServiceException("You Must Configuration First")
+    fun executeCloudFunction(@NotNull functionId: String, @Nullable functionParameters: Any? = null, isPublic: Boolean = false, callback: GameServiceCallback<String>) {
+        if (!isPublic && PlayToken.isNullOrEmpty()) throw GameServiceException("You Login First In Private Mode")
         if (functionId.isEmpty()) throw GameServiceException("functionId Cant Be EmptyOrNull")
 
-        ApiRequest.executeCloudFunction(functionId, functionParameters, callback)
+        ApiRequest.executeCloudFunction(functionId, functionParameters, isPublic, callback)
     }
 
 
