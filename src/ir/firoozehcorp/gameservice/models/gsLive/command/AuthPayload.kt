@@ -25,9 +25,9 @@ import ir.firoozehcorp.gameservice.models.gsLive.Payload
 /**
  * @author Alireza Ghodrati
  */
-internal class AuthPayload(@SerializedName("0")
-                           @Expose var gameId: String?, @SerializedName("1")
-                           @Expose var token: String?) : Payload() {
+internal data class AuthPayload(@SerializedName("0")
+                                @Expose var gameId: String?, @SerializedName("1")
+                                @Expose var token: String?) : Payload() {
 
 
     override fun toString(): String {

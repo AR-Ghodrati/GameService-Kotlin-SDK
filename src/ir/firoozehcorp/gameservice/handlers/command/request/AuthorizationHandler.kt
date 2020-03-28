@@ -18,8 +18,8 @@
 
 package ir.firoozehcorp.gameservice.handlers.command.request
 
+import ir.firoozehcorp.gameservice.core.GameService
 import ir.firoozehcorp.gameservice.handlers.HandlerCore.Companion.gson
-import ir.firoozehcorp.gameservice.handlers.command.CommandHandler
 import ir.firoozehcorp.gameservice.models.consts.Command
 import ir.firoozehcorp.gameservice.models.gsLive.command.AuthPayload
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
@@ -37,7 +37,7 @@ internal class AuthorizationHandler : BaseRequestHandler() {
     private fun doAction(): Packet {
         return Packet(null
                 , Command.ActionAuth
-                , gson.toJson(AuthPayload(CommandHandler.GameId, CommandHandler.UserToken))
+                , gson.toJson(AuthPayload(GameService.CurrentGame?._id, GameService.UserToken))
         )
     }
 

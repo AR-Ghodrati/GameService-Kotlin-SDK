@@ -34,7 +34,7 @@ internal class GetMemberHandler : BaseRequestHandler() {
 
 
     private fun doAction(): Packet {
-        return Packet(TurnBasedHandler.PlayToken, TurnBase.GetUsers)
+        return Packet(TurnBasedHandler.PlayerHash, TurnBase.GetUsers)
     }
 
 

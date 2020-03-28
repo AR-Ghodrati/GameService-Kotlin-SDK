@@ -19,7 +19,6 @@
 package ir.firoozehcorp.gameservice.handlers.realtime
 
 import com.google.gson.Gson
-import ir.firoozehcorp.gameservice.core.GameService
 import ir.firoozehcorp.gameservice.core.sockets.GProtocolClient
 import ir.firoozehcorp.gameservice.core.sockets.GsUdpClient
 import ir.firoozehcorp.gameservice.handlers.HandlerCore
@@ -50,7 +49,6 @@ internal class RealTimeHandler(payload: StartPayload) : HandlerCore() {
 
     companion object {
         var PlayerHash: String = ""
-        val PlayToken: String? = GameService.PlayToken
         var CurrentRoom: Room? = null
         val gson: Gson = Gson()
     }
@@ -99,9 +97,10 @@ internal class RealTimeHandler(payload: StartPayload) : HandlerCore() {
         }
         client.onDataReceived += object : GProtocolClient.DataReceivedListener {
             override fun invoke(element: Pair<Packet, GProtocolSendType>, from: Class<*>?) {
-                GameService.SynchronizationContext?.send({
+                responseHandlers[element.first.action]?.handlePacket(element.first, element.second, gson)
+                /*GameService.SynchronizationContext?.send({
                     responseHandlers[element.first.action]?.handlePacket(element.first, element.second, gson)
-                }, null)
+                }, null)*/
             }
         }
 

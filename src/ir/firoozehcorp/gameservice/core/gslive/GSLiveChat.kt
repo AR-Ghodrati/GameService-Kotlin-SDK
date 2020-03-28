@@ -38,7 +38,7 @@ object GSLiveChat {
      */
     @Throws(GameServiceException::class)
     fun subscribeChannel(@NotNull channelName: String) {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (channelName.isEmpty()) throw GameServiceException("channelName Cant Be EmptyOrNull")
 
         GSLive.handler.commandHandler.request(SubscribeChannelHandler.signature, channelName)
@@ -51,7 +51,7 @@ object GSLiveChat {
      */
     @Throws(GameServiceException::class)
     fun unSubscribeChannel(@NotNull channelName: String) {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (channelName.isEmpty()) throw GameServiceException("channelName Cant Be EmptyOrNull")
 
         GSLive.handler.commandHandler.request(UnSubscribeChannelHandler.signature, channelName)
@@ -65,7 +65,7 @@ object GSLiveChat {
      */
     @Throws(GameServiceException::class)
     fun sendChannelMessage(@NotNull channelName: String, @NotNull message: String) {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (channelName.isEmpty() && message.isEmpty()) throw GameServiceException("channelName Or message Cant Be EmptyOrNull")
 
         GSLive.handler.commandHandler.request(SendChannelMessageHandler.signature, Pair(channelName, message))

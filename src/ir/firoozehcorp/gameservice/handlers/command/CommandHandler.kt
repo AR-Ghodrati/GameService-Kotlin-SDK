@@ -18,13 +18,11 @@
 
 package ir.firoozehcorp.gameservice.handlers.command
 
-import ir.firoozehcorp.gameservice.core.GameService
 import ir.firoozehcorp.gameservice.core.sockets.GsSocketClient
 import ir.firoozehcorp.gameservice.core.sockets.GsTcpClient
 import ir.firoozehcorp.gameservice.handlers.HandlerCore
 import ir.firoozehcorp.gameservice.handlers.command.request.*
 import ir.firoozehcorp.gameservice.handlers.command.resposne.*
-import ir.firoozehcorp.gameservice.handlers.turnbased.TurnBasedHandler
 import ir.firoozehcorp.gameservice.models.GameServiceException
 import ir.firoozehcorp.gameservice.models.consts.Command
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GProtocolSendType
@@ -48,8 +46,6 @@ internal class CommandHandler : HandlerCore() {
 
     companion object {
         var PlayerHash: String = ""
-        val GameId: String? = GameService.CurrentGame?.id
-        val UserToken: String? = GameService.UserToken
     }
 
     init {
@@ -72,9 +68,10 @@ internal class CommandHandler : HandlerCore() {
         }
         tcpClient.onDataReceived += object : GsSocketClient.DataReceivedListener {
             override fun invoke(element: Packet, from: Class<*>?) {
-                GameService.SynchronizationContext?.send({
-                    responseHandlers[element.action]?.handlePacket(element, gson)
-                }, null)
+                responseHandlers[element.action]?.handlePacket(element, gson)
+                /* GameService.SynchronizationContext?.send({
+                     responseHandlers[element.action]?.handlePacket(element, gson)
+                 }, null)*/
             }
         }
 
@@ -87,7 +84,7 @@ internal class CommandHandler : HandlerCore() {
         CoreListeners.Authorized += object : CoreListeners.AuthorisationListener {
             override fun invoke(element: String, from: Class<*>?) {
                 if (from != AuthResponseHandler::class.java) return
-                TurnBasedHandler.PlayerHash = element
+                PlayerHash = element
                 tcpClient.updatePwd(element)
 
                 if (isFirstInit) return
@@ -141,6 +138,7 @@ internal class CommandHandler : HandlerCore() {
             override fun onFailure(error: GameServiceException) {}
             override fun onResponse(response: Boolean) {
                 tcpClient.startReceiving()
+                request(AuthorizationHandler.signature)
             }
         })
     }

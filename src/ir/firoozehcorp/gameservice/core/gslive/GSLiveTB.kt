@@ -43,7 +43,7 @@ object GSLiveTB {
      */
     @Throws(GameServiceException::class)
     fun createRoom(@NotNull option: GSLiveOption.CreateRoomOption) {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         option.gsLiveType = GSLiveType.RealTime
         GSLive.handler.commandHandler.request(CreateRoomHandler.signature, option)
     }
@@ -55,7 +55,7 @@ object GSLiveTB {
      */
     @Throws(GameServiceException::class)
     fun autoMatch(@NotNull option: GSLiveOption.AutoMatchOption) {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         option.gsLiveType = GSLiveType.RealTime
         GSLive.handler.commandHandler.request(AutoMatchHandler.signature, option)
     }
@@ -66,7 +66,7 @@ object GSLiveTB {
      */
     @Throws(GameServiceException::class)
     fun cancelAutoMatch() {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         GSLive.handler.commandHandler.request(CancelAutoMatchHandler.signature)
     }
 
@@ -77,7 +77,7 @@ object GSLiveTB {
      */
     @Throws(GameServiceException::class)
     fun joinRoom(@NotNull roomId: String) {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (roomId.isEmpty()) throw GameServiceException("roomId Cant Be EmptyOrNull")
         GSLive.handler.commandHandler.request(JoinRoomHandler.signature, RoomDetail().apply { id = roomId })
     }
@@ -88,7 +88,7 @@ object GSLiveTB {
      */
     @Throws(GameServiceException::class)
     fun leaveRoom() {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (GSLive.handler.realTimeHandler == null) throw GameServiceException("You Must Create or Join Room First")
 
         GSLive.handler.realTimeHandler?.request(LeaveRoomHandler.signature, type = GProtocolSendType.Reliable)
@@ -102,7 +102,7 @@ object GSLiveTB {
      */
     @Throws(GameServiceException::class)
     fun getAvailableRooms(@NotNull role: String) {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (role.isEmpty()) throw GameServiceException("role Cant Be EmptyOrNull")
         GSLive.handler.commandHandler.request(GetRoomsHandler.signature, RoomDetail()
                 .apply {
@@ -122,7 +122,7 @@ object GSLiveTB {
      */
     @Throws(GameServiceException::class)
     fun takeTurn(@Nullable data: String? = null, @Nullable whoIsNext: String? = null) {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (GSLive.handler.turnBasedHandler == null) throw GameServiceException("You Must Create or Join Room First")
 
         GSLive.handler.turnBasedHandler?.request(TakeTurnHandler.signature, DataPayload()
@@ -140,7 +140,7 @@ object GSLiveTB {
      */
     @Throws(GameServiceException::class)
     fun chooseNext(@Nullable whoIsNext: String? = null) {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (GSLive.handler.turnBasedHandler == null) throw GameServiceException("You Must Create or Join Room First")
 
         GSLive.handler.turnBasedHandler?.request(ChooseNextHandler.signature, DataPayload().apply { nextId = whoIsNext })
@@ -153,7 +153,7 @@ object GSLiveTB {
      */
     @Throws(GameServiceException::class)
     fun leaveRoom(@Nullable whoIsNext: String? = null) {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (GSLive.handler.turnBasedHandler == null) throw GameServiceException("You Must Create or Join Room First")
 
         GSLive.handler.turnBasedHandler?.request(LeaveRoomHandler.signature, DataPayload().apply { nextId = whoIsNext })
@@ -167,7 +167,7 @@ object GSLiveTB {
      */
     @Throws(GameServiceException::class)
     fun finish(@NotNull outcomes: Outcomes) {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (GSLive.handler.turnBasedHandler == null) throw GameServiceException("You Must Create or Join Room First")
 
         GSLive.handler.turnBasedHandler?.request(FinishHandler.signature, DataPayload().apply { this.outcomes = outcomes })
@@ -180,7 +180,7 @@ object GSLiveTB {
      */
     @Throws(GameServiceException::class)
     fun complete(@NotNull memberId: String) {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (GSLive.handler.turnBasedHandler == null) throw GameServiceException("You Must Create or Join Room First")
 
         GSLive.handler.turnBasedHandler?.request(CompleteHandler.signature, DataPayload().apply { id = memberId })
@@ -192,7 +192,7 @@ object GSLiveTB {
      */
     @Throws(GameServiceException::class)
     fun getCurrentTurnMember() {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (GSLive.handler.turnBasedHandler == null) throw GameServiceException("You Must Create or Join Room First")
 
         GSLive.handler.turnBasedHandler?.request(CurrentTurnHandler.signature)
@@ -204,7 +204,7 @@ object GSLiveTB {
      */
     @Throws(GameServiceException::class)
     fun getRoomMembersDetail() {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (GSLive.handler.turnBasedHandler == null) throw GameServiceException("You Must Create or Join Room First")
 
         GSLive.handler.turnBasedHandler?.request(GetMemberHandler.signature)
@@ -216,7 +216,7 @@ object GSLiveTB {
      */
     @Throws(GameServiceException::class)
     fun getInviteInbox() {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         GSLive.handler.commandHandler.request(InviteListHandler.signature, RoomDetail().apply { type = GSLiveType.RealTime.ordinal })
     }
 
@@ -228,7 +228,7 @@ object GSLiveTB {
      */
     @Throws(GameServiceException::class)
     fun inviteUser(@NotNull roomId: String, @NotNull userId: String) {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (userId.isEmpty() && roomId.isEmpty()) throw GameServiceException("roomId Or userId Cant Be EmptyOrNull")
 
         GSLive.handler.commandHandler.request(InviteUserHandler.signature, RoomDetail()
@@ -247,7 +247,7 @@ object GSLiveTB {
      */
     @Throws(GameServiceException::class)
     fun inviteUser(@NotNull inviteId: String) {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (inviteId.isEmpty()) throw GameServiceException("inviteId Cant Be EmptyOrNull")
 
         GSLive.handler.commandHandler.request(AcceptInviteHandler.signature, RoomDetail()
@@ -265,7 +265,7 @@ object GSLiveTB {
      */
     @Throws(GameServiceException::class)
     fun findUser(@NotNull query: String, limit: Int) {
-        if (!GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (query.isEmpty()) throw GameServiceException("query Cant Be EmptyOrNull")
         if (limit <= 0 || limit > 15) throw GameServiceException("invalid Limit Value")
 

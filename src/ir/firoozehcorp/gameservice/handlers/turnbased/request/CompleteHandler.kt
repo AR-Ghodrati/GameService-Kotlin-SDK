@@ -36,7 +36,7 @@ internal class CompleteHandler : BaseRequestHandler() {
 
 
     private fun doAction(payload: DataPayload): Packet {
-        return Packet(TurnBasedHandler.PlayToken, TurnBase.OnComplete, gson.toJson(payload))
+        return Packet(TurnBasedHandler.PlayerHash, TurnBase.OnComplete, gson.toJson(payload))
     }
 
 

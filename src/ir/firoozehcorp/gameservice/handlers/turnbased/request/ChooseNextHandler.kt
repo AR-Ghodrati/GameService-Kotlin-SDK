@@ -36,7 +36,7 @@ internal class ChooseNextHandler : BaseRequestHandler() {
 
 
     private fun doAction(payload: DataPayload): Packet {
-        return Packet(TurnBasedHandler.PlayToken, TurnBase.OnChooseNext, gson.toJson(payload))
+        return Packet(TurnBasedHandler.PlayerHash, TurnBase.OnChooseNext, gson.toJson(payload))
     }
 
 

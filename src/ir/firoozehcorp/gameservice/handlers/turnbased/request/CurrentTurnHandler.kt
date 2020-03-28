@@ -36,7 +36,7 @@ internal class CurrentTurnHandler : BaseRequestHandler() {
 
 
     private fun doAction(payload: DataPayload): Packet {
-        return Packet(TurnBasedHandler.PlayToken, TurnBase.OnCurrentTurnDetail, gson.toJson(payload))
+        return Packet(TurnBasedHandler.PlayerHash, TurnBase.OnCurrentTurnDetail, gson.toJson(payload))
     }
 
 

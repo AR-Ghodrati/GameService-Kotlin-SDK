@@ -18,7 +18,6 @@
 
 package ir.firoozehcorp.gameservice.handlers.turnbased
 
-import ir.firoozehcorp.gameservice.core.GameService
 import ir.firoozehcorp.gameservice.core.sockets.GsSocketClient
 import ir.firoozehcorp.gameservice.core.sockets.GsTcpClient
 import ir.firoozehcorp.gameservice.handlers.HandlerCore
@@ -49,7 +48,6 @@ internal class TurnBasedHandler(payload: StartPayload) : HandlerCore() {
 
     companion object {
         var PlayerHash: String = ""
-        val PlayToken: String? = GameService.PlayToken
         var CurrentRoom: Room? = null
     }
 
@@ -74,9 +72,10 @@ internal class TurnBasedHandler(payload: StartPayload) : HandlerCore() {
         }
         tcpClient.onDataReceived += object : GsSocketClient.DataReceivedListener {
             override fun invoke(element: Packet, from: Class<*>?) {
-                GameService.SynchronizationContext?.send({
+                responseHandlers[element.action]?.handlePacket(element, gson)
+                /*GameService.SynchronizationContext?.send({
                     responseHandlers[element.action]?.handlePacket(element, gson)
-                }, null)
+                }, null)*/
             }
         }
 

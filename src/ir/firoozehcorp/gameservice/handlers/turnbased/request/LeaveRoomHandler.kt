@@ -36,7 +36,7 @@ internal class LeaveRoomHandler : BaseRequestHandler() {
 
 
     private fun doAction(payload: DataPayload): Packet {
-        return Packet(TurnBasedHandler.PlayToken, TurnBase.OnLeave, gson.toJson(payload))
+        return Packet(TurnBasedHandler.PlayerHash, TurnBase.OnLeave, gson.toJson(payload))
     }
 
 

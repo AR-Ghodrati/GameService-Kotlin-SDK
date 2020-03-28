@@ -18,6 +18,7 @@
 
 package ir.firoozehcorp.gameservice.handlers.realtime.request
 
+import ir.firoozehcorp.gameservice.core.GameService
 import ir.firoozehcorp.gameservice.handlers.realtime.RealTimeHandler
 import ir.firoozehcorp.gameservice.handlers.realtime.RealTimeHandler.Companion.gson
 import ir.firoozehcorp.gameservice.models.consts.RealTime
@@ -36,7 +37,7 @@ internal class AuthorizationHandler : BaseRequestHandler() {
 
 
     private fun doAction(): Packet {
-        return Packet(RealTime.ActionAuth, gson.toJson(AuthPayload(RealTimeHandler.CurrentRoom?.id, RealTimeHandler.PlayToken)))
+        return Packet(RealTime.ActionAuth, gson.toJson(AuthPayload(RealTimeHandler.CurrentRoom?.id, GameService.PlayToken)))
     }
 
 

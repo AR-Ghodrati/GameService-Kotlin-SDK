@@ -32,7 +32,8 @@ class Game {
 
     @SerializedName("_id")
     @Expose
-    private var _id: String? = null
+    internal var _id: String? = null
+        private set
 
 
     @SerializedName("name")
