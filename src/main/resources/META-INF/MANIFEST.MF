@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Main-Class: 
+Class-Path: okhttp-4.1.1.jar okio-2.2.2.jar kotlin-stdlib-1.3.41.jar kot
+ lin-stdlib-common-1.3.41.jar annotations-13.0.jar gson-2.8.6.jar Thread
+ Helper.jar GProtocolNative.jar
+
