@@ -29,7 +29,9 @@ internal object Api {
     const val LoginUser = "$BaseUrl2/auth/app/login"
     const val LoginWithGoogle = "$BaseUrl2/auth/g/callback"
     const val Start = "$BaseUrl2/auth/start"
-    const val UserData = "$BaseUrl2/v1"
+    const val GetCurrentPlayerData = "$BaseUrl2/v1"
+    const val GetUserData = "$BaseUrl2/v1/user/"
+
 
     const val SaveGame = "$BaseUrl2/v1/savegame/"
     const val Achievements = "$BaseUrl2/v1/achievement/"

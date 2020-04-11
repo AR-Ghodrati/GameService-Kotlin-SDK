@@ -192,6 +192,18 @@ object GameService {
 
 
     /**
+     *  With this command you can get a User Data with the User ID
+     * @param userId The ID of User you Want To get Detail
+     * @param callback returns CurrentPlayer Data
+     */
+    @Throws(GameServiceException::class)
+    fun getUserData(@NotNull userId: String, callback: GameServiceCallback<User>) {
+        if (!isAuthenticated()) throw GameServiceException("gameservice Not Available")
+        ApiRequest.getUserData(userId, callback)
+    }
+
+
+    /**
      * With this command you can Edit information about the current player is playing
      * @param callback returns CurrentPlayer Data
      */

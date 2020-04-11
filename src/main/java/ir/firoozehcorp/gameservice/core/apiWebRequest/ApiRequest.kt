@@ -198,7 +198,7 @@ internal object ApiRequest {
 
 
     internal fun getCurrentPlayer(callback: GameServiceCallback<User>) {
-        GSWebRequest.get(Api.UserData, createPlayTokenHeader())
+        GSWebRequest.get(Api.GetCurrentPlayerData, createPlayTokenHeader())
                 .enqueue(object : Callback {
                     override fun onFailure(call: Call, e: IOException) {
                         callback.onFailure(GameServiceException(e.message))
@@ -206,6 +206,22 @@ internal object ApiRequest {
 
                     override fun onResponse(call: Call, response: Response) {
                         if (response.isSuccessful) callback.onResponse(gson.fromJson(response.body?.string(), TUser::class.java).user!!)
+                        else callback.onFailure(GameServiceException(gson.fromJson(response.body?.string(), Error::class.java).message))
+                    }
+
+                })
+    }
+
+
+    internal fun getUserData(userId: String, callback: GameServiceCallback<User>) {
+        GSWebRequest.get(Api.GetUserData + userId, createPlayTokenHeader())
+                .enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        callback.onFailure(GameServiceException(e.message))
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        if (response.isSuccessful) callback.onResponse(gson.fromJson(response.body?.string(), User::class.java))
                         else callback.onFailure(GameServiceException(gson.fromJson(response.body?.string(), Error::class.java).message))
                     }
 
