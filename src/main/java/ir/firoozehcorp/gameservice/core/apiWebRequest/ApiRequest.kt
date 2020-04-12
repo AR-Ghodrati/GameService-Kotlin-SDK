@@ -527,6 +527,8 @@ internal object ApiRequest {
                 map["mode"] = "register"
             }
         }
+
+        map["client_id"] = Configuration?.clientId.toString()
         map["device_id"] = Configuration?.systemInfo?.deviceUniqueId.toString()
         return map
     }
@@ -556,7 +558,8 @@ internal object ApiRequest {
 
     private fun createUserTokenHeader(): MutableMap<String, String> {
         return mutableMapOf(
-                "x-access-token" to GameService.UserToken.toString()
+                "x-access-token" to GameService.UserToken.toString(),
+                "client-id" to Configuration?.clientId.toString()
         )
     }
 }
