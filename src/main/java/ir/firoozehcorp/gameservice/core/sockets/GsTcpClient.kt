@@ -46,13 +46,17 @@ internal class GsTcpClient(area: Area) : GsSocketClient() {
     }
 
     public override fun init(callback: GameServiceCallback<Boolean>) {
-        thread(priority = Thread.MAX_PRIORITY) {
-            socket = Socket()
-            socket.connect(InetSocketAddress(InetAddress.getByName(endpoint.ip), endpoint.port), 6000)
-            input = BufferedReader(InputStreamReader(socket.getInputStream(), "UTF-8"))
-            out = DataOutputStream(socket.getOutputStream())
-            isRunning = AtomicBoolean(true)
-            callback.onResponse(true)
+        try {
+            thread(priority = Thread.MAX_PRIORITY) {
+                socket = Socket()
+                socket.connect(InetSocketAddress(InetAddress.getByName(endpoint.ip), endpoint.port), timeout)
+                input = BufferedReader(InputStreamReader(socket.getInputStream(), "UTF-8"))
+                out = DataOutputStream(socket.getOutputStream())
+                isRunning = AtomicBoolean(true)
+                callback.onResponse(true)
+            }
+        } catch (e: Exception) {
+            callback.onResponse(false)
         }
     }
 
@@ -69,10 +73,10 @@ internal class GsTcpClient(area: Area) : GsSocketClient() {
                     while (input.read().also { ch = it } != -1) {
                         val c = ch.toChar()
                         data.append(c)
-                        if (c == l_START) {
+                        if (c == lStart) {
                             if (current == 0) start = index
                             current++
-                        } else if (c == l_END) {
+                        } else if (c == lEnd) {
                             current--
                             if (current == 0) {
                                 val reader = JsonReader(StringReader(data.substring(start, index + 1)))

@@ -20,7 +20,6 @@ package ir.firoozehcorp.gameservice.models.gsLive
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ir.firoozehcorp.gameservice.models.basicApi.User
 import ir.firoozehcorp.gameservice.models.internal.Game
 import java.io.Serializable
 
@@ -42,12 +41,12 @@ class Invite : Serializable {
 
 
     /**
-     * Gets the Inviter User.
-     * @return the Inviter User
+     * Gets the Inviter Member.
+     * @return the Inviter Member
      */
     @SerializedName("inviter")
     @Expose
-    lateinit var inviter: User
+    lateinit var inviter: Member
         private set
 
 

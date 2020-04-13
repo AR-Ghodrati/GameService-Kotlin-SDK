@@ -36,7 +36,7 @@ internal class FindUserHandler : BaseRequestHandler() {
 
     private fun doAction(inviteOptions: RoomDetail): Packet {
         return Packet(CommandHandler.PlayerHash
-                , Command.ActionFindUser
+                , Command.ActionFindMembers
                 , gson.toJson(inviteOptions)
         )
     }

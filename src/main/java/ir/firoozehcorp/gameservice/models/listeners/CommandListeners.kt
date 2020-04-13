@@ -18,9 +18,9 @@
 
 package ir.firoozehcorp.gameservice.models.listeners
 
-import ir.firoozehcorp.gameservice.models.basicApi.User
 import ir.firoozehcorp.gameservice.models.enums.gsLive.command.AutoMatchCancel
 import ir.firoozehcorp.gameservice.models.gsLive.Invite
+import ir.firoozehcorp.gameservice.models.gsLive.Member
 import ir.firoozehcorp.gameservice.models.gsLive.Room
 import ir.firoozehcorp.gameservice.models.gsLive.command.AutoMatchEvent
 import ir.firoozehcorp.gameservice.models.internal.EventHandler
@@ -52,8 +52,8 @@ open class CommandListeners : CoreListeners() {
     }
 
 
-    interface FindUserListener : EventHandler.IEventHandler<MutableList<User>> {
-        override fun invoke(element: MutableList<User>, from: Class<*>?)
+    interface FindMemberListener : EventHandler.IEventHandler<MutableList<Member>> {
+        override fun invoke(element: MutableList<Member>, from: Class<*>?)
     }
 
     interface InvitationSentListener : EventHandler.IEventHandler<Boolean> {
@@ -94,9 +94,9 @@ open class CommandListeners : CoreListeners() {
 
 
         /**
-         * Returns List of Users
+         * Returns List of Member
          */
-        val FindUserReceived: EventHandler<FindUserListener, MutableList<User>> = EventHandler()
+        val FindMemberReceived: EventHandler<FindMemberListener, MutableList<Member>> = EventHandler()
 
 
         /**

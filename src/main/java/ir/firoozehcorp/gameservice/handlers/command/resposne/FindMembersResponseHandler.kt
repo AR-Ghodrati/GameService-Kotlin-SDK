@@ -20,22 +20,22 @@ package ir.firoozehcorp.gameservice.handlers.command.resposne
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import ir.firoozehcorp.gameservice.models.basicApi.User
 import ir.firoozehcorp.gameservice.models.consts.Command
+import ir.firoozehcorp.gameservice.models.gsLive.Member
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
 import ir.firoozehcorp.gameservice.models.listeners.CommandListeners
 
 /**
  * @author Alireza Ghodrati
  */
-internal class FindUserResponseHandler : BaseResponseHandler() {
+internal class FindMembersResponseHandler : BaseResponseHandler() {
 
     companion object {
-        const val action = Command.ActionFindUser
+        const val action = Command.ActionFindMembers
     }
 
     override fun handleResponse(packet: Packet, jsonHandler: Gson) {
-        val users = jsonHandler.fromJson<MutableList<User>>(packet.data, object : TypeToken<MutableList<User>>() {}.type)
-        CommandListeners.FindUserReceived.invokeListeners(users)
+        val members = jsonHandler.fromJson<MutableList<Member>>(packet.data, object : TypeToken<MutableList<Member>>() {}.type)
+        CommandListeners.FindMemberReceived.invokeListeners(members)
     }
 }

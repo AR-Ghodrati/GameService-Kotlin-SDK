@@ -39,6 +39,27 @@ class Member : Serializable {
     lateinit var id: String
         private set
 
+
+    /**
+     * Gets the Member Name.
+     * @return the Member Name</value>
+     */
+    @SerializedName("name")
+    @Expose
+    var name: String? = null
+        private set
+
+
+    /**
+     * Gets the Member Logo.
+     * @return the Member Logo</value>
+     */
+    @SerializedName("logo")
+    @Expose
+    var logo: String? = null
+        private set
+
+
     /**
      * Gets the Member User Data
      * @return the Member User Data
@@ -47,6 +68,5 @@ class Member : Serializable {
     @Expose
     lateinit var user: User
         private set
-
 
 }

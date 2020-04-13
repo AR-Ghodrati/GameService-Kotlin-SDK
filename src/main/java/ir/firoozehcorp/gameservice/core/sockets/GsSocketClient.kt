@@ -53,12 +53,13 @@ internal abstract class GsSocketClient {
     protected lateinit var endpoint: Area
 
     protected var isLogEnable = false
+    protected val timeout = 7000
 
     val onError: EventHandler<ErrorListener, GameServiceException> = EventHandler()
     val onDataReceived: EventHandler<DataReceivedListener, Packet> = EventHandler()
 
-    protected val l_START = '{'
-    protected val l_END = '}'
+    protected val lStart = '{'
+    protected val lEnd = '}'
 
 
     protected abstract fun init(callback: GameServiceCallback<Boolean>)

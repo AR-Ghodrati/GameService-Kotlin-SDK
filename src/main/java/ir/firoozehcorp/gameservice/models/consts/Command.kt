@@ -42,7 +42,7 @@ internal object Command {
     const val ActionKickUser = 7
     const val ActionGetInviteList = 8
     const val ActionAcceptInvite = 9
-    const val ActionFindUser = 10
+    const val ActionFindMembers = 10
     const val ActionNotification = 11
     const val ActionSubscribe = 12
     const val ActionChat = 13

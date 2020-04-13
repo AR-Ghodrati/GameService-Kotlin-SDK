@@ -20,7 +20,7 @@ package ir.firoozehcorp.gameservice.models.gsLive.chat
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ir.firoozehcorp.gameservice.models.basicApi.User
+import ir.firoozehcorp.gameservice.models.gsLive.Member
 import java.io.Serializable
 
 /**
@@ -48,12 +48,12 @@ class Chat : Serializable {
 
 
     /**
-     * Gets the Chat Sender User.
-     * @return the Chat Sender User
+     * Gets the Chat Sender Member.
+     * @return the Chat Sender Member
      */
     @SerializedName("2")
     @Expose
-    lateinit var sender: User
+    lateinit var sender: Member
 
 
     /**

@@ -120,7 +120,7 @@ internal class CommandHandler : HandlerCore() {
                 CancelAutoMatchResponseHandler.action to CancelAutoMatchResponseHandler(),
                 ChatResponseHandler.action to ChatResponseHandler(),
                 ErrorResponseHandler.action to ErrorResponseHandler(),
-                FindUserResponseHandler.action to FindUserResponseHandler(),
+                FindMembersResponseHandler.action to FindMembersResponseHandler(),
                 GetInviteInboxResponseHandler.action to GetInviteInboxResponseHandler(),
                 InviteReceivedResponseHandler.action to InviteReceivedResponseHandler(),
                 InviteUserResponseHandler.action to InviteUserResponseHandler(),
