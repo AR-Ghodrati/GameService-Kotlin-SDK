@@ -39,6 +39,15 @@ class Chat : Serializable {
 
 
     /**
+     * Gets the Chat Channel Name.
+     * @return the Chat Channel Name.
+     */
+    @SerializedName("5")
+    @Expose
+    lateinit var channelName: String
+
+
+    /**
      * Gets the Chat Receiver Id.
      * @return the Chat Receiver Id
      */
