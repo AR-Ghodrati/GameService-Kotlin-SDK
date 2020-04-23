@@ -49,6 +49,7 @@ internal object Command {
     const val ActionUnSubscribe = 14
     const val ActionOnInvite = 15
     const val ActionCancelAutoMatch = 16
+    const val ActionGetChannelsSubscribed = 17
 
     const val Error = 100
 }

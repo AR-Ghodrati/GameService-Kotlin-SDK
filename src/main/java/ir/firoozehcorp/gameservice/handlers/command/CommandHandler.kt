@@ -109,7 +109,9 @@ internal class CommandHandler : HandlerCore() {
                 PingPongHandler.signature to PingPongHandler(),
                 SendChannelMessageHandler.signature to SendChannelMessageHandler(),
                 SubscribeChannelHandler.signature to SubscribeChannelHandler(),
-                UnSubscribeChannelHandler.signature to UnSubscribeChannelHandler()
+                UnSubscribeChannelHandler.signature to UnSubscribeChannelHandler(),
+                GetChannelsSubscribedHandler.signature to GetChannelsSubscribedHandler()
+
         )
     }
 
@@ -128,7 +130,8 @@ internal class CommandHandler : HandlerCore() {
                 NotificationResponseHandler.action to NotificationResponseHandler(),
                 PingResponseHandler.action to PingResponseHandler(),
                 SubscribeChannelResponseHandler.action to SubscribeChannelResponseHandler(),
-                UnSubscribeChannelResponseHandler.action to UnSubscribeChannelResponseHandler()
+                UnSubscribeChannelResponseHandler.action to UnSubscribeChannelResponseHandler(),
+                ChannelSubscribedResponseHandler.action to ChannelSubscribedResponseHandler()
         )
     }
 

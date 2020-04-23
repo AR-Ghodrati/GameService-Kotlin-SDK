@@ -40,6 +40,10 @@ class ChatListeners {
         override fun invoke(element: String, from: Class<*>?)
     }
 
+    interface ChannelsSubscribedListener : EventHandler.IEventHandler<MutableList<String>> {
+        override fun invoke(element: MutableList<String>, from: Class<*>?)
+    }
+
 
     companion object {
         /**
@@ -59,6 +63,12 @@ class ChatListeners {
          * Calls When Current Player UnSubscribe Channel
          */
         val UnSubscribedChannel: EventHandler<UnSubscribeChannelListener, String> = EventHandler()
+
+
+        /**
+         * Calls When Current Player Get Channels Subscribed List
+         */
+        val ChannelsSubscribed: EventHandler<ChannelsSubscribedListener, MutableList<String>> = EventHandler()
     }
 
 
