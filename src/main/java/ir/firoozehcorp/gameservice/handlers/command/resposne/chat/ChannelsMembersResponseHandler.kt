@@ -1,5 +1,5 @@
 /*
- * <copyright file="GetChannelsSubscribedHandler.kt" company="Firoozeh Technology LTD">
+ * <copyright file="ChannelsMembersResponseHandler.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,36 +16,27 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.handlers.command.request
+package ir.firoozehcorp.gameservice.handlers.command.resposne.chat
 
-import ir.firoozehcorp.gameservice.handlers.command.CommandHandler
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import ir.firoozehcorp.gameservice.handlers.command.resposne.BaseResponseHandler
 import ir.firoozehcorp.gameservice.models.consts.Command
+import ir.firoozehcorp.gameservice.models.gsLive.Member
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
+import ir.firoozehcorp.gameservice.models.listeners.ChatListeners
 
 /**
  * @author Alireza Ghodrati
  */
-internal class GetChannelsSubscribedHandler : BaseRequestHandler() {
+internal class ChannelsMembersResponseHandler : BaseResponseHandler() {
 
     companion object {
-        const val signature = "GET_CHANNELS_SUBSCRIBED"
+        const val action = Command.ActionChatRoomDetails
     }
 
-
-    private fun doAction(): Packet {
-        return Packet(CommandHandler.PlayerHash
-                , Command.ActionGetChannelsSubscribed
-        )
+    override fun handleResponse(packet: Packet, jsonHandler: Gson) {
+        val members = jsonHandler.fromJson<MutableList<Member>>(packet.data, object : TypeToken<MutableList<Member>>() {}.type)
+        ChatListeners.ChannelsMembers.invokeListeners(members)
     }
-
-
-    override fun checkAction(payload: Any?): Boolean {
-        return true
-    }
-
-    override fun doAction(payload: Any?): Packet {
-        if (!checkAction(payload)) throw IllegalArgumentException()
-        return doAction()
-    }
-
 }

@@ -1,5 +1,5 @@
 /*
- * <copyright file="SubscribeChannelResponseHandler.kt" company="Firoozeh Technology LTD">
+ * <copyright file="GetChannelsSubscribedHandler.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,23 +16,35 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.handlers.command.resposne
+package ir.firoozehcorp.gameservice.handlers.command.request.chat
 
-import com.google.gson.Gson
+import ir.firoozehcorp.gameservice.handlers.command.CommandHandler
+import ir.firoozehcorp.gameservice.handlers.command.request.BaseRequestHandler
 import ir.firoozehcorp.gameservice.models.consts.Command
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
-import ir.firoozehcorp.gameservice.models.listeners.ChatListeners
 
 /**
  * @author Alireza Ghodrati
  */
-internal class SubscribeChannelResponseHandler : BaseResponseHandler() {
+internal class GetPendingMessagesRequestHandler : BaseRequestHandler() {
 
     companion object {
-        const val action = Command.ActionSubscribe
+        const val signature = "GET_PENDING_MESSAGES"
     }
 
-    override fun handleResponse(packet: Packet, jsonHandler: Gson) {
-        ChatListeners.SubscribedChannel.invokeListeners(packet.message.toString())
+
+    private fun doAction(): Packet {
+        return Packet(CommandHandler.PlayerHash, Command.ActionGetPendingChats)
     }
+
+
+    override fun checkAction(payload: Any?): Boolean {
+        return true
+    }
+
+    override fun doAction(payload: Any?): Packet {
+        if (!checkAction(payload)) throw IllegalArgumentException()
+        return doAction()
+    }
+
 }

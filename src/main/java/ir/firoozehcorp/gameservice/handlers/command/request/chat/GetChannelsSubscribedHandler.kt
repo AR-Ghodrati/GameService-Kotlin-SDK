@@ -1,5 +1,5 @@
 /*
- * <copyright file="UnSubscribeChannelHandler.kt" company="Firoozeh Technology LTD">
+ * <copyright file="GetChannelsSubscribedHandler.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,34 +16,37 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.handlers.command.request
+package ir.firoozehcorp.gameservice.handlers.command.request.chat
 
 import ir.firoozehcorp.gameservice.handlers.command.CommandHandler
+import ir.firoozehcorp.gameservice.handlers.command.request.BaseRequestHandler
 import ir.firoozehcorp.gameservice.models.consts.Command
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
 
 /**
  * @author Alireza Ghodrati
  */
-internal class UnSubscribeChannelHandler : BaseRequestHandler() {
+internal class GetChannelsSubscribedHandler : BaseRequestHandler() {
 
     companion object {
-        const val signature = "UNSUBSCRIBE_CHANNEL"
+        const val signature = "GET_CHANNELS_SUBSCRIBED"
     }
 
 
-    private fun doAction(name: String): Packet {
-        return Packet(CommandHandler.PlayerHash, Command.ActionUnSubscribe, message = name)
+    private fun doAction(): Packet {
+        return Packet(CommandHandler.PlayerHash
+                , Command.ActionGetChannelsSubscribed
+        )
     }
 
 
     override fun checkAction(payload: Any?): Boolean {
-        return payload != null && payload is String
+        return true
     }
 
     override fun doAction(payload: Any?): Packet {
         if (!checkAction(payload)) throw IllegalArgumentException()
-        return doAction(payload as String)
+        return doAction()
     }
 
 }

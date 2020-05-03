@@ -18,6 +18,7 @@
 
 package ir.firoozehcorp.gameservice.models.listeners
 
+import ir.firoozehcorp.gameservice.models.gsLive.Member
 import ir.firoozehcorp.gameservice.models.gsLive.chat.Chat
 import ir.firoozehcorp.gameservice.models.internal.EventHandler
 
@@ -42,6 +43,18 @@ class ChatListeners {
 
     interface ChannelsSubscribedListener : EventHandler.IEventHandler<MutableList<String>> {
         override fun invoke(element: MutableList<String>, from: Class<*>?)
+    }
+
+    interface ChannelsMembersListener : EventHandler.IEventHandler<MutableList<Member>> {
+        override fun invoke(element: MutableList<Member>, from: Class<*>?)
+    }
+
+    interface ChannelsRecentMessagesListener : EventHandler.IEventHandler<MutableList<Chat>> {
+        override fun invoke(element: MutableList<Chat>, from: Class<*>?)
+    }
+
+    interface PendingMessagesListener : EventHandler.IEventHandler<MutableList<Chat>> {
+        override fun invoke(element: MutableList<Chat>, from: Class<*>?)
     }
 
 
@@ -69,6 +82,26 @@ class ChatListeners {
          * Calls When Current Player Get Channels Subscribed List
          */
         val ChannelsSubscribed: EventHandler<ChannelsSubscribedListener, MutableList<String>> = EventHandler()
+
+
+        /**
+         * Calls When Current Player Get Channel Members List
+         */
+        val ChannelsMembers: EventHandler<ChannelsMembersListener, MutableList<Member>> = EventHandler()
+
+
+        /**
+         * Calls When Current Player Get Channel Recent Messages
+         */
+        val ChannelsRecentMessages: EventHandler<ChannelsRecentMessagesListener, MutableList<Chat>> = EventHandler()
+
+
+        /**
+         * Calls When Current Player Get Pending Messages
+         * Pending Messages Saved when the Current Player is offline
+         * You Can Get Them With this Function
+         */
+        val PendingMessages: EventHandler<PendingMessagesListener, MutableList<Chat>> = EventHandler()
     }
 
 

@@ -44,12 +44,19 @@ internal object Command {
     const val ActionAcceptInvite = 9
     const val ActionFindMembers = 10
     const val ActionNotification = 11
+    const val ActionOnInvite = 15
+    const val ActionCancelAutoMatch = 16
+
+
     const val ActionSubscribe = 12
     const val ActionChat = 13
     const val ActionUnSubscribe = 14
-    const val ActionOnInvite = 15
-    const val ActionCancelAutoMatch = 16
     const val ActionGetChannelsSubscribed = 17
+    const val ActionPrivateChat = 18
+    const val ActionChatRoomDetails = 19
+    const val ActionGetLastChats = 20
+    const val ActionGetPendingChats = 21
+
 
     const val Error = 100
 }

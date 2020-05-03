@@ -22,7 +22,15 @@ import ir.firoozehcorp.gameservice.core.sockets.GsSocketClient
 import ir.firoozehcorp.gameservice.core.sockets.GsTcpClient
 import ir.firoozehcorp.gameservice.handlers.HandlerCore
 import ir.firoozehcorp.gameservice.handlers.command.request.*
+import ir.firoozehcorp.gameservice.handlers.command.request.chat.GetChannelsSubscribedHandler
+import ir.firoozehcorp.gameservice.handlers.command.request.chat.SendChannelMessageHandler
+import ir.firoozehcorp.gameservice.handlers.command.request.chat.SubscribeChannelHandler
+import ir.firoozehcorp.gameservice.handlers.command.request.chat.UnSubscribeChannelHandler
 import ir.firoozehcorp.gameservice.handlers.command.resposne.*
+import ir.firoozehcorp.gameservice.handlers.command.resposne.chat.ChannelMessageResponseHandler
+import ir.firoozehcorp.gameservice.handlers.command.resposne.chat.ChannelSubscribedResponseHandler
+import ir.firoozehcorp.gameservice.handlers.command.resposne.chat.SubscribeChannelResponseHandler
+import ir.firoozehcorp.gameservice.handlers.command.resposne.chat.UnSubscribeChannelResponseHandler
 import ir.firoozehcorp.gameservice.models.GameServiceException
 import ir.firoozehcorp.gameservice.models.consts.Command
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GProtocolSendType
@@ -120,7 +128,7 @@ internal class CommandHandler : HandlerCore() {
                 AutoMatchResponseHandler.action to AutoMatchResponseHandler(),
                 AuthResponseHandler.action to AuthResponseHandler(),
                 CancelAutoMatchResponseHandler.action to CancelAutoMatchResponseHandler(),
-                ChatResponseHandler.action to ChatResponseHandler(),
+                ChannelMessageResponseHandler.action to ChannelMessageResponseHandler(),
                 ErrorResponseHandler.action to ErrorResponseHandler(),
                 FindMembersResponseHandler.action to FindMembersResponseHandler(),
                 GetInviteInboxResponseHandler.action to GetInviteInboxResponseHandler(),

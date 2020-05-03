@@ -16,10 +16,11 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.handlers.command.request
+package ir.firoozehcorp.gameservice.handlers.command.request.chat
 
 import ir.firoozehcorp.gameservice.handlers.HandlerCore.Companion.gson
 import ir.firoozehcorp.gameservice.handlers.command.CommandHandler
+import ir.firoozehcorp.gameservice.handlers.command.request.BaseRequestHandler
 import ir.firoozehcorp.gameservice.models.consts.Command
 import ir.firoozehcorp.gameservice.models.gsLive.command.Message
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet

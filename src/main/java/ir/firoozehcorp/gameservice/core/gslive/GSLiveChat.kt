@@ -19,11 +19,10 @@
 package ir.firoozehcorp.gameservice.core.gslive
 
 import ir.firoozehcorp.gameservice.core.GameService
-import ir.firoozehcorp.gameservice.handlers.command.request.SendChannelMessageHandler
-import ir.firoozehcorp.gameservice.handlers.command.request.SubscribeChannelHandler
-import ir.firoozehcorp.gameservice.handlers.command.request.UnSubscribeChannelHandler
+import ir.firoozehcorp.gameservice.handlers.command.request.chat.*
 import ir.firoozehcorp.gameservice.models.GameServiceException
 import ir.firoozehcorp.gameservice.models.annotations.NotNull
+import ir.firoozehcorp.gameservice.models.gsLive.command.RoomDetail
 
 /**
  * Represents Game Service Chat System
@@ -70,5 +69,78 @@ object GSLiveChat {
 
         GSLive.handler.commandHandler.request(SendChannelMessageHandler.signature, Pair(channelName, message))
     }
+
+
+    /**
+     * Send Message In SubscribedChannel.
+     * @param memberId ID of Member You want To Send Message
+     * @param message Message Data
+     */
+    @Throws(GameServiceException::class)
+    fun sendPrivateMessage(@NotNull memberId: String, @NotNull message: String) {
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (memberId.isEmpty() && message.isEmpty()) throw GameServiceException("memberId Or message Cant Be EmptyOrNull")
+
+        GSLive.handler.commandHandler.request(SendPrivateMessageHandler.signature, Pair(memberId, message))
+    }
+
+
+    /**
+     *  Get Channels Subscribe List
+     */
+    @Throws(GameServiceException::class)
+    fun getChannelsSubscribed() {
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+
+        GSLive.handler.commandHandler.request(GetChannelsSubscribedHandler.signature)
+    }
+
+
+    /**
+     *  Get Channel last 30 Messages.
+     * @param channelName Name of Channel You want To Get last 30 Messages
+     */
+    @Throws(GameServiceException::class)
+    fun getChannelRecentMessages(@NotNull channelName: String) {
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (channelName.isEmpty()) throw GameServiceException("channelName Cant Be EmptyOrNull")
+
+        GSLive.handler.commandHandler.request(GetChannelRecentMessagesRequestHandler.signature, RoomDetail().apply { id = channelName })
+    }
+
+
+    /**
+     *    Get Channel Members
+     * @param channelName Name of Channel You want To Get Members
+     * @param skip The skip value
+     * @param limit (Max = 15) The Limit value
+     */
+    @Throws(GameServiceException::class)
+    fun getChannelMembers(@NotNull channelName: String, skip: Int, limit: Int) {
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+        if (channelName.isEmpty()) throw GameServiceException("channelName Cant Be EmptyOrNull")
+        if (limit <= 0 || limit > 15) throw GameServiceException("invalid Limit Value")
+        if (skip < 0) throw GameServiceException("invalid Skip Value")
+
+        GSLive.handler.commandHandler.request(GetChannelsMembersRequestHandler.signature, RoomDetail()
+                .apply {
+                    id = channelName
+                    min = skip
+                    max = limit
+                }
+        )
+    }
+
+
+    /**
+     *  Get Your Pending Messages
+     */
+    @Throws(GameServiceException::class)
+    fun getPendingMessages() {
+        if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
+
+        GSLive.handler.commandHandler.request(GetPendingMessagesRequestHandler.signature)
+    }
+
 
 }

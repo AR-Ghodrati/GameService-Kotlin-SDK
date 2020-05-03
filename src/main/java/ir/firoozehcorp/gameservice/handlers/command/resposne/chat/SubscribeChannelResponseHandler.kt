@@ -1,5 +1,5 @@
 /*
- * <copyright file="SubscribeChannelHandler.kt" company="Firoozeh Technology LTD">
+ * <copyright file="$this.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,34 +16,24 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.handlers.command.request
+package ir.firoozehcorp.gameservice.handlers.command.resposne.chat
 
-import ir.firoozehcorp.gameservice.handlers.command.CommandHandler
+import com.google.gson.Gson
+import ir.firoozehcorp.gameservice.handlers.command.resposne.BaseResponseHandler
 import ir.firoozehcorp.gameservice.models.consts.Command
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
+import ir.firoozehcorp.gameservice.models.listeners.ChatListeners
 
 /**
  * @author Alireza Ghodrati
  */
-internal class SubscribeChannelHandler : BaseRequestHandler() {
+internal class SubscribeChannelResponseHandler : BaseResponseHandler() {
 
     companion object {
-        const val signature = "SUBSCRIBE_CHANNEL"
+        const val action = Command.ActionSubscribe
     }
 
-
-    private fun doAction(name: String): Packet {
-        return Packet(CommandHandler.PlayerHash, Command.ActionSubscribe, message = name)
+    override fun handleResponse(packet: Packet, jsonHandler: Gson) {
+        ChatListeners.SubscribedChannel.invokeListeners(packet.message.toString())
     }
-
-
-    override fun checkAction(payload: Any?): Boolean {
-        return payload != null && payload is String
-    }
-
-    override fun doAction(payload: Any?): Packet {
-        if (!checkAction(payload)) throw IllegalArgumentException()
-        return doAction(payload as String)
-    }
-
 }
