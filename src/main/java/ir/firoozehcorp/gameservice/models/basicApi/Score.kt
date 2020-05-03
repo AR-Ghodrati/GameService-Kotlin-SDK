@@ -39,12 +39,12 @@ class Score : Serializable {
 
 
     /**
-     * Gets the User Submit this Score.
-     * @return the User Submit this Score
+     * Gets the Member Submit this Score.
+     * @return the Member Submit this Score
      */
-    @SerializedName("user")
+    @SerializedName("member")
     @Expose
-    var user: User? = null
+    var submitter: User? = null
         private set
 
 
@@ -79,7 +79,7 @@ class Score : Serializable {
 
 
     override fun toString(): String {
-        return "Score(gameId=$gameId, user=$user, value=$value, rank=$rank, tries=$tries)"
+        return "Score(gameId=$gameId, user=$submitter, value=$value, rank=$rank, tries=$tries)"
     }
 
 

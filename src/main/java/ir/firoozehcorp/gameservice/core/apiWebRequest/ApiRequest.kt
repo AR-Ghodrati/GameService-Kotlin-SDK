@@ -26,6 +26,7 @@ import ir.firoozehcorp.gameservice.models.basicApi.*
 import ir.firoozehcorp.gameservice.models.basicApi.bucket.BucketOption
 import ir.firoozehcorp.gameservice.models.basicApi.tResponse.*
 import ir.firoozehcorp.gameservice.models.consts.Api
+import ir.firoozehcorp.gameservice.models.gsLive.Member
 import ir.firoozehcorp.gameservice.models.internal.AssetInfo
 import ir.firoozehcorp.gameservice.models.internal.GSTime
 import ir.firoozehcorp.gameservice.models.internal.interfaces.GameServiceCallback
@@ -197,15 +198,15 @@ internal object ApiRequest {
     }
 
 
-    internal fun getCurrentPlayer(callback: GameServiceCallback<User>) {
-        GSWebRequest.get(Api.GetCurrentPlayerData, createPlayTokenHeader())
+    internal fun getCurrentPlayer(callback: GameServiceCallback<Member>) {
+        GSWebRequest.get(Api.GetMemberData, createPlayTokenHeader())
                 .enqueue(object : Callback {
                     override fun onFailure(call: Call, e: IOException) {
                         callback.onFailure(GameServiceException(e.message))
                     }
 
                     override fun onResponse(call: Call, response: Response) {
-                        if (response.isSuccessful) callback.onResponse(gson.fromJson(response.body?.string(), TUser::class.java).user!!)
+                        if (response.isSuccessful) callback.onResponse(gson.fromJson(response.body?.string(), TMember::class.java).member!!)
                         else callback.onFailure(GameServiceException(gson.fromJson(response.body?.string(), Error::class.java).message))
                     }
 
@@ -228,26 +229,42 @@ internal object ApiRequest {
                 })
     }
 
+    internal fun getMemberData(memberId: String, callback: GameServiceCallback<Member>) {
+        GSWebRequest.get(Api.GetMemberData + memberId, createPlayTokenHeader())
+                .enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        callback.onFailure(GameServiceException(e.message))
+                    }
 
-    internal fun editCurrentPlayer(editUserProfile: EditUserProfile, callback: GameServiceCallback<User>) {
+                    override fun onResponse(call: Call, response: Response) {
+                        if (response.isSuccessful) callback.onResponse(gson.fromJson(response.body?.string(), Member::class.java))
+                        else callback.onFailure(GameServiceException(gson.fromJson(response.body?.string(), Error::class.java).message))
+                    }
+
+                })
+    }
+
+
+    internal fun editCurrentPlayer(editUserProfile: EditUserProfile, callback: GameServiceCallback<Member>) {
 
         editUserProfile.logoBuffer?.apply {
             GSWebRequest.multiPart(Api.UserProfileLogo, this, createUserTokenHeader())
                     .enqueue(object : Callback {
                         override fun onFailure(call: Call, e: IOException) {
-                            GSWebRequest.put(Api.UserProfile, gson.toJson(ir.firoozehcorp.gameservice.models.internal.EditUserProfile().apply {
-                                        nickName = editUserProfile.nickName
-                                        allowAutoAddToGame = editUserProfile.allowAutoAddToGame
-                                        showGroupActivity = editUserProfile.showGroupActivity
-                                        showPublicActivity = editUserProfile.showPublicActivity
-                                    }), createUserTokenHeader())
+                            GSWebRequest.put(Api.UserProfile, gson.toJson(ir.firoozehcorp.gameservice.models.internal.EditUserProfile()
+                                            .apply {
+                                                nickName = editUserProfile.nickName
+                                                allowAutoAddToGame = editUserProfile.allowAutoAddToGame
+                                                showGroupActivity = editUserProfile.showGroupActivity
+                                                showPublicActivity = editUserProfile.showPublicActivity
+                                            }), createUserTokenHeader())
                                     .enqueue(object : Callback {
                                         override fun onFailure(call: Call, e: IOException) {
                                             callback.onFailure(GameServiceException(e.message))
                                         }
 
                                         override fun onResponse(call: Call, response: Response) {
-                                            if (response.isSuccessful) callback.onResponse(gson.fromJson(response.body?.string(), TEditUser::class.java).user)
+                                            if (response.isSuccessful) callback.onResponse(gson.fromJson(response.body?.string(), TEditUser::class.java).member)
                                             else callback.onFailure(GameServiceException(gson.fromJson(response.body?.string(), Error::class.java).message))
                                         }
 
@@ -267,7 +284,7 @@ internal object ApiRequest {
                                         }
 
                                         override fun onResponse(call: Call, response: Response) {
-                                            if (response.isSuccessful) callback.onResponse(gson.fromJson(response.body?.string(), TEditUser::class.java).user)
+                                            if (response.isSuccessful) callback.onResponse(gson.fromJson(response.body?.string(), TEditUser::class.java).member)
                                             else callback.onFailure(GameServiceException(gson.fromJson(response.body?.string(), Error::class.java).message))
                                         }
 

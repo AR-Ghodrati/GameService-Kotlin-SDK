@@ -28,6 +28,7 @@ import ir.firoozehcorp.gameservice.models.annotations.NotNull
 import ir.firoozehcorp.gameservice.models.annotations.Nullable
 import ir.firoozehcorp.gameservice.models.basicApi.*
 import ir.firoozehcorp.gameservice.models.basicApi.bucket.BucketOption
+import ir.firoozehcorp.gameservice.models.gsLive.Member
 import ir.firoozehcorp.gameservice.models.gsLive.command.Notification
 import ir.firoozehcorp.gameservice.models.internal.AssetInfo
 import ir.firoozehcorp.gameservice.models.internal.EventHandler
@@ -185,7 +186,7 @@ object GameService {
      * @param callback returns CurrentPlayer Data
      */
     @Throws(GameServiceException::class)
-    fun getCurrentPlayer(callback: GameServiceCallback<User>) {
+    fun getCurrentPlayer(callback: GameServiceCallback<Member>) {
         if (!isAuthenticated()) throw GameServiceException("gameservice Not Available")
         ApiRequest.getCurrentPlayer(callback)
     }
@@ -194,12 +195,25 @@ object GameService {
     /**
      *  With this command you can get a User Data with the User ID
      * @param userId The ID of User you Want To get Detail
-     * @param callback returns CurrentPlayer Data
+     * @param callback returns User Data
      */
     @Throws(GameServiceException::class)
+    @Deprecated("This Method is Deprecated,Use GetMemberData() Instead", ReplaceWith("getMemberData()"))
     fun getUserData(@NotNull userId: String, callback: GameServiceCallback<User>) {
         if (!isAuthenticated()) throw GameServiceException("gameservice Not Available")
         ApiRequest.getUserData(userId, callback)
+    }
+
+
+    /**
+     *  With this command you can get a Member Data with the Member ID
+     * @param memberId The ID of Member you Want To get Detail
+     * @param callback returns Member Data
+     */
+    @Throws(GameServiceException::class)
+    fun getMemberData(@NotNull memberId: String, callback: GameServiceCallback<Member>) {
+        if (!isAuthenticated()) throw GameServiceException("gameservice Not Available")
+        ApiRequest.getMemberData(memberId, callback)
     }
 
 
@@ -208,7 +222,7 @@ object GameService {
      * @param callback returns CurrentPlayer Data
      */
     @Throws(GameServiceException::class)
-    fun editCurrentPlayerProfile(editUserProfile: EditUserProfile, callback: GameServiceCallback<User>) {
+    fun editCurrentPlayerProfile(editUserProfile: EditUserProfile, callback: GameServiceCallback<Member>) {
         if (!isAuthenticated()) throw GameServiceException("gameservice Not Available")
         ApiRequest.editCurrentPlayer(editUserProfile, callback)
     }

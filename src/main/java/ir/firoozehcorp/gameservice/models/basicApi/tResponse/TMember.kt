@@ -1,5 +1,5 @@
 /*
- * <copyright file="TEditUser.kt" company="Firoozeh Technology LTD">
+ * <copyright file="TUser.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,14 +25,14 @@ import ir.firoozehcorp.gameservice.models.gsLive.Member
 /**
  * @author Alireza Ghodrati
  */
-internal class TEditUser {
+internal class TMember {
 
     @SerializedName("status")
     @Expose
     var status: Boolean = false
 
 
-    @SerializedName("user")
+    @SerializedName("data")
     @Expose
-    lateinit var member: Member
+    var member: Member? = null
 }

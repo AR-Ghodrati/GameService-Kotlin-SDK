@@ -32,6 +32,8 @@ internal object Api {
     const val GetCurrentPlayerData = "$BaseUrl2/v1"
     const val GetUserData = "$BaseUrl2/v1/user/"
 
+    const val GetMemberData = "$BaseUrl2/v1/member/"
+
 
     const val SaveGame = "$BaseUrl2/v1/savegame/"
     const val Achievements = "$BaseUrl2/v1/achievement/"
