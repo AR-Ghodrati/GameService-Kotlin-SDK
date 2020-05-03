@@ -4,6 +4,99 @@ All notable changes to this project will be documented in this file.
 
 
 
+
+
+## [2.3.0] - 2020-05-02
+
+### Added
+
+- Added Ability To GetMemberData
+- Added Ability To Send Private Message 
+- Added Ability To Get Members Chat
+- Added Ability To Get Pending Messages
+- Added Ability To Get Recent Messages
+
+### Changed
+
+- Changed Return Value in GetCurrentPlayer Function
+- Changed Score User Property to Submitter Member
+
+### Fixed
+
+- Fixed GSLive System
+
+
+
+
+
+## [2.2.3] - 2020-04-26
+
+### Fixed
+
+- Fixed GSLive System
+
+
+
+
+
+## [2.2.2] - 2020-04-23
+
+### Added
+
+- Added Ability to Get Channels Subscribed
+
+
+
+
+
+## [2.2.1] - 2020-04-20
+
+### Added
+
+- Added Channel Name to Chat Class Model
+
+
+
+
+
+## [2.2.0] - 2020-04-14
+
+### Added
+
+- Added Ability To Get User Data With UserID
+- Added Local & Global Mode To Member Data 
+- Added Ability to check if Command is available or not
+- Added GSLiveOption XML Doc
+
+### Changed
+
+- Added Name & Logo To Member Class (for Local Mode)
+- Changed FindUser Function to FindMember Function in GSLive
+- Changed Inviter User to Inviter Member in Invite Class in GSLive
+
+### Fixed
+
+- Fixed Timeout When GSLive not Connected
+- Fixed Http Request
+
+
+
+## [2.1.1] - 2020-04-4
+
+### Added
+
+- Added Ignore Default Value To FaaS
+
+
+
+### Fixed
+
+- Fixed SDK
+
+
+
+
+
 ## [2.1.0] - 2020-03-28
 
 ### Added
