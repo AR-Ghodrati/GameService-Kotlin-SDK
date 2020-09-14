@@ -18,7 +18,6 @@
 
 package ir.firoozehcorp.gameservice.handlers.turnbased.request
 
-import ir.firoozehcorp.gameservice.handlers.HandlerCore.Companion.gson
 import ir.firoozehcorp.gameservice.handlers.turnbased.TurnBasedHandler
 import ir.firoozehcorp.gameservice.models.consts.TurnBase
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
@@ -35,18 +34,18 @@ internal class CurrentTurnHandler : BaseRequestHandler() {
     }
 
 
-    private fun doAction(payload: DataPayload): Packet {
-        return Packet(TurnBasedHandler.PlayerHash, TurnBase.OnCurrentTurnDetail, gson.toJson(payload))
+    private fun doAction(): Packet {
+        return Packet(TurnBasedHandler.PlayerHash, TurnBase.OnCurrentTurnDetail)
     }
 
 
     override fun checkAction(payload: Any?): Boolean {
-        return payload != null && payload is DataPayload
+        return true
     }
 
     override fun doAction(payload: Any?): Packet {
         if (!checkAction(payload)) throw IllegalArgumentException()
-        return doAction(payload as DataPayload)
+        return doAction()
     }
 
 }

@@ -44,7 +44,7 @@ object GSLiveTB {
     @Throws(GameServiceException::class)
     fun createRoom(@NotNull option: GSLiveOption.CreateRoomOption) {
         if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
-        option.gsLiveType = GSLiveType.RealTime
+        option.gsLiveType = GSLiveType.TurnBased
         GSLive.handler.commandHandler.request(CreateRoomHandler.signature, option)
     }
 
@@ -56,7 +56,7 @@ object GSLiveTB {
     @Throws(GameServiceException::class)
     fun autoMatch(@NotNull option: GSLiveOption.AutoMatchOption) {
         if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
-        option.gsLiveType = GSLiveType.RealTime
+        option.gsLiveType = GSLiveType.TurnBased
         GSLive.handler.commandHandler.request(AutoMatchHandler.signature, option)
     }
 

@@ -36,7 +36,7 @@ class Room : Serializable {
      */
     @SerializedName("_id")
     @Expose
-    lateinit var id: String
+    var id: String? = null
         private set
 
 
@@ -46,7 +46,7 @@ class Room : Serializable {
      */
     @SerializedName("name")
     @Expose
-    lateinit var name: String
+    var name: String? = null
         private set
 
 
@@ -96,7 +96,7 @@ class Room : Serializable {
      */
     @SerializedName("role")
     @Expose
-    lateinit var role: String
+    var role: String? = null
         private set
 
 

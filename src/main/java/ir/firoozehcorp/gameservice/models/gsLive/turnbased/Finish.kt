@@ -36,7 +36,7 @@ class Finish : Serializable {
      */
     @SerializedName("0")
     @Expose
-    lateinit var memberFinish: Member
+    var memberFinish: Member? = null
         private set
 
 
@@ -47,7 +47,7 @@ class Finish : Serializable {
      */
     @SerializedName("1")
     @Expose
-    lateinit var outcomes: Outcomes
+    var outcomes: Outcomes? = null
         private set
 
 }

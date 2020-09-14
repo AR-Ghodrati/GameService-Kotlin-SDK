@@ -26,6 +26,7 @@ import ir.firoozehcorp.gameservice.models.gsLive.Member
 import ir.firoozehcorp.gameservice.models.gsLive.command.AutoMatchEvent
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
 import ir.firoozehcorp.gameservice.models.listeners.CommandListeners
+import ir.firoozehcorp.gameservice.utils.LogUtil
 
 /**
  * @author Alireza Ghodrati
@@ -37,7 +38,7 @@ internal class AutoMatchResponseHandler : BaseResponseHandler() {
     }
 
     override fun handleResponse(packet: Packet, jsonHandler: Gson) {
-        packet.message?.let { message ->
+        packet.message.let { message ->
             when (message) {
                 "waiting_queue" -> {
                     CommandListeners.AutoMatchUpdated.invokeListeners(

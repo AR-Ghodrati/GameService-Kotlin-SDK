@@ -33,6 +33,7 @@ import ir.firoozehcorp.gameservice.models.gsLive.command.StartPayload
 import ir.firoozehcorp.gameservice.models.internal.interfaces.GameServiceCallback
 import ir.firoozehcorp.gameservice.models.listeners.CoreListeners
 import ir.firoozehcorp.gameservice.utils.GsLiveSystemObserver
+import ir.firoozehcorp.gameservice.utils.LogUtil
 
 /**
  * @author Alireza Ghodrati
@@ -59,6 +60,9 @@ internal class TurnBasedHandler(payload: StartPayload) : HandlerCore() {
 
         initRequestMessageHandlers()
         initResponseMessageHandlers()
+
+        LogUtil.logData("TurnBasedHandler Inited With ${responseHandlers.count()} responseHandlers & " +
+                "${requestHandlers.count()} responseHandlers")
     }
 
 
@@ -73,9 +77,6 @@ internal class TurnBasedHandler(payload: StartPayload) : HandlerCore() {
         tcpClient.onDataReceived += object : GsSocketClient.DataReceivedListener {
             override fun invoke(element: Packet, from: Class<*>?) {
                 responseHandlers[element.action]?.handlePacket(element, gson)
-                /*GameService.SynchronizationContext?.send({
-                    responseHandlers[element.action]?.handlePacket(element, gson)
-                }, null)*/
             }
         }
 
@@ -131,6 +132,7 @@ internal class TurnBasedHandler(payload: StartPayload) : HandlerCore() {
             override fun onFailure(error: GameServiceException) {}
             override fun onResponse(response: Boolean) {
                 tcpClient.startReceiving()
+                request(AuthorizationHandler.signature)
             }
         })
     }

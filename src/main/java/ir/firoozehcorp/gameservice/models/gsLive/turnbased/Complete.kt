@@ -46,7 +46,7 @@ class Complete : Serializable {
      */
     @SerializedName("Outcomes")
     @Expose
-    lateinit var result: Outcomes
+    var result: Outcomes? = null
         private set
 
 

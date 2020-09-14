@@ -18,10 +18,24 @@
 
 package ir.firoozehcorp.gameservice.models.enums.gsLive
 
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+
 /**
  * Represents GSLiveType Of GSLive System
  * @author Alireza Ghodrati
  */
 enum class GSLiveType {
-    NotSet, TurnBased, RealTime, Core
+    @SerializedName("0")
+    @Expose
+    NotSet,
+    @SerializedName("1")
+    @Expose
+    TurnBased,
+    @SerializedName("2")
+    @Expose
+    RealTime,
+    @SerializedName("3")
+    @Expose
+    Core
 }

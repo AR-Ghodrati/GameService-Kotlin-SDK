@@ -18,10 +18,23 @@
 
 package ir.firoozehcorp.gameservice.models.enums.gsLive
 
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+
 /**
  * Represents JoinType Of GSLive System
  * @author Alireza Ghodrati
  */
 enum class JoinType {
-    NotSet, Normal, AutoMatch
+    @SerializedName("0")
+    @Expose
+    NotSet,
+
+    @SerializedName("1")
+    @Expose
+    Normal,
+
+    @SerializedName("2")
+    @Expose
+    AutoMatch
 }

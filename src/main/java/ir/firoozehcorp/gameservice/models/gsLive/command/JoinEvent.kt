@@ -38,5 +38,12 @@ class JoinEvent {
      * Gets the Join Data
      * @return the Join Data
      */
-    lateinit var joinData: JoinData
+    var joinData: JoinData? = null
+
+
+    override fun toString(): String {
+        return "JoinEvent(type=$type, joinData=$joinData)"
+    }
+
+
 }

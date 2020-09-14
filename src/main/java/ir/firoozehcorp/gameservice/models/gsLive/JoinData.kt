@@ -35,7 +35,7 @@ class JoinData : Serializable {
      */
     @SerializedName("1")
     @Expose
-    lateinit var type: JoinType
+    var type: JoinType = JoinType.NotSet
         private set
 
 
@@ -45,7 +45,7 @@ class JoinData : Serializable {
      */
     @SerializedName("2")
     @Expose
-    lateinit var roomData: RoomData
+    var roomData: RoomData? = null
         private set
 
 
@@ -55,7 +55,7 @@ class JoinData : Serializable {
      */
     @SerializedName("3")
     @Expose
-    lateinit var joinedMember: Member
+    var joinedMember: Member? =null
         private set
 
 

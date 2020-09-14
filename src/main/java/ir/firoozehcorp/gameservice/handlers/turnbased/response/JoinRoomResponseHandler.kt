@@ -25,6 +25,7 @@ import ir.firoozehcorp.gameservice.models.gsLive.JoinData
 import ir.firoozehcorp.gameservice.models.gsLive.command.JoinEvent
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
 import ir.firoozehcorp.gameservice.models.listeners.TurnBasedListeners
+import ir.firoozehcorp.gameservice.utils.LogUtil
 
 /**
  * @author Alireza Ghodrati

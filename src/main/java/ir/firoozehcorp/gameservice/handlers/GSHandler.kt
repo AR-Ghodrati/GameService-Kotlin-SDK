@@ -25,6 +25,7 @@ import ir.firoozehcorp.gameservice.handlers.turnbased.TurnBasedHandler
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 import ir.firoozehcorp.gameservice.models.gsLive.command.StartPayload
 import ir.firoozehcorp.gameservice.models.listeners.CoreListeners
+import ir.firoozehcorp.gameservice.utils.LogUtil
 import java.io.Closeable
 
 /**
@@ -41,9 +42,9 @@ internal class GSHandler : Closeable {
 
         CoreListeners.GsLiveSystemStarted += object : CoreListeners.GSLiveSystemListener {
             override fun invoke(element: StartPayload, from: Class<*>?) {
-                when (element.room.type) {
+                when (element.room?.type) {
                     GSLiveType.TurnBased -> connectToTurnBased(element)
-                    GSLiveType.RealTime -> connectToRealTime(element)
+                    //GSLiveType.RealTime -> connectToRealTime(element)
                     else -> {
                     }
                 }

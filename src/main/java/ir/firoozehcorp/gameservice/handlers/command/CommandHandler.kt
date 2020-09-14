@@ -83,9 +83,6 @@ internal class CommandHandler : HandlerCore() {
         tcpClient.onDataReceived += object : GsSocketClient.DataReceivedListener {
             override fun invoke(element: Packet, from: Class<*>?) {
                 responseHandlers[element.action]?.handlePacket(element, gson)
-                /* GameService.SynchronizationContext?.send({
-                     responseHandlers[element.action]?.handlePacket(element, gson)
-                 }, null)*/
             }
         }
 

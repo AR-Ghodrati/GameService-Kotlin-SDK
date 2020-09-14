@@ -23,6 +23,7 @@ import ir.firoozehcorp.gameservice.models.consts.TurnBase
 import ir.firoozehcorp.gameservice.models.gsLive.Member
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
 import ir.firoozehcorp.gameservice.models.listeners.TurnBasedListeners
+import ir.firoozehcorp.gameservice.utils.LogUtil
 
 /**
  * @author Alireza Ghodrati
@@ -34,7 +35,9 @@ internal class CurrentTurnResponseHandler : BaseResponseHandler() {
     }
 
     override fun handleResponse(packet: Packet, jsonHandler: Gson) {
+        LogUtil.logData(packet.data)
         val member = jsonHandler.fromJson(packet.data, Member::class.java)
+        LogUtil.logData(member.toString())
         TurnBasedListeners.CurrentTurnMemberReceived.invokeListeners(member)
     }
 }

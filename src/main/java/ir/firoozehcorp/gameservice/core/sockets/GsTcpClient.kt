@@ -58,6 +58,7 @@ internal class GsTcpClient(area: Area? = null) : GsSocketClient() {
                 input = BufferedReader(InputStreamReader(socket.getInputStream(), "UTF-8"))
                 out = DataOutputStream(socket.getOutputStream())
                 isRunning = AtomicBoolean(true)
+                LogUtil.logData("GsTcpClient -> init With IP: $ip,Port: $port")
                 callback.onResponse(true)
             }
         } catch (e: Exception) {

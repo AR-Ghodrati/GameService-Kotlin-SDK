@@ -36,7 +36,7 @@ class Member : Serializable {
      */
     @SerializedName("_id")
     @Expose
-    lateinit var id: String
+    var id: String? = null
         private set
 
 
@@ -66,7 +66,7 @@ class Member : Serializable {
      */
     @SerializedName("user")
     @Expose
-    lateinit var user: User
+    var user: User? = null
         private set
 
     /*
@@ -79,7 +79,13 @@ class Member : Serializable {
      */
     @SerializedName("extra")
     @Expose
-    lateinit var extra: String
+    var extra: String? = null
         private set
+
+
+    override fun toString(): String {
+        return "Member(id=$id, name=$name, logo=$logo, user=$user, extra=$extra)"
+    }
+
 
 }

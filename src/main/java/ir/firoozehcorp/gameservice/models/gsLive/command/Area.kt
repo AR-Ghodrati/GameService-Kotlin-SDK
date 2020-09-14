@@ -29,13 +29,13 @@ internal class Area {
 
     @SerializedName("0")
     @Expose
-    lateinit var ip: String
+    var ip: String? = null
         internal set
 
 
     @SerializedName("1")
     @Expose
-    lateinit var protocol: String
+    var protocol: String? = null
         internal set
 
 
@@ -45,9 +45,20 @@ internal class Area {
         internal set
 
 
-    override fun toString(): String {
-        return "Area(ip=$ip, protocol=$protocol, port=$port)"
-    }
+    @SerializedName("3")
+    @Expose
+    var connectToken: String? = null
+        internal set
 
+
+    @SerializedName("4")
+    @Expose
+    var cert: String? = null
+        internal set
+
+
+    override fun toString(): String {
+        return "Area(ip='$ip', protocol='$protocol', port=$port, connectToken=$connectToken, cert=$cert)"
+    }
 
 }

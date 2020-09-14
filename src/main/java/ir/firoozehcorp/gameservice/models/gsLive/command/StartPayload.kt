@@ -29,19 +29,19 @@ internal class StartPayload {
 
     @SerializedName("0")
     @Expose
-    lateinit var room: Room
+     var room: Room? = null
         private set
 
 
     @SerializedName("1")
     @Expose
-    lateinit var memberId: String
+    var memberId: String? = null
         private set
 
 
     @SerializedName("2")
     @Expose
-    lateinit var area: Area
+    var area: Area? = null
         private set
 
 

@@ -34,16 +34,16 @@ import ir.firoozehcorp.gprotocol.Models.GProtocolType
 /**
  * @author Alireza Ghodrati
  */
-internal class GsUdpClient(area: Area) : GProtocolClient(), GProtocolListener {
+internal class GsUdpClient(area: Area?) : GProtocolClient(), GProtocolListener {
 
     init {
-        if (area.protocol.toUpperCase() != "TCP")
+        if (area?.protocol?.toUpperCase() != "TCP")
             throw GameServiceException("Only TCP Protocol Supported")
         endpoint = area
     }
 
     public override fun init(callback: GameServiceCallback<Boolean>) {
-        GProtocolLoader.Init(endpoint.ip, endpoint.port, this)
+        GProtocolLoader.Init(endpoint?.ip, endpoint?.port!!, this)
     }
 
     public override fun startReceiving() {

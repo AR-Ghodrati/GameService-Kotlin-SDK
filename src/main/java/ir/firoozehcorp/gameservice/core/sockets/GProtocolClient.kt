@@ -43,7 +43,7 @@ internal abstract class GProtocolClient {
     }
 
     protected var gson: Gson = Gson()
-    protected lateinit var endpoint: Area
+    protected var endpoint: Area? = null
 
     protected var IsAvailable = false
 

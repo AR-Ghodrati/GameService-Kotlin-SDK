@@ -28,7 +28,7 @@ import java.io.Serializable
  */
 class GSLiveOption : Serializable {
 
-    open class AutoMatchOption @Throws(GameServiceException::class) constructor(open var minPlayer: Int = 2, open var maxPlayer: Int = 2, open var role: String, open var isPersist: Boolean = false,open var extra: String?) {
+    open class AutoMatchOption @Throws(GameServiceException::class) constructor(open var minPlayer: Int = 2, open var maxPlayer: Int = 2, open var role: String, open var isPersist: Boolean = false,open var extra: String? = null) {
 
         internal var gsLiveType = GSLiveType.NotSet
 
