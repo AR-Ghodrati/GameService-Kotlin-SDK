@@ -31,7 +31,7 @@ class GSLive {
         internal val handler: GSHandler = GSHandler()
     }
 
-    val realTime: GSLiveRT = GSLiveRT
+    //val realTime: GSLiveRT = GSLiveRT
     val turnBase: GSLiveTB = GSLiveTB
     val chat: GSLiveChat = GSLiveChat
 
@@ -44,9 +44,10 @@ class GSLive {
         handler.close()
     }
 
-    fun isRealTimeAvailable(): Boolean {
+    /*fun isRealTimeAvailable(): Boolean {
         return handler.realTimeHandler != null
     }
+     */
 
     fun isTurnBasedAvailable(): Boolean {
         return handler.turnBasedHandler != null

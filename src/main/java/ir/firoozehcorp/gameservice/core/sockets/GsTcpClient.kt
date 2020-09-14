@@ -20,6 +20,7 @@ package ir.firoozehcorp.gameservice.core.sockets
 
 import com.google.gson.stream.JsonReader
 import ir.firoozehcorp.gameservice.models.GameServiceException
+import ir.firoozehcorp.gameservice.models.basicApi.CommandInfo
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 import ir.firoozehcorp.gameservice.models.gsLive.APacket
 import ir.firoozehcorp.gameservice.models.gsLive.command.Area
@@ -37,19 +38,22 @@ import kotlin.concurrent.thread
 /**
  * @author Alireza Ghodrati
  */
-internal class GsTcpClient(area: Area) : GsSocketClient() {
+internal class GsTcpClient(area: Area? = null) : GsSocketClient() {
 
     init {
-        if (area.protocol.toUpperCase() != "TCP")
+        if (area?.protocol?.toUpperCase() != "TCP")
             throw GameServiceException("Only TCP Protocol Supported")
         endpoint = area
     }
 
-    public override fun init(callback: GameServiceCallback<Boolean>) {
+    public override fun init(commandInfo: CommandInfo?,callback: GameServiceCallback<Boolean>) {
         try {
             thread(priority = Thread.MAX_PRIORITY) {
+                val ip = if(commandInfo == null) endpoint.ip else commandInfo.ip
+                val port = commandInfo?.port ?: endpoint.port
+
                 socket = Socket()
-                socket.connect(InetSocketAddress(InetAddress.getByName(endpoint.ip), endpoint.port), timeout)
+                socket.connect(InetSocketAddress(InetAddress.getByName(ip), port), timeout)
                 input = BufferedReader(InputStreamReader(socket.getInputStream(), "UTF-8"))
                 out = DataOutputStream(socket.getOutputStream())
                 isRunning = AtomicBoolean(true)

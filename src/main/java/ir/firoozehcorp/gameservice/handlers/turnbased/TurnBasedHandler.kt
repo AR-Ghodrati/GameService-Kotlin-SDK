@@ -127,7 +127,7 @@ internal class TurnBasedHandler(payload: StartPayload) : HandlerCore() {
 
 
     public override fun init() {
-        tcpClient.init(object : GameServiceCallback<Boolean> {
+        tcpClient.init(null,object : GameServiceCallback<Boolean> {
             override fun onFailure(error: GameServiceException) {}
             override fun onResponse(response: Boolean) {
                 tcpClient.startReceiving()

@@ -1,5 +1,5 @@
 /*
- * <copyright file="$this.kt" company="Firoozeh Technology LTD">
+ * <copyright file="CommandInfo.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,36 +20,25 @@ package ir.firoozehcorp.gameservice.models.basicApi
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ir.firoozehcorp.gameservice.models.internal.Game
+import java.io.Serializable
 
-/**
- * @author Alireza Ghodrati
- */
-internal class Login {
+internal class CommandInfo : Serializable {
 
-
-    @SerializedName("command")
+    @SerializedName("k")
     @Expose
-    var commandInfo: CommandInfo? = null
+    lateinit var cert: String
         private set
 
 
-
-    @SerializedName("status")
+    @SerializedName("ip")
     @Expose
-    var status: Boolean = false
+    var ip: String? = null
         private set
 
 
-    @SerializedName("token")
+    @SerializedName("port")
     @Expose
-    var token: String? = null
-        private set
-
-
-    @SerializedName("game")
-    @Expose
-    var game: Game? = null
+    var port: Int = 0
         private set
 
 }

@@ -18,7 +18,6 @@
 
 package ir.firoozehcorp.gameservice.core
 
-import com.tunnelvisionlabs.util.concurrent.SynchronizationContext
 import ir.firoozehcorp.gameservice.builder.GameServiceClientConfiguration
 import ir.firoozehcorp.gameservice.core.apiWebRequest.ApiRequest
 import ir.firoozehcorp.gameservice.core.apiWebRequest.DownloadRequest
@@ -28,6 +27,7 @@ import ir.firoozehcorp.gameservice.models.annotations.NotNull
 import ir.firoozehcorp.gameservice.models.annotations.Nullable
 import ir.firoozehcorp.gameservice.models.basicApi.*
 import ir.firoozehcorp.gameservice.models.basicApi.bucket.BucketOption
+import ir.firoozehcorp.gameservice.models.consts.Command
 import ir.firoozehcorp.gameservice.models.gsLive.Member
 import ir.firoozehcorp.gameservice.models.gsLive.command.Notification
 import ir.firoozehcorp.gameservice.models.internal.AssetInfo
@@ -58,10 +58,11 @@ object GameService {
         private set
     internal var IsGuest = false
         private set
+    internal var CommandInfo: CommandInfo? = null
+        private set
     internal var Configuration: GameServiceClientConfiguration? = null
         private set
-    internal var SynchronizationContext: SynchronizationContext? = null
-        private set
+
 
     interface NotificationListener : EventHandler.IEventHandler<Notification> {
         override fun invoke(element: Notification, from: Class<*>?)
@@ -475,6 +476,7 @@ object GameService {
                     override fun onResponse(response: Login) {
                         PlayToken = response.token
                         CurrentGame = response.game
+                        CommandInfo = response.commandInfo
                         StartPlaying = System.currentTimeMillis()
                         isAvailable = true
                         IsGuest = false
@@ -514,6 +516,7 @@ object GameService {
             override fun onResponse(response: Login) {
                 PlayToken = response.token
                 CurrentGame = response.game
+                CommandInfo = response.commandInfo
                 StartPlaying = System.currentTimeMillis()
                 isAvailable = true
                 IsGuest = false
@@ -549,6 +552,7 @@ object GameService {
                     override fun onResponse(response: Login) {
                         PlayToken = response.token
                         CurrentGame = response.game
+                        CommandInfo = response.commandInfo
                         StartPlaying = System.currentTimeMillis()
                         isAvailable = true
                         IsGuest = false
@@ -596,6 +600,7 @@ object GameService {
                     override fun onResponse(response: Login) {
                         PlayToken = response.token
                         CurrentGame = response.game
+                        CommandInfo = response.commandInfo
                         StartPlaying = System.currentTimeMillis()
                         isAvailable = true
                         IsGuest = false
@@ -635,6 +640,7 @@ object GameService {
                     override fun onResponse(response: Login) {
                         PlayToken = response.token
                         CurrentGame = response.game
+                        CommandInfo = response.commandInfo
                         StartPlaying = System.currentTimeMillis()
                         isAvailable = true
                         IsGuest = false
@@ -678,6 +684,7 @@ object GameService {
                     override fun onResponse(response: Login) {
                         PlayToken = response.token
                         CurrentGame = response.game
+                        CommandInfo = response.commandInfo
                         StartPlaying = System.currentTimeMillis()
                         isAvailable = true
                         IsGuest = false

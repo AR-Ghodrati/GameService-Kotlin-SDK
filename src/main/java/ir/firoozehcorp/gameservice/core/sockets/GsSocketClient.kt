@@ -20,6 +20,7 @@ package ir.firoozehcorp.gameservice.core.sockets
 
 import com.google.gson.Gson
 import ir.firoozehcorp.gameservice.models.GameServiceException
+import ir.firoozehcorp.gameservice.models.basicApi.CommandInfo
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 import ir.firoozehcorp.gameservice.models.gsLive.APacket
 import ir.firoozehcorp.gameservice.models.gsLive.command.Area
@@ -62,7 +63,7 @@ internal abstract class GsSocketClient {
     protected val lEnd = '}'
 
 
-    protected abstract fun init(callback: GameServiceCallback<Boolean>)
+    protected abstract fun init(commandInfo: CommandInfo?, callback: GameServiceCallback<Boolean>)
     protected abstract fun startReceiving()
     protected abstract fun stopReceiving()
     protected abstract fun updatePwd(newPwd: String?)

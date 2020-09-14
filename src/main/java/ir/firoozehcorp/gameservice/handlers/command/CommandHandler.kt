@@ -18,19 +18,25 @@
 
 package ir.firoozehcorp.gameservice.handlers.command
 
+import ir.firoozehcorp.gameservice.core.GameService
 import ir.firoozehcorp.gameservice.core.sockets.GsSocketClient
 import ir.firoozehcorp.gameservice.core.sockets.GsTcpClient
 import ir.firoozehcorp.gameservice.handlers.HandlerCore
 import ir.firoozehcorp.gameservice.handlers.command.request.*
+import ir.firoozehcorp.gameservice.handlers.command.request.chat.*
+import ir.firoozehcorp.gameservice.handlers.command.request.chat.GetChannelRecentMessagesRequestHandler
 import ir.firoozehcorp.gameservice.handlers.command.request.chat.GetChannelsSubscribedHandler
 import ir.firoozehcorp.gameservice.handlers.command.request.chat.SendChannelMessageHandler
 import ir.firoozehcorp.gameservice.handlers.command.request.chat.SubscribeChannelHandler
 import ir.firoozehcorp.gameservice.handlers.command.request.chat.UnSubscribeChannelHandler
 import ir.firoozehcorp.gameservice.handlers.command.resposne.*
+import ir.firoozehcorp.gameservice.handlers.command.resposne.chat.*
 import ir.firoozehcorp.gameservice.handlers.command.resposne.chat.ChannelMessageResponseHandler
+import ir.firoozehcorp.gameservice.handlers.command.resposne.chat.ChannelRecentResponseHandler
 import ir.firoozehcorp.gameservice.handlers.command.resposne.chat.ChannelSubscribedResponseHandler
 import ir.firoozehcorp.gameservice.handlers.command.resposne.chat.SubscribeChannelResponseHandler
 import ir.firoozehcorp.gameservice.handlers.command.resposne.chat.UnSubscribeChannelResponseHandler
+import ir.firoozehcorp.gameservice.handlers.realtime.request.SendPublicMessageHandler
 import ir.firoozehcorp.gameservice.models.GameServiceException
 import ir.firoozehcorp.gameservice.models.consts.Command
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GProtocolSendType
@@ -115,11 +121,14 @@ internal class CommandHandler : HandlerCore() {
                 InviteUserHandler.signature to InviteUserHandler(),
                 JoinRoomHandler.signature to JoinRoomHandler(),
                 PingPongHandler.signature to PingPongHandler(),
-                SendChannelMessageHandler.signature to SendChannelMessageHandler(),
+
                 SubscribeChannelHandler.signature to SubscribeChannelHandler(),
                 UnSubscribeChannelHandler.signature to UnSubscribeChannelHandler(),
-                GetChannelsSubscribedHandler.signature to GetChannelsSubscribedHandler()
-
+                GetChannelsSubscribedHandler.signature to GetChannelsSubscribedHandler(),
+                GetChannelRecentMessagesRequestHandler.signature to GetChannelRecentMessagesRequestHandler(),
+                GetChannelsMembersRequestHandler.signature to GetChannelsMembersRequestHandler(),
+                SendPrivateMessageHandler.signature to SendPrivateMessageHandler(),
+                SendChannelMessageHandler.signature to SendChannelMessageHandler()
         )
     }
 
@@ -128,7 +137,6 @@ internal class CommandHandler : HandlerCore() {
                 AutoMatchResponseHandler.action to AutoMatchResponseHandler(),
                 AuthResponseHandler.action to AuthResponseHandler(),
                 CancelAutoMatchResponseHandler.action to CancelAutoMatchResponseHandler(),
-                ChannelMessageResponseHandler.action to ChannelMessageResponseHandler(),
                 ErrorResponseHandler.action to ErrorResponseHandler(),
                 FindMembersResponseHandler.action to FindMembersResponseHandler(),
                 GetInviteInboxResponseHandler.action to GetInviteInboxResponseHandler(),
@@ -137,15 +145,21 @@ internal class CommandHandler : HandlerCore() {
                 JoinRoomResponseHandler.action to JoinRoomResponseHandler(),
                 NotificationResponseHandler.action to NotificationResponseHandler(),
                 PingResponseHandler.action to PingResponseHandler(),
+
                 SubscribeChannelResponseHandler.action to SubscribeChannelResponseHandler(),
                 UnSubscribeChannelResponseHandler.action to UnSubscribeChannelResponseHandler(),
-                ChannelSubscribedResponseHandler.action to ChannelSubscribedResponseHandler()
+                ChannelSubscribedResponseHandler.action to ChannelSubscribedResponseHandler(),
+                ChannelMessageResponseHandler.action to ChannelMessageResponseHandler(),
+                ChannelRecentResponseHandler.action to ChannelRecentResponseHandler(),
+                ChannelsMembersResponseHandler.action to ChannelsMembersResponseHandler(),
+                PendingMessagesResponseHandler.action to PendingMessagesResponseHandler(),
+                PrivateChatResponseHandler.action to PrivateChatResponseHandler()
         )
     }
 
 
     public override fun init() {
-        tcpClient.init(object : GameServiceCallback<Boolean> {
+        tcpClient.init(GameService.CommandInfo,object : GameServiceCallback<Boolean> {
             override fun onFailure(error: GameServiceException) {}
             override fun onResponse(response: Boolean) {
                 tcpClient.startReceiving()
