@@ -1,8 +1,4 @@
 - <p align="center">
-  <img src="http://uupload.ir/files/s6eo_img_20200205_213054_702.jpg">
-
-
-
 
 
   <h4>
@@ -11,7 +7,8 @@
    همچنین برای معرفی و دیده شدن آن کافیست بازی خود را ثبت کنید </b>
       </p>
   </h4>
-----
+
+
 
 
 
@@ -30,9 +27,3 @@
 ### راه اندازی گیم سرویس :
 
 برای استفاده از گیم سرویس به [مستندات](https://gamesservice.ir/docs) مراجعه کنید
-
-
-
-### کتابخانه های استفاده شده :
-- [Async Await Support](https://assetstore.unity.com/packages/tools/integration/async-await-support-101056)
-- [NaughtyAttributes](https://assetstore.unity.com/packages/tools/utilities/naughtyattributes-129996)
