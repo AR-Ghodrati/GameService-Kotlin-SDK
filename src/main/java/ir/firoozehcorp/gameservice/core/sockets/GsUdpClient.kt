@@ -23,18 +23,13 @@ import ir.firoozehcorp.gameservice.models.enums.gsLive.GProtocolSendType
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 import ir.firoozehcorp.gameservice.models.gsLive.APacket
 import ir.firoozehcorp.gameservice.models.gsLive.command.Area
-import ir.firoozehcorp.gameservice.models.gsLive.realtime.Packet
 import ir.firoozehcorp.gameservice.models.internal.interfaces.GameServiceCallback
-import ir.firoozehcorp.gameservice.models.listeners.CoreListeners
-import ir.firoozehcorp.gprotocol.GProtocolLoader
-import ir.firoozehcorp.gprotocol.Models.GProtocolListener
-import ir.firoozehcorp.gprotocol.Models.GProtocolType
 
 
 /**
  * @author Alireza Ghodrati
  */
-internal class GsUdpClient(area: Area?) : GProtocolClient(), GProtocolListener {
+internal class GsUdpClient(area: Area?) : GProtocolClient() {
 
     init {
         if (area?.protocol?.toUpperCase() != "TCP")
@@ -43,15 +38,15 @@ internal class GsUdpClient(area: Area?) : GProtocolClient(), GProtocolListener {
     }
 
     public override fun init(callback: GameServiceCallback<Boolean>) {
-        GProtocolLoader.Init(endpoint?.ip, endpoint?.port!!, this)
+        // GProtocolLoader.Init(endpoint?.ip, endpoint?.port!!, this)
     }
 
     public override fun startReceiving() {
-        GProtocolLoader.StartReceiving()
+        // GProtocolLoader.StartReceiving()
     }
 
     public override fun stopReceiving() {
-        GProtocolLoader.StopReceiving()
+        // GProtocolLoader.StopReceiving()
     }
 
     public override fun updatePwd(newPwd: String?) {
@@ -61,19 +56,20 @@ internal class GsUdpClient(area: Area?) : GProtocolClient(), GProtocolListener {
     }
 
     public override fun send(packet: APacket?, type: GProtocolSendType) {
-        when (type) {
-            GProtocolSendType.NotSet -> {
-            }
-            GProtocolSendType.Reliable -> GProtocolLoader.SendReliable(gson.toJson(packet))
-            GProtocolSendType.UnReliable -> GProtocolLoader.SendUnReliable(gson.toJson(packet))
-        }
+        /* when (type) {
+             GProtocolSendType.NotSet -> {
+             }
+             GProtocolSendType.Reliable -> GProtocolLoader.SendReliable(gson.toJson(packet))
+             GProtocolSendType.UnReliable -> GProtocolLoader.SendUnReliable(gson.toJson(packet))
+         }
+         */
     }
 
     public override fun isAvailable(): Boolean {
         return IsAvailable
     }
 
-    override fun OnTimeout() {
+    /*override fun OnTimeout() {
         IsAvailable = false
         onError.invokeListeners(GameServiceException("ServerTimeout"))
     }
@@ -93,4 +89,5 @@ internal class GsUdpClient(area: Area?) : GProtocolClient(), GProtocolListener {
         IsAvailable = false
         onError.invokeListeners(GameServiceException("ServerDisconnect"))
     }
+     */
 }
