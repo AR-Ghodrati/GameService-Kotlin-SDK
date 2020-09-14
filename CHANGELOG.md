@@ -6,6 +6,222 @@ All notable changes to this project will be documented in this file.
 
 
 
+## [5.4.1] Stable - 2020-08-22
+
+### Added
+
+- Added Email To Edit User
+- Added Email and Phone Number To User Data Model
+
+
+
+
+
+## [5.4.0] Stable - 2020-08-20
+
+### Added
+
+- Added Phone Number To Edit User
+- Added Extra Data To Send With AutoMatch & Create Room & Invites
+- Added GetLastLoginMemberInfo Function
+
+
+
+### Fixed
+
+- Fixed CanLoginWithPhoneNumber Return Value
+
+
+
+## [5.3.0] Alpha - 2020-08-11
+
+### Added
+
+- Added SendLoginCodeWithSms Function
+- Added LoginWithPhoneNumber Function
+- Added CanLoginWithPhoneNumber Function
+- Added Download With Certificates (Secure Download)
+
+
+
+### Fixed
+
+- Fixed RealTime & GProtocol System 
+
+
+
+## [5.2.0] Stable - 2020-08-04
+
+### Added
+
+- Added GetCurrentPlayerScore Function
+
+- Added Some Array Serializers
+
+  
+
+### Changed
+
+- Changed HttpRequestObserver to 9 Requests per 3 Secs
+
+
+
+### Fixed
+
+- Fixed RealTime System To Improved Network Transmit
+
+
+
+
+
+
+
+## [5.1.1] Alpha - 2020-07-30
+
+### Added
+
+- Added Ability To Parallel Download in Download Manager
+- Added Some Download EventHandlers
+- Added Cancel Download Functions
+
+
+### Fixed
+
+- Fixed ReadTime System
+
+
+
+## [5.1.0] Alpha - 2020-07-29
+
+### Added
+
+- Added Ability To Set Property
+- Added Some Error Handling
+
+
+
+### Changed
+
+- Changed Unity Serializers Classes  To Improve Performance and Network Transmit
+
+
+
+### Fixed
+
+- Fixed RigidBody2D Observer
+
+
+
+## [5.0.0] Alpha - 2020-07-25
+
+### Added
+
+- Added New RealTime Utility System (Version Alpha 1.0.0) 
+
+- Added Http Request Observer
+
+- Added GetPing() To RealTime Functions
+
+  
+
+### Changed
+
+- Migrate To Binary System in RealTime Core
+
+
+
+### Fixed
+
+- Fixed GsLive on Critical Sections
+- Fixed Code
+
+
+
+## [4.1.2] - 2020-07-03
+
+### Changed
+
+- Migrate DataPack To New Version
+
+
+
+
+
+## [4.1.1] - 2020-06-05
+
+### Fixed
+
+- Fixed MaxPlayer in GSLiveOption
+
+
+
+## [4.1.0] - 2020-06-03
+
+### Added
+
+- Added Message Info To RealTime Message Receive Event
+- Added Round-Trip Time (RTT) to RealTime Message Info
+
+### Fixed
+
+- Fixed GetCurrent Time Function
+
+- Fixed GSLive System
+
+  
+
+
+
+## [4.0.1] - 2020-05-31
+
+### Fixed
+
+- Fixed GSLive System 
+
+
+
+
+
+## [4.0.0 alpha] - 2020-05-29
+
+### Added
+
+- Added Cryptography To GProtocol
+- Added Congestion Control System To GProtocol
+
+### Changed
+
+- Updated GProtocol To Version 2.0.0
+
+### Fixed
+
+- Fixed GSLive System
+- Fixed Sending Continuous Packets issue
+
+
+
+
+
+## [3.0.1] - 2020-05-28
+
+### Fixed
+
+- Fixed Download Manager
+
+
+
+
+
+## [3.0.0] - 2020-05-05
+
+### Added
+
+- Added Ability To Build on IL2CPP Scripting Backend
+
+
+
+
+
 ## [2.3.0] - 2020-05-02
 
 ### Added
