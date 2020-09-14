@@ -24,6 +24,7 @@ import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 import ir.firoozehcorp.gameservice.models.gsLive.command.ErrorEvent
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
 import ir.firoozehcorp.gameservice.models.listeners.CoreListeners
+import ir.firoozehcorp.gameservice.models.listeners.TurnBasedListeners
 
 
 /**
@@ -36,7 +37,7 @@ internal class ErrorResponseHandler : BaseResponseHandler() {
     }
 
     override fun handleResponse(packet: Packet, jsonHandler: Gson) {
-        CoreListeners.Error.invokeListeners(ErrorEvent().apply {
+        TurnBasedListeners.Error.invokeListeners(ErrorEvent().apply {
             this.type = GSLiveType.TurnBased
             this.error = packet.message.toString()
         }, javaClass)

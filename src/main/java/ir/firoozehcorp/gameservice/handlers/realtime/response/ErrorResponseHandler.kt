@@ -25,6 +25,7 @@ import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 import ir.firoozehcorp.gameservice.models.gsLive.command.ErrorEvent
 import ir.firoozehcorp.gameservice.models.gsLive.realtime.Packet
 import ir.firoozehcorp.gameservice.models.listeners.CoreListeners
+import ir.firoozehcorp.gameservice.models.listeners.RealTimeListeners
 
 /**
  * @author Alireza Ghodrati
@@ -36,7 +37,7 @@ internal class ErrorResponseHandler : BaseResponseHandler() {
     }
 
     override fun handleResponse(packet: Packet, type: GProtocolSendType, jsonHandler: Gson) {
-        CoreListeners.Error.invokeListeners(ErrorEvent().apply {
+        RealTimeListeners.Error.invokeListeners(ErrorEvent().apply {
             this.type = GSLiveType.RealTime
             this.error = packet.payload.toString()
         }, javaClass)

@@ -38,4 +38,11 @@ class ErrorEvent : Serializable {
      * @return Gets the Error Text
      */
     var error: String = ""
+
+
+    override fun toString(): String {
+        return "ErrorEvent(type=$type, error='$error')"
+    }
+
+
 }

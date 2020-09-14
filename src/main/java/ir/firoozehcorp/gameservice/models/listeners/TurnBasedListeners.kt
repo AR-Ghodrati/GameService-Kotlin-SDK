@@ -19,6 +19,7 @@
 package ir.firoozehcorp.gameservice.models.listeners
 
 import ir.firoozehcorp.gameservice.models.gsLive.Member
+import ir.firoozehcorp.gameservice.models.gsLive.command.ErrorEvent
 import ir.firoozehcorp.gameservice.models.gsLive.command.JoinEvent
 import ir.firoozehcorp.gameservice.models.gsLive.turnbased.Complete
 import ir.firoozehcorp.gameservice.models.gsLive.turnbased.Finish
@@ -115,6 +116,12 @@ open class TurnBasedListeners : CommandListeners() {
          * Returns Current Room Members Detail
          */
         val RoomMembersDetailReceived: EventHandler<RoomMembersDetailListener, MutableList<Member>> = EventHandler()
+
+
+        /**
+         * Calls When An New Error Received From Server
+         */
+        val Error: EventHandler<ErrorListener, ErrorEvent> = EventHandler()
     }
 
 }

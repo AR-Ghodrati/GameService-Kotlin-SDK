@@ -31,7 +31,7 @@ internal class DataPayload : Payload() {
 
     @SerializedName("0")
     @Expose
-    var action: Int = -1
+    var action: Int = 0
 
 
     @SerializedName("1")

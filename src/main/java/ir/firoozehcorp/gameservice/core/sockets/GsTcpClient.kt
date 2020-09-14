@@ -126,10 +126,9 @@ internal class GsTcpClient(area: Area? = null) : GsSocketClient() {
     public override fun send(packet: APacket?) {
         thread(priority = Thread.MAX_PRIORITY) {
             try {
-                LogUtil.logData("GsTcpClient -> DataOut: $packet")
-                out.write(gson
-                        .toJson(packet)
-                        .toByteArray(charset("UTF-8"))
+                val data = gson.toJson(packet)
+                LogUtil.logData("GsTcpClient -> DataOut: $data")
+                out.write(data.toByteArray(charset("UTF-8"))
                 )
                 out.flush()
             } catch (e: Exception) {

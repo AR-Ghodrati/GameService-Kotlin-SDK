@@ -20,7 +20,7 @@ package ir.firoozehcorp.gameservice.utils
 
 internal object LogUtil {
 
-    private const val Debug = true
+    private const val Debug = false
 
     internal fun logData(data : String?){
         if(!Debug) return
