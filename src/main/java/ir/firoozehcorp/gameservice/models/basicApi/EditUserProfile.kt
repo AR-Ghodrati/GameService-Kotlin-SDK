@@ -28,18 +28,15 @@ class EditUserProfile(
          */
         var nickName: String? = null,
         /**
+         *  Set New PhoneNumber For CurrentPlayer.
+         */
+        var phoneNumber: String? = null,
+        /**
+         *  Set New Email For CurrentPlayer.
+         */
+        var email: String? = null,
+        /**
          * Set New ProfileLogo(BytesBuffer) For CurrentPlayer.
          */
-        var logoBuffer: ByteArray? = null,
-        /**
-         * Set Allow Auto Add To Game For CurrentPlayer.
-         */
-        var allowAutoAddToGame: Boolean = false,
-        /**
-         * Set Show Public Activity For CurrentPlayer.
-         */
-        var showPublicActivity: Boolean = false,
-        /**
-         * Set Show Group Activity For CurrentPlayer.
-         */
-        var showGroupActivity: Boolean = false)
+        var logoBuffer: ByteArray? = null
+       )

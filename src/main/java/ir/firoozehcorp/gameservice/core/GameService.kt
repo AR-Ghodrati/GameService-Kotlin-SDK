@@ -182,6 +182,21 @@ object GameService {
 
 
     /**
+     *  With this command you can get Current Player Score with the ID of the LeaderBoard id
+     *   you registered in the Developer panel.
+     * @param leaderBoardKey the Key of leaderBoard you Want To get Score
+     * @param callback returns Score Data
+     */
+    @Throws(GameServiceException::class)
+    fun getCurrentPlayerScore(@NotNull leaderBoardKey : String,callback: GameServiceCallback<Score>) {
+        if (!isAuthenticated()) throw GameServiceException("gameservice Not Available")
+        if (leaderBoardKey.isEmpty()) throw GameServiceException("leaderBoardKey Cant Be EmptyOrNull")
+        ApiRequest.getCurrentPlayerScore(leaderBoardKey,callback)
+    }
+
+
+
+    /**
      * With this command you can get information about the current player is playing
      * @param callback returns CurrentPlayer Data
      */
@@ -214,6 +229,17 @@ object GameService {
     fun getMemberData(@NotNull memberId: String, callback: GameServiceCallback<Member>) {
         if (!isAuthenticated()) throw GameServiceException("gameservice Not Available")
         ApiRequest.getMemberData(memberId, callback)
+    }
+
+
+    /**
+     *  With this command you can get The Last Login Member Info
+     * @param callback returns Member Data
+     */
+    @Throws(GameServiceException::class)
+    fun getLastLoginMemberInfo(callback: GameServiceCallback<MemberInfo>) {
+        if (!isAuthenticated()) throw GameServiceException("gameservice Not Available")
+        ApiRequest.getLastLoginMemberInfo(callback)
     }
 
 
@@ -341,6 +367,18 @@ object GameService {
 
 
     /**
+     *  This command Check Can Login With Phone Number
+     * @param callback returns The Status
+     */
+    @Throws(GameServiceException::class)
+    fun canLoginWithPhoneNumber(callback: GameServiceCallback<Boolean>) {
+        if (Configuration == null) throw GameServiceException("You Must Configuration First")
+        ApiRequest.checkPhoneLoginStatus(callback)
+    }
+
+
+
+    /**
      * Gets Asset Info With AssetTag
      * @param assetTag Specifies the Asset tag that Set in Developers Panel
      * @param callback return The AssetInfo
@@ -399,6 +437,22 @@ object GameService {
 
         ApiRequest.executeCloudFunction(functionId, functionParameters, isPublic, callback)
     }
+
+
+    /**
+     *  This command Check Can Login With Phone Number
+     * @param phoneNumber Specifies the Phone Number
+     * @param callback returns The Status
+     */
+    @Throws(GameServiceException::class)
+    fun sendLoginCodeWithSms(@NotNull phoneNumber : String, callback: GameServiceCallback<Boolean>) {
+        if (!NetworkUtil.isConnected()) throw GameServiceException("Network Unreachable")
+        if (Configuration == null) throw GameServiceException("You Must Configuration First")
+        if (phoneNumber.isEmpty()) throw GameServiceException("phoneNumber Cant Be Empty")
+        if (isAuthenticated()) logout()
+        ApiRequest.checkPhoneLoginStatus(phoneNumber,callback)
+    }
+
 
 
     /**
@@ -489,6 +543,53 @@ object GameService {
         if (isAuthenticated()) logout()
 
         ApiRequest.loginWithGoogle(idToken, object : GameServiceCallback<Login> {
+            override fun onResponse(response: Login) {
+                UserToken = response.token
+                ApiRequest.authorize(object : GameServiceCallback<Login> {
+                    override fun onResponse(response: Login) {
+                        PlayToken = response.token
+                        CurrentGame = response.game
+                        StartPlaying = System.currentTimeMillis()
+                        isAvailable = true
+                        IsGuest = false
+                        GSLive.init()
+                        callback.onResponse(UserToken.toString())
+                    }
+
+                    override fun onFailure(error: GameServiceException) {
+                        callback.onFailure(error)
+                    }
+
+                })
+            }
+
+            override fun onFailure(error: GameServiceException) {
+                callback.onFailure(error)
+            }
+
+        })
+    }
+
+
+
+    /**
+     * Normal Login With Phone Number To Game Service
+     * You Must Call SendLoginCodeWithSms First, to get SMS Code.
+     * It May Throw Exception
+     * @param nickName Specifies Nick Name
+     * @param phoneNumber Specifies Phone Number
+     * @param smsCode Specifies sms Code
+     */
+    @Throws(GameServiceException::class)
+    fun loginWithPhoneNumber(@NotNull nickName: String,@NotNull phoneNumber: String,@NotNull smsCode: String, callback: GameServiceCallback<String>) {
+        if (Configuration == null) throw GameServiceException("You Must Configuration First")
+        if (!NetworkUtil.isConnected()) throw GameServiceException("Network Unreachable")
+        if (nickName.isEmpty()) throw GameServiceException("nickName Cant Be Empty")
+        if (phoneNumber.isEmpty()) throw GameServiceException("phoneNumber Cant Be Empty")
+        if (smsCode.isEmpty()) throw GameServiceException("smsCode Cant Be Empty")
+        if (isAuthenticated()) logout()
+
+        ApiRequest.loginWithPhoneNumber(nickName,phoneNumber,smsCode, object : GameServiceCallback<Login> {
             override fun onResponse(response: Login) {
                 UserToken = response.token
                 ApiRequest.authorize(object : GameServiceCallback<Login> {
@@ -613,7 +714,7 @@ object GameService {
      * @return The Current gameservice Version
      */
     fun version(): String {
-        return "2.1.0"
+        return "5.4.1"
     }
 
     /**

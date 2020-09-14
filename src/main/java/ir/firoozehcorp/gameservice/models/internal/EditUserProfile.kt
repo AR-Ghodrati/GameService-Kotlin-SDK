@@ -32,21 +32,14 @@ internal class EditUserProfile(
         @SerializedName("name")
         @Expose
         var nickName: String? = null,
-        /**
-         * Set Allow Auto Add To Game For CurrentPlayer.
-         */
-        @SerializedName("auto_add")
+
+
+        @SerializedName("mobile")
         @Expose
-        var allowAutoAddToGame: Boolean = false,
-        /**
-         * Set Show Public Activity For CurrentPlayer.
-         */
-        @SerializedName("public_last_activity")
+        var phoneNumber: String? = null,
+
+
+        @SerializedName("email")
         @Expose
-        var showPublicActivity: Boolean = false,
-        /**
-         * Set Show Group Activity For CurrentPlayer.
-         */
-        @SerializedName("group_activity")
-        @Expose
-        var showGroupActivity: Boolean = false)
+        var email: String? = null
+     )

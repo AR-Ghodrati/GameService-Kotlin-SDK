@@ -48,6 +48,26 @@ class User : Serializable {
     var name: String? = null
         private set
 
+    /**
+     * Gets the User Email(NULLABLE).
+     * @return the User Email</value>
+     */
+    @SerializedName("email")
+    @Expose
+    var email: String? = null
+        private set
+
+
+
+    /**
+     * Gets the User PhoneNumber(NULLABLE).
+     * @return the User PhoneNumber</value>
+     */
+    @SerializedName("mobile")
+    @Expose
+    var phoneNumber: String? = null
+        private set
+
 
     /**
      * Gets the User Logo.

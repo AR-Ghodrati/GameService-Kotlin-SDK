@@ -1,5 +1,5 @@
 /*
- * <copyright file="Member.kt" company="Firoozeh Technology LTD">
+ * <copyright file="$this.kt" company="Firoozeh Technology LTD">
  * Copyright (C) 2020. Firoozeh Technology LTD. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,18 +16,17 @@
  * </copyright>
  */
 
-package ir.firoozehcorp.gameservice.models.gsLive
+package ir.firoozehcorp.gameservice.models.basicApi
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ir.firoozehcorp.gameservice.models.basicApi.User
 import java.io.Serializable
 
 /**
- * Represents Member Data Model In GameService MultiPlayer System (GSLive)
+ * Represents MemberInfo Data Model In GameService MultiPlayer System (GSLive)
  * @author Alireza Ghodrati
  */
-class Member : Serializable {
+class MemberInfo : Serializable {
 
     /**
      * Gets the Member ID
@@ -60,26 +59,29 @@ class Member : Serializable {
         private set
 
 
+
     /**
-     * Gets the Member User Data
-     * @return the Member User Data
+     * Gets the Member Email.
+     * @return the Member Email</value>
      */
-    @SerializedName("user")
+    @SerializedName("email")
     @Expose
-    lateinit var user: User
+    var email: String? = null
         private set
 
-    /*
-     * Gets the Member Extra Data (NULLABLE).
-     * NOTE : The Extra Data Only Available in :
-     *   1 - AutoMatch
-     *   2 - Join Room
-     *   3 - Member Details
-     * @return the Member Extra
+
+
+    /**
+     * Gets the Member PhoneNumber.
+     * @return the Member PhoneNumber</value>
      */
-    @SerializedName("extra")
+    @SerializedName("phone_number")
     @Expose
-    lateinit var extra: String
+    var phoneNumber: String? = null
         private set
+
+
+
+
 
 }

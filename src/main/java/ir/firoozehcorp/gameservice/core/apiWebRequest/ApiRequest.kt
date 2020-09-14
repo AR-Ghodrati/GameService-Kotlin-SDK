@@ -22,6 +22,7 @@ import com.google.gson.GsonBuilder
 import ir.firoozehcorp.gameservice.core.GameService
 import ir.firoozehcorp.gameservice.core.GameService.Configuration
 import ir.firoozehcorp.gameservice.models.GameServiceException
+import ir.firoozehcorp.gameservice.models.annotations.NotNull
 import ir.firoozehcorp.gameservice.models.basicApi.*
 import ir.firoozehcorp.gameservice.models.basicApi.bucket.BucketOption
 import ir.firoozehcorp.gameservice.models.basicApi.tResponse.*
@@ -104,6 +105,23 @@ internal object ApiRequest {
 
     internal fun loginWithGoogle(idToken: String, callback: GameServiceCallback<Login>) {
         GSWebRequest.post(Api.LoginWithGoogle, gson.toJson(createGoogleLoginHeader(idToken)))
+                .enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        callback.onFailure(GameServiceException(e.message))
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        if (response.isSuccessful) callback.onResponse(gson.fromJson(response.body?.string(), Login::class.java))
+                        else callback.onFailure(GameServiceException(gson.fromJson(response.body?.string(), Error::class.java).message))
+                    }
+
+                })
+    }
+
+
+
+    internal fun loginWithPhoneNumber(nickName: String,phoneNumber: String,smsCode: String, callback: GameServiceCallback<Login>) {
+        GSWebRequest.post(Api.LoginWithPhoneNumber + "/callback", gson.toJson(createPhoneLoginDictionary(nickName,phoneNumber,smsCode)))
                 .enqueue(object : Callback {
                     override fun onFailure(call: Call, e: IOException) {
                         callback.onFailure(GameServiceException(e.message))
@@ -214,6 +232,22 @@ internal object ApiRequest {
     }
 
 
+    internal fun getCurrentPlayerScore(leaderBoardKey : String,callback: GameServiceCallback<Score>) {
+        GSWebRequest.get(Api.Leaderboard + leaderBoardKey + "/me", createPlayTokenHeader())
+                .enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        callback.onFailure(GameServiceException(e.message))
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        if (response.isSuccessful) callback.onResponse(gson.fromJson(response.body?.string(), Score::class.java))
+                        else callback.onFailure(GameServiceException(gson.fromJson(response.body?.string(), Error::class.java).message))
+                    }
+
+                })
+    }
+
+
     internal fun getUserData(userId: String, callback: GameServiceCallback<User>) {
         GSWebRequest.get(Api.GetUserData + userId, createPlayTokenHeader())
                 .enqueue(object : Callback {
@@ -245,6 +279,23 @@ internal object ApiRequest {
     }
 
 
+    internal fun getLastLoginMemberInfo(callback: GameServiceCallback<MemberInfo>) {
+        GSWebRequest.get(Api.GetLastLoginInfo, createLastLoginDictionary())
+                .enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        callback.onFailure(GameServiceException(e.message))
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        if (response.isSuccessful) callback.onResponse(gson.fromJson(response.body?.string(), MemberInfo::class.java))
+                        else callback.onFailure(GameServiceException(gson.fromJson(response.body?.string(), Error::class.java).message))
+                    }
+
+                })
+    }
+
+
+
     internal fun editCurrentPlayer(editUserProfile: EditUserProfile, callback: GameServiceCallback<Member>) {
 
         editUserProfile.logoBuffer?.apply {
@@ -254,9 +305,8 @@ internal object ApiRequest {
                             GSWebRequest.put(Api.UserProfile, gson.toJson(ir.firoozehcorp.gameservice.models.internal.EditUserProfile()
                                             .apply {
                                                 nickName = editUserProfile.nickName
-                                                allowAutoAddToGame = editUserProfile.allowAutoAddToGame
-                                                showGroupActivity = editUserProfile.showGroupActivity
-                                                showPublicActivity = editUserProfile.showPublicActivity
+                                                email = editUserProfile.email
+                                                phoneNumber = editUserProfile.phoneNumber
                                             }), createUserTokenHeader())
                                     .enqueue(object : Callback {
                                         override fun onFailure(call: Call, e: IOException) {
@@ -274,9 +324,8 @@ internal object ApiRequest {
                         override fun onResponse(call: Call, response: Response) {
                             GSWebRequest.put(Api.UserProfile, gson.toJson(EditUserProfile().apply {
                                         nickName = editUserProfile.nickName
-                                        allowAutoAddToGame = editUserProfile.allowAutoAddToGame
-                                        showGroupActivity = editUserProfile.showGroupActivity
-                                        showPublicActivity = editUserProfile.showPublicActivity
+                                        email = editUserProfile.email
+                                        phoneNumber = editUserProfile.phoneNumber
                                     }), createUserTokenHeader())
                                     .enqueue(object : Callback {
                                         override fun onFailure(call: Call, e: IOException) {
@@ -493,6 +542,37 @@ internal object ApiRequest {
     }
 
 
+
+    internal fun checkPhoneLoginStatus(callback: GameServiceCallback<Boolean>) {
+        GSWebRequest.put(Api.LoginWithPhoneNumber, gson.toJson(createSendSmsDictionary()))
+                .enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        callback.onFailure(GameServiceException(e.message))
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        callback.onResponse(gson.fromJson(response.body?.string(), Error::class.java).status)
+                    }
+
+                })
+    }
+
+
+    internal fun checkPhoneLoginStatus(phoneNumber: String,callback: GameServiceCallback<Boolean>) {
+        GSWebRequest.post(Api.LoginWithPhoneNumber, gson.toJson(createSendSmsDictionary(phoneNumber)))
+                .enqueue(object : Callback {
+                    override fun onFailure(call: Call, e: IOException) {
+                        callback.onFailure(GameServiceException(e.message))
+                    }
+
+                    override fun onResponse(call: Call, response: Response) {
+                        callback.onResponse(gson.fromJson(response.body?.string(), Error::class.java).status)
+                    }
+
+                })
+    }
+
+
     internal fun executeCloudFunction(functionId: String, functionParameters: Any?, isPublic: Boolean, callback: GameServiceCallback<String>) {
 
         val call: Call = if (isPublic)
@@ -567,9 +647,37 @@ internal object ApiRequest {
     }
 
 
+    private fun createPhoneLoginDictionary(nickName: String,phoneNumber: String,smsCode: String): MutableMap<String, String> {
+        return mutableMapOf(
+                "device_id" to Configuration?.systemInfo?.deviceUniqueId.toString(),
+                "phone_number" to phoneNumber,
+                "code" to smsCode,
+                "name" to nickName
+        )
+    }
+
+
     private fun createPlayTokenHeader(): MutableMap<String, String> {
         return mutableMapOf(
                 "x-access-token" to GameService.PlayToken.toString()
+        )
+    }
+
+
+    private fun createLastLoginDictionary(): MutableMap<String, String> {
+        return mutableMapOf(
+                "game" to Configuration?.clientId.toString(),
+                "secret" to Configuration?.clientSecret.toString(),
+                "device_id" to Configuration?.systemInfo?.deviceUniqueId.toString()
+        )
+    }
+
+
+    private fun createSendSmsDictionary(phoneNumber : String? = null): MutableMap<String, String> {
+        return mutableMapOf(
+                "game" to Configuration?.clientId.toString(),
+                "secret" to Configuration?.clientSecret.toString(),
+                "phone_number" to phoneNumber.toString()
         )
     }
 

@@ -25,15 +25,18 @@ internal object Api {
 
     const val BaseUrl1 = "https://gamesservice.ir"
     private const val BaseUrl2 = "https://api.gamesservice.ir"
+    const val FaaS = "https://faas.gamesservice.ir/"
 
     const val LoginUser = "$BaseUrl2/auth/app/login"
     const val LoginWithGoogle = "$BaseUrl2/auth/g/callback"
+    const val LoginWithPhoneNumber = "$BaseUrl2/auth/phone";
     const val Start = "$BaseUrl2/auth/start"
     const val GetCurrentPlayerData = "$BaseUrl2/v1"
     const val GetUserData = "$BaseUrl2/v1/user/"
 
     const val GetMemberData = "$BaseUrl2/v1/member/"
 
+    const val GetLastLoginInfo = "$BaseUrl2/auth/app/login/info"
 
     const val SaveGame = "$BaseUrl2/v1/savegame/"
     const val Achievements = "$BaseUrl2/v1/achievement/"
@@ -42,7 +45,6 @@ internal object Api {
 
     const val CurrentTime = "$BaseUrl2/syncedtime"
 
-    const val FaaS = "https://faas.gamesservice.ir/"
 
     const val UserProfileLogo = "$BaseUrl1/Application/image"
     const val UserProfile = "$BaseUrl1/Application"
