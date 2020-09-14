@@ -92,9 +92,14 @@ internal class RoomDetail {
     var isPersist: Boolean = false
         internal set
 
+    @SerializedName("11")
+    @Expose
+    var extra: String? = null
+        internal set
+
 
     override fun toString(): String {
-        return "RoomDetail(id=$id, user=$user, invite=$invite, name=$name, type=$type, min=$min, max=$max, gsLiveType=$gsLiveType, role=$role, isPrivate=$isPrivate, isPersist=$isPersist)"
+        return "RoomDetail(id=$id, user=$user, invite=$invite, name=$name, type=$type, min=$min, max=$max, gsLiveType=$gsLiveType, role=$role, isPrivate=$isPrivate, isPersist=$isPersist, extra=$extra)"
     }
 
 

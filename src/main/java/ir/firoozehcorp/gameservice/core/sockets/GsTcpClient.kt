@@ -26,6 +26,7 @@ import ir.firoozehcorp.gameservice.models.gsLive.APacket
 import ir.firoozehcorp.gameservice.models.gsLive.command.Area
 import ir.firoozehcorp.gameservice.models.gsLive.command.Packet
 import ir.firoozehcorp.gameservice.models.internal.interfaces.GameServiceCallback
+import ir.firoozehcorp.gameservice.utils.LogUtil
 import java.io.*
 import java.net.InetAddress
 import java.net.InetSocketAddress
@@ -86,6 +87,7 @@ internal class GsTcpClient(area: Area? = null) : GsSocketClient() {
                                 val reader = JsonReader(StringReader(data.substring(start, index + 1)))
                                 reader.isLenient = true
                                 val packet: Packet = gson.fromJson(reader, Packet::class.java)
+                                LogUtil.logData("GsTcpClient -> DataIn: $packet")
                                 onDataReceived.invokeListeners(packet)
                             }
                         }
@@ -123,6 +125,7 @@ internal class GsTcpClient(area: Area? = null) : GsSocketClient() {
     public override fun send(packet: APacket?) {
         thread(priority = Thread.MAX_PRIORITY) {
             try {
+                LogUtil.logData("GsTcpClient -> DataOut: $packet")
                 out.write(gson
                         .toJson(packet)
                         .toByteArray(charset("UTF-8"))

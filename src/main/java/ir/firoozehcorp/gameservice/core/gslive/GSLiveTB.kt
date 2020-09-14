@@ -76,10 +76,14 @@ object GSLiveTB {
      * @param roomId Room's id You Want To Join
      */
     @Throws(GameServiceException::class)
-    fun joinRoom(@NotNull roomId: String) {
+    fun joinRoom(@NotNull roomId: String,@Nullable extra: String? = null) {
         if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (roomId.isEmpty()) throw GameServiceException("roomId Cant Be EmptyOrNull")
-        GSLive.handler.commandHandler.request(JoinRoomHandler.signature, RoomDetail().apply { id = roomId })
+        GSLive.handler.commandHandler.request(JoinRoomHandler.signature, RoomDetail().apply
+        {
+            id = roomId
+            this.extra = extra
+        })
     }
 
 
@@ -246,13 +250,14 @@ object GSLiveTB {
      * @param inviteId (Type : InviteID) Invite's ID
      */
     @Throws(GameServiceException::class)
-    fun inviteUser(@NotNull inviteId: String) {
+    fun AcceptInvite(@NotNull inviteId: String,@Nullable extra: String? = null) {
         if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (inviteId.isEmpty()) throw GameServiceException("inviteId Cant Be EmptyOrNull")
 
         GSLive.handler.commandHandler.request(AcceptInviteHandler.signature, RoomDetail()
                 .apply {
                     invite = inviteId
+                    this.extra = extra
                     type = GSLiveType.TurnBased.ordinal
                 })
     }

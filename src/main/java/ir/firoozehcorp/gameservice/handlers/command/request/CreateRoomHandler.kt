@@ -44,6 +44,7 @@ internal class CreateRoomHandler : BaseRequestHandler() {
                     role = option.role
                     min = option.minPlayer
                     max = option.maxPlayer
+                    extra = option.extra
                     type = Command.ActionCreateRoom
                     isPersist = option.isPersist
                     isPrivate = option.isPrivate

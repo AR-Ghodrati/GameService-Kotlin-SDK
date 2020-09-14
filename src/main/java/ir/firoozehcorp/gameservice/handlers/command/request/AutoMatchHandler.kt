@@ -43,6 +43,7 @@ internal class AutoMatchHandler : BaseRequestHandler() {
                     role = option.role
                     min = option.minPlayer
                     max = option.maxPlayer
+                    extra = option.extra
                     type = Command.ActionAutoMatch
                     isPersist = option.isPersist
                     gsLiveType = option.gsLiveType.ordinal

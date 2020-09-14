@@ -28,7 +28,7 @@ import java.io.Serializable
  */
 class GSLiveOption : Serializable {
 
-    open class AutoMatchOption @Throws(GameServiceException::class) constructor(open var minPlayer: Int = 2, open var maxPlayer: Int = 2, open var role: String, open var isPersist: Boolean = false) {
+    open class AutoMatchOption @Throws(GameServiceException::class) constructor(open var minPlayer: Int = 2, open var maxPlayer: Int = 2, open var role: String, open var isPersist: Boolean = false,open var extra: String?) {
 
         internal var gsLiveType = GSLiveType.NotSet
 
@@ -41,8 +41,8 @@ class GSLiveOption : Serializable {
     }
 
 
-    class CreateRoomOption @Throws(GameServiceException::class) constructor(var roomName: String, override var minPlayer: Int = 2, override var maxPlayer: Int = 2, override var role: String, var isPrivate: Boolean = false, override var isPersist: Boolean = false)
-        : AutoMatchOption(minPlayer, maxPlayer, role, isPersist) {
+    class CreateRoomOption @Throws(GameServiceException::class) constructor(var roomName: String, override var minPlayer: Int = 2, override var maxPlayer: Int = 2, override var role: String, var isPrivate: Boolean = false, override var isPersist: Boolean = false,override var extra: String? = null)
+        : AutoMatchOption(minPlayer, maxPlayer, role, isPersist,extra) {
 
         init {
             if (roomName.isEmpty()) throw  GameServiceException("RoomName Cant Be EmptyOrNull")

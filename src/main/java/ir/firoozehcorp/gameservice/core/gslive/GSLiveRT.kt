@@ -26,6 +26,7 @@ import ir.firoozehcorp.gameservice.handlers.realtime.request.SendPrivateMessageH
 import ir.firoozehcorp.gameservice.handlers.realtime.request.SendPublicMessageHandler
 import ir.firoozehcorp.gameservice.models.GameServiceException
 import ir.firoozehcorp.gameservice.models.annotations.NotNull
+import ir.firoozehcorp.gameservice.models.annotations.Nullable
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GProtocolSendType
 import ir.firoozehcorp.gameservice.models.enums.gsLive.GSLiveType
 import ir.firoozehcorp.gameservice.models.gsLive.command.RoomDetail
@@ -77,11 +78,16 @@ object GSLiveRT {
      * @param roomId Room's id You Want To Join
      */
     @Throws(GameServiceException::class)
-    fun joinRoom(@NotNull roomId: String) {
+    fun joinRoom(@NotNull roomId: String,@Nullable extra: String? = null) {
         if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (roomId.isEmpty()) throw GameServiceException("roomId Cant Be EmptyOrNull")
-        GSLive.handler.commandHandler.request(JoinRoomHandler.signature, RoomDetail().apply { id = roomId })
+        GSLive.handler.commandHandler.request(JoinRoomHandler.signature, RoomDetail().apply
+        {
+            id = roomId
+            this.extra = extra
+        })
     }
+
 
 
     /**
@@ -194,17 +200,17 @@ object GSLiveRT {
      * @param inviteId (Type : InviteID) Invite's ID
      */
     @Throws(GameServiceException::class)
-    fun inviteUser(@NotNull inviteId: String) {
+    fun AcceptInvite(@NotNull inviteId: String,@Nullable extra: String? = null) {
         if (GameService.IsGuest) throw GameServiceException("This Function Not Working In Guest Mode")
         if (inviteId.isEmpty()) throw GameServiceException("inviteId Cant Be EmptyOrNull")
 
         GSLive.handler.commandHandler.request(AcceptInviteHandler.signature, RoomDetail()
                 .apply {
                     invite = inviteId
-                    type = GSLiveType.RealTime.ordinal
+                    this.extra = extra
+                    type = GSLiveType.TurnBased.ordinal
                 })
     }
-
 
     /**
      * Find All Users With Specific NickName
